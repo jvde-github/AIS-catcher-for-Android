@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="tuner_array">
+        <item>Auto</item>
+    </string-array>
+
+    <string-array name="rtltcp_rate_array">
+        <item>240K</item><item>288K</item><item>1536K</item><item>2304K</item>
+    </string-array>
+
+    <string-array name="rtlsdr_rate_array">
+        <item>240K</item><item>288K</item><item>1536K</item><item>2304K</item>
+    </string-array>
+
+    <string-array name="airspy_rate_array">
+        <item>2500K</item><item>3000K</item><item>6000K</item><item>10000K</item>
+    </string-array>
+
+    <string-array name="airspyhf_rate_array">
+        <item>192K</item><item>768K</item>
+    </string-array>
+
+</resources>

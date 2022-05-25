@@ -1,0 +1,22 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:appcompat="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <item
+        android:id="@+id/action_play"
+        android:icon="@drawable/ic_baseline_play_circle_filled_40"
+        android:orderInCategory="1"
+        android:title="Play" />
+
+    <item
+        android:id="@+id/action_clear"
+        android:icon="@drawable/ic_baseline_clear_40"
+        android:orderInCategory="2"
+        android:title="Clear" />
+    <item
+        android:id="@+id/action_source"
+        android:icon="@drawable/ic_baseline_input_40"
+        android:orderInCategory="3"
+        android:title="RTLTCP" />
+</menu>

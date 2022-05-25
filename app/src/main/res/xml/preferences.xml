@@ -1,0 +1,165 @@
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:key="first_preferencescreen">
+
+    <PreferenceCategory
+        android:key="rtltcp_category"
+        android:title="RTL-TCP">
+
+        <ListPreference
+            android:defaultValue="240K"
+            android:dialogTitle="Sample rate"
+            android:entries="@array/rtltcp_rate_array"
+            android:entryValues="@array/rtltcp_rate_array"
+            android:key="tRATE"
+            android:title="Sample rate" />
+
+        <ListPreference
+            android:defaultValue="Auto"
+            android:dialogTitle="Tuner Gain"
+            android:entries="@array/tuner_array"
+            android:entryValues="@array/tuner_array"
+            android:key="tTUNER"
+            android:title="Tuner" />
+
+        <EditTextPreference
+            android:key="tHOST"
+            android:defaultValue="localhost"
+            android:summary="IP address of RTL-TCP server"
+            android:singleLine="true"
+            android:title="Server IP"/>
+
+        <EditTextPreference
+            android:key="tPORT"
+            android:defaultValue="12345"
+            android:summary="Port of RTL-TCP server"
+            android:singleLine="true"
+            android:title="Server Port"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="rtlsdr_category"
+        android:title="RTL-SDR">
+
+        <ListPreference
+            android:defaultValue="240K"
+            android:dialogTitle="Sample rate"
+            android:entries="@array/rtltcp_rate_array"
+            android:entryValues="@array/rtltcp_rate_array"
+            android:key="rRATE"
+            android:title="Sample rate" />
+
+        <ListPreference
+            android:defaultValue="Auto"
+            android:dialogTitle="Tuner Gain"
+            android:entries="@array/tuner_array"
+            android:entryValues="@array/tuner_array"
+            android:key="rTUNER"
+            android:title="Tuner" />
+
+        <SwitchPreferenceCompat
+            android:key="rRTLAGC"
+            android:summary="RTL Automatic Gain Control"
+            android:defaultValue="False"
+            android:title="RTLAGC"/>
+
+        <SwitchPreferenceCompat
+            android:key="rBIASTEE"
+            android:summary="Enable Bias Tee"
+            android:defaultValue="False"
+            android:title="Bias Tee"/>
+
+        <EditTextPreference
+            android:key="rFREQOFFSET"
+            android:defaultValue="0"
+            android:summary="Frequency Correction"
+            android:title="Frequency Correction (PPM)"/>
+
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="airspy_category"
+        android:title="Airspy R2/Mini">
+
+        <ListPreference
+            android:defaultValue="2500K"
+            android:dialogTitle="Preferred Sample rate"
+            android:entries="@array/airspy_rate_array"
+            android:entryValues="@array/airspy_rate_array"
+            android:key="mRATE"
+            android:title="Preferred Sample rate" />
+
+        <SeekBarPreference
+            android:key="mLINEARITY"
+            android:defaultValue="17"
+            android:max="21"
+            android:summary="Level"
+            android:dialogTitle="Linearity"
+            android:title="Linearity Level"/>
+
+        <SwitchPreferenceCompat
+            android:key="mBIASTEE"
+            android:defaultValue="False"
+            android:summary="Enable Bias Tee"
+            android:title="Bias Tee"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="airspyhf_category"
+        android:title="Airspy HF+">
+
+        <ListPreference
+            android:defaultValue="192K"
+            android:dialogTitle="Preferred Sample rate"
+            android:entries="@array/airspyhf_rate_array"
+            android:entryValues="@array/airspyhf_rate_array"
+            android:key="hRATE"
+            android:title="Preferred Sample rate" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="output_category"
+        android:title="Output">
+
+        <SwitchPreferenceCompat
+            android:key="u1SWITCH"
+            android:defaultValue="False"
+            android:title="UDP Server 1"/>
+
+        <EditTextPreference
+            android:key="u1HOST"
+            android:defaultValue="127.0.0.1"
+            android:dependency="u1SWITCH"
+            android:title="IP"/>
+
+        <EditTextPreference
+            android:key="u1PORT"
+            android:defaultValue="10101"
+            android:dependency="u1SWITCH"
+            android:title="Port"/>
+
+        <SwitchPreferenceCompat
+            android:key="u2SWITCH"
+            android:defaultValue="False"
+            android:title="UDP Server 2"/>
+
+        <EditTextPreference
+            android:key="u2HOST"
+            android:dependency="u2SWITCH"
+            android:defaultValue="localhost"
+
+            android:title="IP"/>
+
+        <EditTextPreference
+            android:key="u2PORT"
+            android:dependency="u2SWITCH"
+            android:defaultValue="4002"
+            android:title="Port"/>
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

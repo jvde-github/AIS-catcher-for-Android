@@ -1,0 +1,29 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:appcompat="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <item
+        android:id="@+id/action_settings"
+        android:icon="@drawable/ic_baseline_settings_24"
+        android:iconTint="@color/white"
+        android:orderInCategory="1"
+        android:title="Settings"
+        appcompat:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_abouts"
+        android:orderInCategory="2"
+        android:title="About"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_credit"
+        android:orderInCategory="3"
+        android:title="Licenses"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_default"
+        android:orderInCategory="3"
+        android:title="Reset Settings"
+        app:showAsAction="never" />
+</menu>

@@ -1,0 +1,15 @@
+[submodule "app/src/main/jni/libusb"]
+	path = app/src/main/jni/libusb
+	url = https://github.com/libusb/libusb.git
+[submodule "app/src/main/jni/AIS-catcher"]
+	path = app/src/main/jni/AIS-catcher
+	url = https://github.com/jvde-github/AIS-catcher.git
+[submodule "app/src/main/jni/rtl-sdr"]
+	path = app/src/main/jni/rtl-sdr
+	url = https://github.com/jvde-github/rtl-sdr.git
+[submodule "app/src/main/jni/airspyone_host"]
+	path = app/src/main/jni/airspyone_host
+	url = https://github.com/jvde-github/airspyone_host.git
+[submodule "app/src/main/jni/airspyhf"]
+	path = app/src/main/jni/airspyhf
+	url = https://github.com/jvde-github/airspyhf.git
