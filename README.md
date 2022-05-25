@@ -21,12 +21,14 @@ This is hobby and research software for use only in those regions where such use
 
 ## Latest news: Android version available for testing
 
-An Android version of AIS-catcher is available for download and testing [here](https://github.com/jvde-github/AIS-catcher-for-Android). Please notice that it is still in beta-stage and is provided for testing purposes.
+If yoyu are familiar with AIS and/or AIS-catcher for Linux/Windows the user interface should be very intuitive.
 <p align="center">
 <img src="https://raw.githubusercontent.com/jvde-github/AIS-catcher/media/media/AIScatcher%20for%20Android%20screenshot%201.png" width=20% height=20%>
 <img src="https://raw.githubusercontent.com/jvde-github/AIS-catcher/media/media/AIScatcher%20for%20Android%20screenshot%202.png" width=20% height=20%>
 </p>
 
 For a video of a field test of an early version [see YouTube](https://www.youtube.com/watch?v=Sn-3c-qCxu4). Hopefully in the App store by the end of this Summer.
+
+For testing purposes you can download a [APK file from my Google drive](https://drive.google.com/file/d/1HDm39szX_kF-Bg6KKruabFoWmzveji0w/view?usp=sharing) (I might have to give you access). After downloading the file on your phone, just tap to install. After that you should be good to go. Feedback is very much appreciated by mailing [me](mailto:jvde.github@gmail.com) or sharing in the issue section before I will share this app in the Play Store!
 
 More to come....
