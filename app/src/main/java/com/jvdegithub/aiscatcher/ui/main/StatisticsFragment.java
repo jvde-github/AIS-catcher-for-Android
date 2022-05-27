@@ -68,7 +68,7 @@ public class StatisticsFragment extends Fragment {
 
     public void Update() {
         getActivity().runOnUiThread(() -> {
-            MB.setText(String.format("%d MB", AisCatcherJava.Statistics.getData()));
+            MB.setText(AisCatcherJava.Statistics.getDataString());
             Total.setText(String.format("%d", AisCatcherJava.Statistics.getTotal()));
             ChannelA.setText(String.format("%d", AisCatcherJava.Statistics.getChA()));
             ChannelB.setText(String.format("%d", AisCatcherJava.Statistics.getChB()));

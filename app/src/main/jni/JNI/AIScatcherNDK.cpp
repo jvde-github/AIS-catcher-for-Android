@@ -86,8 +86,11 @@ void DetachThread()
 void pushStatistics(JNIEnv *env) {
 
     env->SetStaticIntField(javaStatisticsClass,
-                           env->GetStaticFieldID(javaStatisticsClass, "Data", "I"),
+                           env->GetStaticFieldID(javaStatisticsClass, "DataMB", "I"),
                            statistics.DataB / 1000000);
+    env->SetStaticIntField(javaStatisticsClass,
+                           env->GetStaticFieldID(javaStatisticsClass, "DataGB", "I"),
+                           statistics.DataGB);
     env->SetStaticIntField(javaStatisticsClass,
                            env->GetStaticFieldID(javaStatisticsClass, "Total", "I"),
                            statistics.Total);

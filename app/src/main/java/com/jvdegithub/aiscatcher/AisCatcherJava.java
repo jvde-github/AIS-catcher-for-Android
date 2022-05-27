@@ -54,7 +54,8 @@ public class AisCatcherJava {
     static native int getSampleRate();
 
     public static class Statistics {
-        private static int Data = 0;
+        private static int DataMB = 0;
+        private static int DataGB = 0;
         private static int Total = 0;
         private static int ChA = 0;
         private static int ChB = 0;
@@ -65,7 +66,11 @@ public class AisCatcherJava {
         private static int MsgOther = 0;
 
         public static int getData() {
-            return Data;
+            return DataMB;
+        }
+
+        public static String getDataString() {
+            return String.format("%d MB", getData());
         }
 
         public static int getTotal() {
