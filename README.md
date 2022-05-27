@@ -21,7 +21,6 @@ This is hobby and research software for use only in those regions where such use
 
 ## Latest news: Android version available for testing
 
-
 It is easy to give AIS-catcher a try on your Android device and if you are familiar with AIS and/or AIS-catcher for Linux/Windows the user interface should be very intuitive:
 <p align="center">
 <img src="https://raw.githubusercontent.com/jvde-github/AIS-catcher/media/media/AIScatcher%20for%20Android%20screenshot%201.png" width=20% height=20%>

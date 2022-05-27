@@ -35,6 +35,13 @@ public class DeviceManager {
 
     enum DeviceType {NONE, RTLTCP, RTLSDR, AIRSPY, AIRSPYHF, HACKRF}
 
+    public interface DeviceCallback {
+
+        void onSourceChange();
+    }
+
+    private static DeviceManager.DeviceCallback callback = null;
+
     static class Device {
 
         private final UsbDevice device;
@@ -74,26 +81,34 @@ public class DeviceManager {
 
     static UsbDeviceConnection usbDeviceConnection = null;
 
-    public static void register() {
+    public static void register(DeviceCallback cb) {
+        callback = cb;
         registerUSBBroadCast();
     }
 
     public static void unregister() {
         unregisterUSBBroadCast();
+        callback = null;
+    }
+
+    public static void onSourceChanged() {
+
+        if (callback != null)
+            callback.onSourceChange();
     }
 
     public static int openDevice() {
 
         int fd = -1;
 
-        AisCatcherJava.callbackConsole("Opening Device Connection\n");
+        AisCatcherJava.onStatus("Opening Device Connection\n");
 
         if (devices.get(deviceIndex).type != DeviceType.RTLTCP) {
 
             UsbManager mUsbManager = (UsbManager) context.getSystemService(Context.USB_SERVICE);
             UsbDeviceConnection conn = mUsbManager.openDevice(devices.get(deviceIndex).getDevice());
             fd = conn.getFileDescriptor();
-            AisCatcherJava.callbackConsole("Device SN: " + conn.getSerial() + ", FD: " + fd + "\n");
+            AisCatcherJava.onStatus("Device SN: " + conn.getSerial() + ", FD: " + fd + "\n");
         }
         return fd;
     }
@@ -120,7 +135,7 @@ public class DeviceManager {
 
     public static void closeDevice() {
 
-        AisCatcherJava.callbackConsole("Closing USB connection\n");
+        AisCatcherJava.onStatus("Closing USB connection\n");
 
         if (devices.get(deviceIndex).getType() != DeviceType.RTLTCP && usbDeviceConnection != null) {
             usbDeviceConnection.close();
@@ -168,7 +183,7 @@ public class DeviceManager {
 
         setDevice(select);
 
-        if (changed) AisCatcherJava.callbackSourceChanged();
+        if (changed) onSourceChanged();
         return changed;
     }
 
@@ -178,7 +193,7 @@ public class DeviceManager {
         deviceType = dev.getType();
         deviceUID = dev.getUID();
 
-        AisCatcherJava.callbackSourceChanged();
+        onSourceChanged();
     }
 
     public static String getDeviceTypeString() {
@@ -254,7 +269,7 @@ public class DeviceManager {
                 action_clean = "USB device granted extra permission";
             }
 
-            AisCatcherJava.callbackConsole("Android: " + action_clean + ".\n");
+            AisCatcherJava.onStatus("Android: " + action_clean + ".\n");
             refreshList(add);
         }
 

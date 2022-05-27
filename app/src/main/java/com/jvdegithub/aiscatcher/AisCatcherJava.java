@@ -20,22 +20,22 @@ package com.jvdegithub.aiscatcher;
 
 public class AisCatcherJava {
 
+    public interface AisCallback {
+
+        void onNMEA(final String line);
+
+        void onConsole(final String line);
+
+        void onError(final String line);
+
+        void onClose();
+
+        void onUpdate();
+    }
+
     private static AisCallback callback = null;
 
-    private static final TextLog NmeaLog = new TextLog();
-    private static final TextLog ConsoleLog = new TextLog();
-
-    private static int Statistics_Data = 0;
-    private static int Statistics_Total = 0;
-    private static int Statistics_ChA = 0;
-    private static int Statistics_ChB = 0;
-    private static int Statistics_Msg123 = 0;
-    private static int Statistics_Msg5 = 0;
-    private static int Statistics_Msg1819 = 0;
-    private static int Statistics_Msg24 = 0;
-    private static int Statistics_MsgOther = 0;
-
-    static native int Init();
+    static native int InitNative();
 
     static native int createReceiver(int source, int FD);
 
@@ -51,10 +51,64 @@ public class AisCatcherJava {
 
     static native int createUDP(String h, String p);
 
-    static native void resetStatistics();
-
     static native int getSampleRate();
 
+    public static class Statistics {
+        private static int Data = 0;
+        private static int Total = 0;
+        private static int ChA = 0;
+        private static int ChB = 0;
+        private static int Msg123 = 0;
+        private static int Msg5 = 0;
+        private static int Msg1819 = 0;
+        private static int Msg24 = 0;
+        private static int MsgOther = 0;
+
+        public static int getData() {
+            return Data;
+        }
+
+        public static int getTotal() {
+            return Total;
+        }
+
+        public static int getChA() {
+            return ChA;
+        }
+
+        public static int getChB() {
+            return ChB;
+        }
+
+        public static int getMsg123() {
+            return Msg123;
+        }
+
+        public static int getMsg5() {
+            return Msg5;
+        }
+
+        public static int getMsg1819() {
+            return Msg1819;
+        }
+
+        public static int getMsg24() {
+            return Msg24;
+        }
+
+        public static int getMsgOther() {
+            return MsgOther;
+        }
+
+        private static native void Init();
+
+        static native void Reset();
+    }
+
+    public static void Init() {
+        InitNative();
+        Statistics.Init();
+    }
 
     public static void registerCallback(AisCallback m) {
         callback = m;
@@ -64,110 +118,43 @@ public class AisCatcherJava {
         callback = null;
     }
 
-    public static String getNmeaText() {
-        return NmeaLog.getText();
-    }
-
-    public static String getConsoleText() {
-        return ConsoleLog.getText();
-    }
-
-    public static int getStatistics_Data() {
-        return Statistics_Data;
-    }
-
-    public static int getStatistics_Total() {
-        return Statistics_Total;
-    }
-
-    public static int getStatistics_ChA() {
-        return Statistics_ChA;
-    }
-
-    public static int getStatistics_ChB() {
-        return Statistics_ChB;
-    }
-
-    public static int getStatistics_Msg123() {
-        return Statistics_Msg123;
-    }
-
-    public static int getStatistics_Msg5() {
-        return Statistics_Msg5;
-    }
-
-    public static int getStatistics_Msg1819() {
-        return Statistics_Msg1819;
-    }
-
-    public static int getStatistics_Msg24() {
-        return Statistics_Msg24;
-    }
-
-    public static int getStatistics_MsgOther() {
-        return Statistics_MsgOther;
-    }
-
-
-    public interface AisCallback {
-
-        void onNMEA(final String line);
-
-        void onConsole(final String line);
-
-        void onError(final String line);
-
-        void onClose();
-
-        void onUpdate();
-
-        void onSourceChange();
-    }
-
     public static void Reset() {
 
-        ConsoleLog.Clear();
-        NmeaLog.Clear();
-
-        resetStatistics();
+        Logs.Clear();
+        Statistics.Reset();
     }
 
-    private static void callbackNMEA(String nmea) {
+    private static void onNMEA(String nmea) {
 
-        NmeaLog.Update(nmea);
+        Logs.Nmea.Update(nmea);
         if (callback != null)
             callback.onNMEA(nmea);
     }
 
-    public static void callbackConsole(String str) {
+    public static void onStatus(String str) {
 
-        ConsoleLog.Update(str);
+        Logs.Status.Update(str);
         if (callback != null)
             callback.onConsole(str);
     }
 
-    public static void callbackError(String str) {
+    public static void onError(String str) {
 
         if (callback != null)
             callback.onError(str);
     }
 
-    public static void callbackClose() {
+    public static void onClose() {
 
         if (callback != null)
             callback.onClose();
     }
 
-    public static void callbackUpdate() {
+    public static void onUpdate() {
 
         if (callback != null)
             callback.onUpdate();
     }
 
-    public static void callbackSourceChanged() {
-
-        if (callback != null)
-            callback.onSourceChange();
-    }
 }
 

@@ -48,7 +48,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Objects;
 
-public class MainActivity<binding> extends AppCompatActivity implements AisCatcherJava.AisCallback {
+public class MainActivity<binding> extends AppCompatActivity implements AisCatcherJava.AisCallback, DeviceManager.DeviceCallback {
 
     private ConsoleLogFragment log_fragment;
     private NMEALogFragment nmea_fragment;
@@ -114,7 +114,7 @@ public class MainActivity<binding> extends AppCompatActivity implements AisCatch
         super.onStart();
 
         AisCatcherJava.registerCallback(this);
-        DeviceManager.register();
+        DeviceManager.register(this);
     }
 
     @Override
@@ -216,7 +216,7 @@ public class MainActivity<binding> extends AppCompatActivity implements AisCatch
     }
 
     private void onClear() {
-        AisCatcherJava.Reset();
+        AisCatcherJava.Statistics.Reset();
     }
 
     private void onSource() {

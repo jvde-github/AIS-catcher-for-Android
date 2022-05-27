@@ -35,6 +35,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.jvdegithub.aiscatcher.AisCatcherJava;
+import com.jvdegithub.aiscatcher.Logs;
 import com.jvdegithub.aiscatcher.R;
 
 public class ConsoleLogFragment extends Fragment {
@@ -53,7 +54,7 @@ public class ConsoleLogFragment extends Fragment {
         View rootview = inflater.inflate(R.layout.fragment_log, container, false);
         logview = rootview.findViewById(R.id.log);
         scrollView = rootview.findViewById(R.id.scrollView);
-        logview.setText(AisCatcherJava.getConsoleText());
+        logview.setText(Logs.getStatus());
 
         rootview.findViewById(R.id.copylog).setOnClickListener(v -> {
 
@@ -69,7 +70,7 @@ public class ConsoleLogFragment extends Fragment {
         if (logview != null && scrollView != null) {
 
             getActivity().runOnUiThread(() -> {
-                logview.setText(AisCatcherJava.getConsoleText());
+                logview.setText(Logs.getStatus());
                 scrollView.fullScroll(View.FOCUS_DOWN);
             });
         }

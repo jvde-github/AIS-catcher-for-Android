@@ -44,12 +44,13 @@
 #include "Device/RTLTCP.h"
 #include "Device/AIRSPY.h"
 
-static JavaVM *javaVm = nullptr;
 static int javaVersion;
-static jclass javaClass = nullptr;
 
-struct Statistics
-{
+static JavaVM *javaVm = nullptr;
+static jclass javaClass = nullptr;
+static jclass javaStatisticsClass = nullptr;
+
+struct Statistics {
     int DataB;
     int DataGB;
     int Total;
@@ -62,8 +63,7 @@ struct Statistics
 
 std::string nmea_msg;
 
-JNIEXPORT jint JNICALL JNI_OnLoad(JavaVM *, void *)
-{
+JNIEXPORT jint JNICALL JNI_OnLoad(JavaVM *, void *) {
     return JNI_VERSION_1_6;
 }
 
@@ -80,51 +80,70 @@ void DetachThread()
 }
 */
 
+
 // JAVA interaction and callbacks
 
 void pushStatistics(JNIEnv *env) {
 
-    env->SetStaticIntField(javaClass, env->GetStaticFieldID(javaClass, "Statistics_Data", "I"), statistics.DataB / 1000000);
-    env->SetStaticIntField(javaClass, env->GetStaticFieldID(javaClass, "Statistics_Total", "I"), statistics.Total);
-    env->SetStaticIntField(javaClass, env->GetStaticFieldID(javaClass, "Statistics_ChA", "I"), statistics.ChA);
-    env->SetStaticIntField(javaClass, env->GetStaticFieldID(javaClass, "Statistics_ChB", "I"), statistics.ChB);
-    env->SetStaticIntField(javaClass, env->GetStaticFieldID(javaClass, "Statistics_Msg123", "I"), statistics.Msg[1] + statistics.Msg[2] + statistics.Msg[3]);
-    env->SetStaticIntField(javaClass, env->GetStaticFieldID(javaClass, "Statistics_Msg5", "I"), statistics.Msg[5]);
-    env->SetStaticIntField(javaClass, env->GetStaticFieldID(javaClass, "Statistics_Msg1819", "I"), statistics.Msg[18] + statistics.Msg[19]);
-    env->SetStaticIntField(javaClass, env->GetStaticFieldID(javaClass, "Statistics_Msg24", "I"), statistics.Msg[24] + statistics.Msg[25]);
-    env->SetStaticIntField(javaClass, env->GetStaticFieldID(javaClass, "Statistics_MsgOther", "I"), statistics.Total - (statistics.Msg[1] + statistics.Msg[2] + statistics.Msg[3] + statistics.Msg[5] + statistics.Msg[18] + statistics.Msg[19] + statistics.Msg[24] + statistics.Msg[25]));
+    env->SetStaticIntField(javaStatisticsClass,
+                           env->GetStaticFieldID(javaStatisticsClass, "Data", "I"),
+                           statistics.DataB / 1000000);
+    env->SetStaticIntField(javaStatisticsClass,
+                           env->GetStaticFieldID(javaStatisticsClass, "Total", "I"),
+                           statistics.Total);
+    env->SetStaticIntField(javaStatisticsClass,
+                           env->GetStaticFieldID(javaStatisticsClass, "ChA", "I"), statistics.ChA);
+    env->SetStaticIntField(javaStatisticsClass,
+                           env->GetStaticFieldID(javaStatisticsClass, "ChB", "I"), statistics.ChB);
+    env->SetStaticIntField(javaStatisticsClass,
+                           env->GetStaticFieldID(javaStatisticsClass, "Msg123", "I"),
+                           statistics.Msg[1] + statistics.Msg[2] + statistics.Msg[3]);
+    env->SetStaticIntField(javaStatisticsClass,
+                           env->GetStaticFieldID(javaStatisticsClass, "Msg5", "I"),
+                           statistics.Msg[5]);
+    env->SetStaticIntField(javaStatisticsClass,
+                           env->GetStaticFieldID(javaStatisticsClass, "Msg1819", "I"),
+                           statistics.Msg[18] + statistics.Msg[19]);
+    env->SetStaticIntField(javaStatisticsClass,
+                           env->GetStaticFieldID(javaStatisticsClass, "Msg24", "I"),
+                           statistics.Msg[24] + statistics.Msg[25]);
+    env->SetStaticIntField(javaStatisticsClass,
+                           env->GetStaticFieldID(javaStatisticsClass, "MsgOther", "I"),
+                           statistics.Total -
+                           (statistics.Msg[1] + statistics.Msg[2] + statistics.Msg[3] +
+                            statistics.Msg[5] + statistics.Msg[18] + statistics.Msg[19] +
+                            statistics.Msg[24] + statistics.Msg[25]));
 }
 
-
-static void callbackNMEA(JNIEnv *env,const std::string& str) {
+static void callbackNMEA(JNIEnv *env, const std::string &str) {
 
     jstring jstr = env->NewStringUTF(str.c_str());
-    jmethodID method = env->GetStaticMethodID(javaClass, "callbackNMEA", "(Ljava/lang/String;)V");
+    jmethodID method = env->GetStaticMethodID(javaClass, "onNMEA", "(Ljava/lang/String;)V");
     env->CallStaticVoidMethod(javaClass, method, jstr);
 }
 
 static void callbackClose(JNIEnv *env) {
 
-    jmethodID method = env->GetStaticMethodID(javaClass, "callbackClose", "()V");
+    jmethodID method = env->GetStaticMethodID(javaClass, "onClose", "()V");
     env->CallStaticVoidMethod(javaClass, method);
 }
 
-static void callbackConsole(JNIEnv *env,const std::string& str) {
+static void callbackConsole(JNIEnv *env, const std::string &str) {
 
     jstring jstr = env->NewStringUTF(str.c_str());
-    jmethodID method = env->GetStaticMethodID(javaClass, "callbackConsole", "(Ljava/lang/String;)V");
+    jmethodID method = env->GetStaticMethodID(javaClass, "onStatus", "(Ljava/lang/String;)V");
     env->CallStaticVoidMethod(javaClass, method, jstr);
 }
 
-static void callbackConsoleFormat(JNIEnv *env,const char *format, ...) {
+static void callbackConsoleFormat(JNIEnv *env, const char *format, ...) {
 
     char buffer[256];
     va_list args;
     va_start (args, format);
-    vsnprintf (buffer, 255, format, args);
+    vsnprintf(buffer, 255, format, args);
 
     jstring jstr = env->NewStringUTF(buffer);
-    jmethodID method = env->GetStaticMethodID(javaClass, "callbackConsole", "(Ljava/lang/String;)V");
+    jmethodID method = env->GetStaticMethodID(javaClass, "onStatus", "(Ljava/lang/String;)V");
     env->CallStaticVoidMethod(javaClass, method, jstr);
 
     va_end (args);
@@ -134,30 +153,29 @@ static void callbackUpdate(JNIEnv *env) {
 
     pushStatistics(env);
 
-    jmethodID method = env->GetStaticMethodID(javaClass, "callbackUpdate", "()V");
+    jmethodID method = env->GetStaticMethodID(javaClass, "onUpdate", "()V");
     env->CallStaticVoidMethod(javaClass, method);
 }
 
-static void callbackError(JNIEnv *env,const std::string& str) {
+static void callbackError(JNIEnv *env, const std::string &str) {
 
-    callbackConsole(env,str);
+    callbackConsole(env, str);
     callbackClose(env);
 
     jstring jstr = env->NewStringUTF(str.c_str());
-    jmethodID method = env->GetStaticMethodID(javaClass, "callbackError", "(Ljava/lang/String;)V");
+    jmethodID method = env->GetStaticMethodID(javaClass, "onError", "(Ljava/lang/String;)V");
     env->CallStaticVoidMethod(javaClass, method, jstr);
 }
 
 // AIS-catcher model
 
-class NMEAcounter : public StreamIn<NMEA>
-{
+class NMEAcounter : public StreamIn<NMEA> {
     std::string list;
     bool clean = true;
 
 public:
 
-    void Receive(const NMEA* data, int len) {
+    void Receive(const NMEA *data, int len) {
         std::string str;
 
         for (int i = 0; i < len; i++) {
@@ -183,21 +201,18 @@ public:
 };
 
 // Counting Data received from device
-class RAWcounter : public StreamIn<RAW>
-{
+class RAWcounter : public StreamIn<RAW> {
 public:
 
-    void Receive(const RAW* data, int len)
-    {
+    void Receive(const RAW *data, int len) {
         const int GB = 1000000000;
         statistics.DataB += data->size;
-        statistics.DataGB += statistics.DataB / GB ;
+        statistics.DataGB += statistics.DataB / GB;
         statistics.DataB %= GB;
     }
 };
 
-struct Drivers
-{
+struct Drivers {
     Device::RTLSDR RTLSDR;
     Device::RTLTCP RTLTCP;
     Device::AIRSPY AIRSPY;
@@ -216,7 +231,8 @@ AIS::Model *model = nullptr;
 bool stop = false;
 
 extern "C"
-JNIEXPORT jint JNICALL Java_com_jvdegithub_aiscatcher_AisCatcherJava_Init(JNIEnv *env, jclass instance) {
+JNIEXPORT jint JNICALL
+Java_com_jvdegithub_aiscatcher_AisCatcherJava_InitNative(JNIEnv *env, jclass instance) {
 
     env->GetJavaVM(&javaVm);
     javaVersion = env->GetVersion();
@@ -230,8 +246,8 @@ JNIEXPORT jint JNICALL Java_com_jvdegithub_aiscatcher_AisCatcherJava_Init(JNIEnv
 
 extern "C"
 JNIEXPORT jboolean JNICALL
-Java_com_jvdegithub_aiscatcher_AisCatcherJava_isStreaming(JNIEnv *, jclass ) {
-    if(device && device->isStreaming()) return JNI_TRUE;
+Java_com_jvdegithub_aiscatcher_AisCatcherJava_isStreaming(JNIEnv *, jclass) {
+    if (device && device->isStreaming()) return JNI_TRUE;
 
     return JNI_FALSE;
 }
@@ -241,58 +257,56 @@ JNIEXPORT jint JNICALL
 Java_com_jvdegithub_aiscatcher_AisCatcherJava_applySetting(JNIEnv *env, jclass, jstring dev,
                                                            jstring setting, jstring param) {
 
-    try{
+    try {
         jboolean isCopy;
         std::string d = (env)->GetStringUTFChars(dev, &isCopy);
         std::string s = (env)->GetStringUTFChars(setting, &isCopy);
         std::string p = (env)->GetStringUTFChars(param, &isCopy);
 
-        switch(d[0]) {
+        switch (d[0]) {
             case 't':
-                callbackConsoleFormat(env,"Set RTLTCP: [%s] %s\n",s.c_str(),p.c_str());
+                callbackConsoleFormat(env, "Set RTLTCP: [%s] %s\n", s.c_str(), p.c_str());
                 drivers.RTLTCP.Set(s, p);
                 break;
             case 'r':
-                callbackConsoleFormat(env,"Set RTLSDR: [%s] %s\n",s.c_str(),p.c_str());
+                callbackConsoleFormat(env, "Set RTLSDR: [%s] %s\n", s.c_str(), p.c_str());
                 drivers.RTLSDR.Set(s, p);
                 break;
             case 'm':
-                callbackConsoleFormat(env,"Set AIRSPY: [%s] %s\n",s.c_str(),p.c_str());
+                callbackConsoleFormat(env, "Set AIRSPY: [%s] %s\n", s.c_str(), p.c_str());
                 drivers.AIRSPY.Set(s, p);
                 break;
             case 'h':
-                callbackConsoleFormat(env,"Set AIRSPYHF: [%s] %s\n",s.c_str(),p.c_str());
+                callbackConsoleFormat(env, "Set AIRSPYHF: [%s] %s\n", s.c_str(), p.c_str());
                 drivers.AIRSPYHF.Set(s, p);
                 break;
 
         }
 
     } catch (const char *msg) {
-        callbackError(env,msg);
+        callbackError(env, msg);
         device = nullptr;
         return -1;
     }
     return 0;
 }
 
-
 extern "C"
 JNIEXPORT jint JNICALL
-Java_com_jvdegithub_aiscatcher_AisCatcherJava_Run(JNIEnv *env, jclass ) {
+Java_com_jvdegithub_aiscatcher_AisCatcherJava_Run(JNIEnv *env, jclass) {
 
 
     try {
-        callbackConsole(env,"Starting device\n");
+        callbackConsole(env, "Starting device\n");
         device->Play();
         stop = false;
 
-        callbackConsole(env,"Run started\n");
+        callbackConsole(env, "Run started\n");
 
         while (device->isStreaming() && !stop) {
             std::this_thread::sleep_for(std::chrono::milliseconds(1000));
             callbackUpdate(env);
-            if(!nmea_msg.empty())
-            {
+            if (!nmea_msg.empty()) {
                 callbackNMEA(env, nmea_msg);
                 nmea_msg = "";
             }
@@ -301,12 +315,12 @@ Java_com_jvdegithub_aiscatcher_AisCatcherJava_Run(JNIEnv *env, jclass ) {
         device->Stop();
     }
     catch (const char *msg) {
-        callbackError(env,msg);
+        callbackError(env, msg);
         return -1;
     }
 
-    if(!stop) {
-        callbackError(env,"Device disconnected");
+    if (!stop) {
+        callbackError(env, "Device disconnected");
     }
 
     return 0;
@@ -314,18 +328,19 @@ Java_com_jvdegithub_aiscatcher_AisCatcherJava_Run(JNIEnv *env, jclass ) {
 
 extern "C"
 JNIEXPORT jint JNICALL
-Java_com_jvdegithub_aiscatcher_AisCatcherJava_Close(JNIEnv *env, jclass ) {
-    callbackConsole(env,"Device closing\n");
+Java_com_jvdegithub_aiscatcher_AisCatcherJava_Close(JNIEnv *env, jclass) {
+    callbackConsole(env, "Device closing\n");
 
     try {
-        if(device) device->Close();
+        if (device) device->Close();
         device = nullptr;
         UDP_connections.clear();
-        delete model; model = nullptr;
+        delete model;
+        model = nullptr;
         UDP_connections.resize(0);
     }
     catch (const char *msg) {
-        callbackError(env,msg);
+        callbackError(env, msg);
         return -1;
     }
     callbackClose(env);
@@ -334,27 +349,15 @@ Java_com_jvdegithub_aiscatcher_AisCatcherJava_Close(JNIEnv *env, jclass ) {
 
 extern "C"
 JNIEXPORT jint JNICALL
-Java_com_jvdegithub_aiscatcher_AisCatcherJava_forceStop(JNIEnv *env, jclass ) {
-    callbackConsole(env,"Stop requested\n");
+Java_com_jvdegithub_aiscatcher_AisCatcherJava_forceStop(JNIEnv *env, jclass) {
+    callbackConsole(env, "Stop requested\n");
     stop = true;
     return 0;
 }
 
 extern "C"
-JNIEXPORT void JNICALL
-Java_com_jvdegithub_aiscatcher_AisCatcherJava_resetStatistics(JNIEnv *env, jclass ) {
-
-    memset(&statistics,0, sizeof(statistics));
-
-    callbackUpdate(env);
-    callbackConsole(env,"");
-    callbackNMEA(env,"");
-}
-
-
-extern "C"
 JNIEXPORT jint JNICALL
-Java_com_jvdegithub_aiscatcher_AisCatcherJava_createReceiver(JNIEnv *env, jclass , jint source,
+Java_com_jvdegithub_aiscatcher_AisCatcherJava_createReceiver(JNIEnv *env, jclass, jint source,
                                                              jint fd) {
     callbackConsole(env, "Creating Receiver\n");
 
@@ -386,27 +389,28 @@ Java_com_jvdegithub_aiscatcher_AisCatcherJava_createReceiver(JNIEnv *env, jclass
         device->setFrequency(162000000);
     }
     catch (const char *msg) {
-        callbackConsole(env,msg);
+        callbackConsole(env, msg);
         device = nullptr;
         return -1;
     }
 
-    callbackConsole(env,"Creating Model\n");
-    callbackConsoleFormat(env,"Building model with sampling rate: %dK\n",device->getSampleRate()/1000);
+    callbackConsole(env, "Creating Model\n");
+    callbackConsoleFormat(env, "Building model with sampling rate: %dK\n",
+                          device->getSampleRate() / 1000);
 
     delete model;
     model = new AIS::ModelDefault();
     model->buildModel(device->getSampleRate(), false, device);
 
-    callbackConsole(env,"Creating output channels\n");
+    callbackConsole(env, "Creating output channels\n");
 
-    try{
+    try {
 
-        for(auto & UDP_connection : UDP_connections) {
+        for (auto &UDP_connection: UDP_connections) {
             model->Output() >> UDP_connection;
         }
     } catch (const char *msg) {
-        callbackError(env,msg);
+        callbackError(env, msg);
         device = nullptr;
         return -1;
     }
@@ -422,18 +426,18 @@ JNIEXPORT jint JNICALL
 Java_com_jvdegithub_aiscatcher_AisCatcherJava_createUDP(JNIEnv *env, jclass clazz, jstring h,
                                                         jstring p) {
     try {
-        UDP_connections.resize(UDP_connections.size()+1);
+        UDP_connections.resize(UDP_connections.size() + 1);
 
         jboolean b;
         std::string host = (env)->GetStringUTFChars(h, &b);
         std::string port = (env)->GetStringUTFChars(p, &b);
-        UDP_connections[UDP_connections.size()-1].openConnection(host,port);
+        UDP_connections[UDP_connections.size() - 1].openConnection(host, port);
 
-        callbackConsoleFormat(env,"UDP: %s %s\n",host.c_str(),port.c_str());
+        callbackConsoleFormat(env, "UDP: %s %s\n", host.c_str(), port.c_str());
 
 
     } catch (const char *msg) {
-        callbackError(env,msg);
+        callbackError(env, msg);
         device = nullptr;
         return -1;
     }
@@ -442,7 +446,26 @@ Java_com_jvdegithub_aiscatcher_AisCatcherJava_createUDP(JNIEnv *env, jclass claz
 extern "C"
 JNIEXPORT jint JNICALL
 Java_com_jvdegithub_aiscatcher_AisCatcherJava_getSampleRate(JNIEnv *env, jclass clazz) {
-    if(device == NULL) return 0;
+    if (device == NULL) return 0;
 
     return device->getSampleRate();
+}
+
+
+extern "C"
+JNIEXPORT void JNICALL
+Java_com_jvdegithub_aiscatcher_AisCatcherJava_00024Statistics_Init(JNIEnv *env, jclass instance) {
+    javaStatisticsClass = (jclass) env->NewGlobalRef(instance);
+    memset(&statistics, 0, sizeof(statistics));
+}
+
+extern "C"
+JNIEXPORT void JNICALL
+Java_com_jvdegithub_aiscatcher_AisCatcherJava_00024Statistics_Reset(JNIEnv *env, jclass instance) {
+
+    memset(&statistics, 0, sizeof(statistics));
+
+    callbackUpdate(env);
+    callbackConsole(env, "");
+    callbackNMEA(env, "");
 }

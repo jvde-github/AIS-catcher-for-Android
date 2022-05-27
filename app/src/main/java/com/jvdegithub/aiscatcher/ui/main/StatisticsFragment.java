@@ -68,15 +68,15 @@ public class StatisticsFragment extends Fragment {
 
     public void Update() {
         getActivity().runOnUiThread(() -> {
-            MB.setText(String.format("%d MB", AisCatcherJava.getStatistics_Data()));
-            Total.setText(String.format("%d", AisCatcherJava.getStatistics_Total()));
-            ChannelA.setText(String.format("%d", AisCatcherJava.getStatistics_ChA()));
-            ChannelB.setText(String.format("%d", AisCatcherJava.getStatistics_ChB()));
-            Msg123.setText(String.format("%d", AisCatcherJava.getStatistics_Msg123()));
-            Msg5.setText(String.format("%d", AisCatcherJava.getStatistics_Msg5()));
-            Msg1819.setText(String.format("%d", AisCatcherJava.getStatistics_Msg1819()));
-            Msg24.setText(String.format("%d", AisCatcherJava.getStatistics_Msg24()));
-            MsgOther.setText(String.format("%d", AisCatcherJava.getStatistics_MsgOther()));
+            MB.setText(String.format("%d MB", AisCatcherJava.Statistics.getData()));
+            Total.setText(String.format("%d", AisCatcherJava.Statistics.getTotal()));
+            ChannelA.setText(String.format("%d", AisCatcherJava.Statistics.getChA()));
+            ChannelB.setText(String.format("%d", AisCatcherJava.Statistics.getChB()));
+            Msg123.setText(String.format("%d", AisCatcherJava.Statistics.getMsg123()));
+            Msg5.setText(String.format("%d", AisCatcherJava.Statistics.getMsg5()));
+            Msg1819.setText(String.format("%d", AisCatcherJava.Statistics.getMsg1819()));
+            Msg24.setText(String.format("%d", AisCatcherJava.Statistics.getMsg24()));
+            MsgOther.setText(String.format("%d", AisCatcherJava.Statistics.getMsgOther()));
         });
     }
 }

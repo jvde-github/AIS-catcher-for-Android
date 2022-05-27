@@ -23,8 +23,8 @@ import android.text.Spanned;
 
 public class InputFilterMinMax implements InputFilter {
 
-    protected int min = -10000;
-    protected int max = 10000;
+    protected int min;
+    protected int max;
 
     public InputFilterMinMax(int m, int M)
     {
@@ -39,7 +39,7 @@ public class InputFilterMinMax implements InputFilter {
 
         if (!r.matches("^([-]?|[-]?[1-9]\\d*|[0]|[1-9]?[1-9]\\d*)")) return "";
         if(r.isEmpty()||r.equals("-")) return null;
-        if ((Integer.valueOf(r) > max || Integer.valueOf(r) < min)) return "";
+        if ((Integer.parseInt(r) > max || Integer.parseInt(r) < min)) return "";
 
         return null;
     }
