@@ -9,7 +9,6 @@ public class Logs {
         Status.Clear();
     }
 
-
     public static String getNmea() {
         return Logs.Nmea.getText();
     }

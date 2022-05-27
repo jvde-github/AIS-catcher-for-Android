@@ -216,7 +216,7 @@ public class MainActivity<binding> extends AppCompatActivity implements AisCatch
     }
 
     private void onClear() {
-        AisCatcherJava.Statistics.Reset();
+        AisCatcherJava.Reset();
     }
 
     private void onSource() {

@@ -18,6 +18,8 @@
 
 package com.jvdegithub.aiscatcher;
 
+import java.text.DecimalFormat;
+
 public class AisCatcherJava {
 
     public interface AisCallback {
@@ -54,7 +56,7 @@ public class AisCatcherJava {
     static native int getSampleRate();
 
     public static class Statistics {
-        private static int DataMB = 0;
+        private static int DataB = 0;
         private static int DataGB = 0;
         private static int Total = 0;
         private static int ChA = 0;
@@ -65,12 +67,24 @@ public class AisCatcherJava {
         private static int Msg24 = 0;
         private static int MsgOther = 0;
 
-        public static int getData() {
-            return DataMB;
+        public static int getDataB() {
+            return DataB;
         }
 
+        public static int getDataGB() {
+            return DataGB;
+        }
         public static String getDataString() {
-            return String.format("%d MB", getData());
+            DecimalFormat df = new DecimalFormat("0.0");
+
+            if(DataGB != 0) {
+                float data = (float) getDataGB() + (float) getDataB() / 1000000000.0f;
+                return df.format(data) + " GB";
+            }
+            else {
+                float data = (float) getDataB() / 1000000.0f;
+                return df.format(data) + " MB";
+            }
         }
 
         public static int getTotal() {
@@ -160,6 +174,5 @@ public class AisCatcherJava {
         if (callback != null)
             callback.onUpdate();
     }
-
 }
 

@@ -10,7 +10,11 @@
         android:orderInCategory="1"
         android:title="Settings"
         appcompat:showAsAction="never" />
-
+    <item
+        android:id="@+id/action_default"
+        android:orderInCategory="3"
+        android:title="Reset Settings"
+        app:showAsAction="never" />
     <item
         android:id="@+id/action_abouts"
         android:orderInCategory="2"
@@ -21,9 +25,5 @@
         android:orderInCategory="3"
         android:title="Licenses"
         app:showAsAction="never" />
-    <item
-        android:id="@+id/action_default"
-        android:orderInCategory="3"
-        android:title="Reset Settings"
-        app:showAsAction="never" />
+
 </menu>
