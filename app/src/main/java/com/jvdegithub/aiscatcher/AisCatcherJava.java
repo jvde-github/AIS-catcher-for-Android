@@ -56,6 +56,7 @@ public class AisCatcherJava {
     static native int getSampleRate();
 
     public static class Statistics {
+
         private static int DataB = 0;
         private static int DataGB = 0;
         private static int Total = 0;
@@ -74,14 +75,14 @@ public class AisCatcherJava {
         public static int getDataGB() {
             return DataGB;
         }
+
         public static String getDataString() {
             DecimalFormat df = new DecimalFormat("0.0");
 
-            if(DataGB != 0) {
+            if (DataGB != 0) {
                 float data = (float) getDataGB() + (float) getDataB() / 1000000000.0f;
                 return df.format(data) + " GB";
-            }
-            else {
+            } else {
                 float data = (float) getDataB() / 1000000.0f;
                 return df.format(data) + " MB";
             }
@@ -175,4 +176,3 @@ public class AisCatcherJava {
             callback.onUpdate();
     }
 }
-

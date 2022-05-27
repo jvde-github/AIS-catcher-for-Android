@@ -19,7 +19,6 @@
 package com.jvdegithub.aiscatcher;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -32,11 +31,9 @@ import com.jvdegithub.aiscatcher.ui.main.StatisticsFragment;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.content.ContextCompat;
-import androidx.preference.PreferenceManager;
 import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -46,7 +43,6 @@ import com.jvdegithub.aiscatcher.ui.main.SectionsPagerAdapter;
 import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Objects;
 
 public class MainActivity<binding> extends AppCompatActivity implements AisCatcherJava.AisCallback, DeviceManager.DeviceCallback {
 
@@ -127,25 +123,16 @@ public class MainActivity<binding> extends AppCompatActivity implements AisCatch
 
     private void onPlayStop() {
         if (!AisService.isRunning(getApplicationContext())) {
+            if (Settings.Apply(this)) {
+                int fd = DeviceManager.openDevice();
+                Intent serviceIntent = new Intent(MainActivity.this, AisService.class);
+                serviceIntent.putExtra("source", DeviceManager.getDeviceCode());
+                serviceIntent.putExtra("USB", fd);
+                ContextCompat.startForegroundService(MainActivity.this, serviceIntent);
+                UpdateUIonStart();
+            } else
+                Toast.makeText(MainActivity.this, "Invalid setting", Toast.LENGTH_LONG).show();
 
-            String valid_until = "15/07/2022";
-            Date valDate = new SimpleDateFormat("dd/MM/yyyy").parse(valid_until, new ParsePosition(0));
-
-            if (new Date().after(valDate)) {
-
-                Toast.makeText(MainActivity.this, "Test version valid until " + valid_until + ". Please download official version.", Toast.LENGTH_LONG).show();
-
-            } else {
-                if (ApplySettings()) {
-                    int fd = DeviceManager.openDevice();
-                    Intent serviceIntent = new Intent(MainActivity.this, AisService.class);
-                    serviceIntent.putExtra("source", DeviceManager.getDeviceCode());
-                    serviceIntent.putExtra("USB", fd);
-                    ContextCompat.startForegroundService(MainActivity.this, serviceIntent);
-                    UpdateUIonStart();
-                } else
-                    Toast.makeText(MainActivity.this, "Invalid setting", Toast.LENGTH_LONG).show();
-            }
         } else {
             AisCatcherJava.forceStop();
         }
@@ -290,62 +277,5 @@ public class MainActivity<binding> extends AppCompatActivity implements AisCatch
         updateUIonSource();
     }
 
-    public boolean ApplySettings() {
 
-        if (!SetDevice("rRATE")) return false;
-        if (!SetDeviceBoolean("rRTLAGC", "ON", "OFF")) return false;
-        if (!SetDevice("rTUNER")) return false;
-        if (!SetDeviceBoolean("rBIASTEE", "ON", "OFF")) return false;
-        if (!SetDevice("rFREQOFFSET")) return false;
-        if (!SetDevice("tRATE")) return false;
-        if (!SetDevice("tTUNER")) return false;
-        if (!SetDevice("tHOST")) return false;
-        if (!SetDevice("tPORT")) return false;
-        if (!SetDevice("mRATE")) return false;
-        if (!SetDeviceInteger("mLINEARITY")) return false;
-        if (!SetDeviceBoolean("mBIASTEE", "ON", "OFF")) return false;
-        if (!SetDevice("hRATE")) return false;
-
-        if (!SetUDPoutput("u1")) return false;
-        return SetUDPoutput("u2");
-    }
-
-    public boolean SetDevice(String s) {
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        String p = preferences.getString(s, "");
-        if (!Objects.equals(p, ""))
-            return AisCatcherJava.applySetting(s.substring(0, 1), s.substring(1), p) == 0;
-
-        return true;
-    }
-
-    public boolean SetDeviceBoolean(String s, String st, String sf) {
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        boolean b = preferences.getBoolean(s, true);
-        return AisCatcherJava.applySetting(s.substring(0, 1), s.substring(1), b ? st : sf) == 0;
-    }
-
-    public boolean SetDeviceInteger(String s) {
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        String p = String.valueOf(preferences.getInt(s, 0));
-        if (!Objects.equals(p, ""))
-            return AisCatcherJava.applySetting(s.substring(0, 1), s.substring(1), p) == 0;
-
-        return true;
-    }
-
-    public boolean SetUDPoutput(String s) {
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-
-        Log.i("SET UDP", s);
-
-        boolean b = preferences.getBoolean(s + "SWITCH", true);
-        if (b) {
-            String host = preferences.getString(s + "HOST", "");
-            String port = preferences.getString(s + "PORT", "");
-            return AisCatcherJava.createUDP(host, port) == 0;
-
-        }
-        return true;
-    }
 }

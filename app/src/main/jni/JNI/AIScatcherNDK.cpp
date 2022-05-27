@@ -51,8 +51,8 @@ static jclass javaClass = nullptr;
 static jclass javaStatisticsClass = nullptr;
 
 struct Statistics {
-    int DataB;
-    int DataGB;
+    long DataB;
+    long DataGB;
     int Total;
     int ChA;
     int ChB;
@@ -298,6 +298,8 @@ extern "C"
 JNIEXPORT jint JNICALL
 Java_com_jvdegithub_aiscatcher_AisCatcherJava_Run(JNIEnv *env, jclass) {
 
+    const int TIME_MAX = 120;
+    const int TIME_INTERVAL = 1000;
 
     try {
         callbackConsole(env, "Starting device\n");
@@ -306,12 +308,21 @@ Java_com_jvdegithub_aiscatcher_AisCatcherJava_Run(JNIEnv *env, jclass) {
 
         callbackConsole(env, "Run started\n");
 
+        int time_idx = 0;
+
         while (device->isStreaming() && !stop) {
-            std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+            std::this_thread::sleep_for(std::chrono::milliseconds(TIME_INTERVAL));
+
             callbackUpdate(env);
             if (!nmea_msg.empty()) {
                 callbackNMEA(env, nmea_msg);
                 nmea_msg = "";
+            }
+
+            if (++time_idx == TIME_MAX)
+            {
+                stop = true;
+                callbackError(env, "Max decoding time of 120 seconds reached");
             }
         }
 
@@ -397,18 +408,18 @@ Java_com_jvdegithub_aiscatcher_AisCatcherJava_createReceiver(JNIEnv *env, jclass
         return -1;
     }
 
+
     callbackConsole(env, "Creating Model\n");
-    callbackConsoleFormat(env, "Building model with sampling rate: %dK\n",
-                          device->getSampleRate() / 1000);
-
-    delete model;
-    model = new AIS::ModelDefault();
-    model->buildModel(device->getSampleRate(), false, device);
-
-    callbackConsole(env, "Creating output channels\n");
-
     try {
 
+        callbackConsoleFormat(env, "Building model with sampling rate: %dK\n",
+                              device->getSampleRate() / 1000);
+
+        delete model;
+        model = new AIS::ModelDefault();
+        model->buildModel(device->getSampleRate(), false, device);
+
+        callbackConsole(env, "Creating output channels\n");
         for (auto &UDP_connection: UDP_connections) {
             model->Output() >> UDP_connection;
         }

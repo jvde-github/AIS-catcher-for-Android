@@ -1,5 +1,7 @@
 package com.jvdegithub.aiscatcher;
 
+import com.jvdegithub.aiscatcher.tools.TextLog;
+
 public class Logs {
     public static final TextLog Nmea = new TextLog();
     public static final TextLog Status = new TextLog();

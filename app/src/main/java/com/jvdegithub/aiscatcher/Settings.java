@@ -32,9 +32,12 @@ import android.os.Bundle;
 import android.text.InputFilter;
 import android.text.InputType;
 import android.text.method.DigitsKeyListener;
+import android.util.Log;
 
 import com.jvdegithub.aiscatcher.tools.InputFilterIP;
 import com.jvdegithub.aiscatcher.tools.InputFilterMinMax;
+
+import java.util.Objects;
 
 public class Settings extends AppCompatActivity {
 
@@ -69,7 +72,6 @@ public class Settings extends AppCompatActivity {
         preferences.edit().putString("mRATE", "2500K").commit();
         preferences.edit().putBoolean("mBIASTEE", false).commit();
 
-
         preferences.edit().putString("hRATE", "192K").commit();
     }
 
@@ -101,35 +103,31 @@ public class Settings extends AppCompatActivity {
         }
 
         private void setSummaries() {
-            setSummaryText("tPORT");
-            setSummaryText("tHOST");
-            setSummaryText("u1HOST");
-            setSummaryText("u1PORT");
-            setSummaryText("u2HOST");
-            setSummaryText("u2PORT");
-            setSummaryText("rFREQOFFSET");
-            setSummaryList("rTUNER");
-            setSummaryList("rRATE");
-            setSummaryList("tRATE");
-            setSummaryList("tTUNER");
-            setSummaryList("mRATE");
-            setSummarySeekbar("mLINEARITY");
-            setSummaryList("hRATE");
+            setSummaryText(new String[]{"tPORT","tHOST","u1HOST","u1PORT","u2HOST","u2PORT", "rFREQOFFSET"});
+            setSummaryList(new String[]{"rTUNER","rRATE","tRATE","tTUNER","mRATE","hRATE"});
+            setSummarySeekbar(new String[]{"mLINEARITY"});
         }
 
-        private void setSummaryText(String s) {
-            EditTextPreference e = findPreference(s);
-            e.setSummary(e.getText());
+        private void setSummaryText(String[] settings) {
+
+            for (String s : settings) {
+                EditTextPreference e = findPreference(s);
+                e.setSummary(e.getText());
+            }
         }
 
-        private void setSummaryList(String s) {
-            ListPreference e = findPreference(s);
-            e.setSummary(e.getEntry());
+        private void setSummaryList(String[] settings) {
+            for (String s : settings) {
+                ListPreference e = findPreference(s);
+                e.setSummary(e.getEntry());
+            }
         }
 
-        private void setSummarySeekbar(String s) {
-            SeekBarPreference e = findPreference(s);
-            e.setSummary(String.valueOf(e.getValue()));
+        private void setSummarySeekbar(String[] settings) {
+            for(String s:settings) {
+                SeekBarPreference e = findPreference(s);
+                e.setSummary(String.valueOf(e.getValue()));
+            }
         }
 
         @Override
@@ -173,5 +171,68 @@ public class Settings extends AppCompatActivity {
             editText.selectAll();
             editText.setFilters(new InputFilter[]{new InputFilterIP()});
         };
+    }
+
+    static public boolean Apply(Context context) {
+
+        if (!SetDevice(new String[]{"rRATE", "rTUNER", "rFREQOFFSET", "tRATE", "tTUNER", "tHOST", "tPORT", "mRATE", "hRATE"}, context))
+            return false;
+        if (!SetDeviceBoolean(new String[]{"rRTLAGC", "rBIASTEE", "mBIASTEE"}, "ON", "OFF", context))
+            return false;
+        if (!SetDeviceInteger(new String[]{"mLINEARITY"}, context)) return false;
+
+        if (!SetUDPoutput("u1", context)) return false;
+        if (!SetUDPoutput("u2", context)) return false;
+        return true;
+    }
+
+    static private boolean SetDevice(String[] settings, Context context) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+
+        for (String s : settings) {
+            String p = preferences.getString(s, "");
+            if (Objects.equals(p, "")) return false;
+            if (AisCatcherJava.applySetting(s.substring(0, 1), s.substring(1), p) != 0)
+                return false;
+        }
+        return true;
+    }
+
+    static private boolean SetDeviceBoolean(String[] settings, String st, String sf, Context context) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+
+        for (String s : settings) {
+            boolean b = preferences.getBoolean(s, true);
+            if (AisCatcherJava.applySetting(s.substring(0, 1), s.substring(1), b ? st : sf) != 0)
+                return false;
+        }
+        return true;
+    }
+
+    static private boolean SetDeviceInteger(String[] settings, Context context) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+
+        for (String s : settings) {
+            String p = String.valueOf(preferences.getInt(s, 0));
+            if (Objects.equals(p, "")) return false;
+            if (AisCatcherJava.applySetting(s.substring(0, 1), s.substring(1), p) != 0)
+                return false;
+        }
+        return true;
+    }
+
+    static private boolean SetUDPoutput(String s, Context context) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+
+        Log.i("SET UDP", s);
+
+        boolean b = preferences.getBoolean(s + "SWITCH", true);
+        if (b) {
+            String host = preferences.getString(s + "HOST", "");
+            String port = preferences.getString(s + "PORT", "");
+            return AisCatcherJava.createUDP(host, port) == 0;
+
+        }
+        return true;
     }
 }

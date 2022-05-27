@@ -16,7 +16,7 @@
  *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.jvdegithub.aiscatcher;
+package com.jvdegithub.aiscatcher.tools;
 
 public class TextLog {
 
