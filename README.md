@@ -6,7 +6,7 @@ or send to Marine services like Marinetraffic.
 The requirements to recieve AIS signals are a RTL-SDR dongle (or Airspy), a simple antenna, an Android device with USB connector and an OTG cable to connect the dongle with your Android device.
 
 <p align="center">
-<img src="https://raw.githubusercontent.com/jvde-github/AIS-catcher/media/media/equipment.jpg" width=50% height=50%>
+<img src="https://raw.githubusercontent.com/jvde-github/AIS-catcher/media/media/equipment.jpg" width=80% height=80%>
 </p>
 
 ### Disclaimer
