@@ -10,15 +10,21 @@ on all Android devices. And one more thing, you need to be in a region where the
 <p align="center">
 <img src="https://raw.githubusercontent.com/jvde-github/AIS-catcher/media/media/equipment.jpg" width=80% height=80%></p>
 
-### Disclaimer
+### Purpose and Disclaimer
 
-```AIS-catcher for Android```  is created for research and educational purposes under the GPL license. It is a hobby project and not tested and designed for reliability and correctness. 
-You can play with the software but it is the user's responsibility to use it prudently. So,  DO NOT rely upon this software in any way including for navigation 
+```AIS-catcher for Android```  is created for research and educational purposes under the GPL license.
+This program comes with **ABSOLUTELY NO WARRANTY**; This is free software, and you are welcome to redistribute it
+under certain conditions. for details see [https://github.com/jvde-github/AIS-catcher-for-Android]([https://github.com/jvde-github/AIS-catcher-for-Android).
+
+It is a hobby project and not tested and designed for reliability and correctness. 
+You can play with the software but it is the user's responsibility to use it prudently. So,  **DO NOT** rely upon this software in any way including for navigation 
 and/or safety of life or property purposes.
 There are variations in the legislation concerning radio reception in the different administrations around the world. 
 It is your responsibility to determine whether or not your local administration permits the reception and handling of AIS messages from ships and you can have this App on your phone. 
 It is specifically forbidden to use this software for any illegal purpose whatsoever. 
-This is hobby and research software for use only in those regions where such use is permitted.
+The software is intended for use **only in those regions** where such use **is permitted**.
+
+The maximum time for the receiver is set to two minutes for this reason.
 
 ## Latest news: Android version available for testing
 
