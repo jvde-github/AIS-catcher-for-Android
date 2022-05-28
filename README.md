@@ -14,7 +14,7 @@ on all Android devices. And one more thing, you need to be in a region where the
 
 ```AIS-catcher for Android```  is created for research and educational purposes under the GPL license.
 This program comes with **ABSOLUTELY NO WARRANTY**; This is free software, and you are welcome to redistribute it
-under certain conditions. for details see [https://github.com/jvde-github/AIS-catcher-for-Android]([https://github.com/jvde-github/AIS-catcher-for-Android).
+under certain conditions. For details see [https://github.com/jvde-github/AIS-catcher-for-Android](https://github.com/jvde-github/AIS-catcher-for-Android).
 
 It is a hobby project and not tested and designed for reliability and correctness. 
 You can play with the software but it is the user's responsibility to use it prudently. So,  **DO NOT** rely upon this software in any way including for navigation 
