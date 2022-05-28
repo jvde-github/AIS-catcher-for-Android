@@ -42,6 +42,15 @@ For testing purposes you can download a [APK file from my Google drive](https://
 After downloading the file on your phone, just tap to install. After that you should be good to go. Feedback is very much appreciated by mailing [me](mailto:jvde.github@gmail.com) 
 or sharing in the Issue section.
 
-For a video of a field test of an early version [see YouTube](https://www.youtube.com/watch?v=Sn-3c-qCxu4). Hopefully in the Play Store by the end of this Summer.
+For a video of a field test of an early version [see YouTube](https://www.youtube.com/shorts/1ArB7GL_yV8). Hopefully in the Play Store by the end of this Summer.
 
 More to come....
+
+
+## To do
+
+- More testing....
+- Application crashes when Airspy HF+ is disconnected (seems to be a more general issue)
+- Shorter timeouts when connecting to RTL-TCP
+- Simple map
+- Graphs with statistics
