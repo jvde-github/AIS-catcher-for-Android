@@ -1,3 +1,49 @@
 <resources>
     <string name="app_name">AIS-catcher</string>
+    <string name="license_text"><![CDATA[
+AIS-catcher for Android uses the following libraries:<P><P>
+<b>* libusb-1.0.26</<b><P>
+<a href="https://github.com/libusb/libusb">https://github.com/libusb/libusb</a><P>
+libusb is a library for USB device access from Linux, macOS, Windows, OpenBSD/NetBSD, Haiku and Solaris userspace. It is written in C (Haiku backend in C++) and licensed under the GNU Lesser General Public License version 2.1 or, at your option, any later version (see COPYING).<P>
+<P>
+<b>* rtl-sdr</<b><P>
+<a href="https://github.com/osmocom/rtl-sdr">https://github.com/osmocom/rtl-sdr</a>
+Turns your Realtek RTL2832 based DVB dongle into a SDR receiver. Licensed under the GPL-2.0 license.
+Modified for Android to open devices with file descriptors: https://github.com/jvde-github/rtl-sdr<P>
+<P>
+<b>* airspyhf</<b><P>
+<a href="https://github.com/airspy/airspyhf">https://github.com/airspy/airspyhf</a><P>
+This repository contains host software (Linux/Windows) for Airspy HF+, a high performance software defined radio for the HF and VHF bands. Licensed under the BSD-3-Clause license.<P>
+Modified for Android to open devices with file descriptors: https://github.com/jvde-github/airspyhf<P>
+<P>
+<b>* airspyone_host</<b><P>
+<a href="https://github.com/airspy/airspyone_host">https://github.com/airspy/airspyone_host</a><P>
+AirSpy usemode driver and associated tools<P>
+https://github.com/jvde-github/airspyone_host<P>
+<P>
+<b>* AIS-catcher</<b><P>
+<a href="https://github.com/jvde-github/AIS-catcher">https://github.com/jvde-github/AIS-catcher</a><P>
+AIS receiver for RTL SDR dongles, Airspy R2, Airspy Mini, Airspy HF+, HackRF and SDRplay. Licensed under the MIT license.<P>
+]]></string>
+
+    <string name="disclaimer_text"><![CDATA[
+<i>AIS-catcher for Android</i> is created for research and educational purposes under the GPL license.<P>
+This is free software that comes with <b>ABSOLUTELY NO WARRANTY</b>. <p>
+It is a hobby project and not tested and designed for reliability and correctness. You can play with the software but it is the user responsibility to use it prudently.
+So, <b>DO NOT rely upon this software</b> in any way including for navigation and/or safety of life or property purposes.<p>
+There are variations in the legislation concerning radio reception in the different administrations around the world.
+It is your responsibility to determine whether or not your local administration permits the reception and handling of AIS messages from ships and you can have this App on your phone.
+It is specifically forbidden to use this software for any illegal purpose whatsoever. It is intended <b>for use only</b> in those regions where such use <b>is permitted</b>.<p>
+ For this reason the maximum receiver time has been limited to two minutes per run.<p>
+]]></string>
+
+    <string name="short_disclaimer_text"><![CDATA[
+    AIS-catcher for Android<p>
+    Copyright (C) 2022<p><i>jvde.github@gmail.com</i><p>
+    This program comes with <b>ABSOLUTELY NO WARRANTY</b>;</p>
+    This is free software, and you are welcome to redistribute it
+    under certain conditions. for details see <a href="https://github.com/jvde-github/AIS-catcher-for-Android">https://github.com/jvde-github/AIS-catcher-for-Android</a>.<p>
+    <b>DO NOT rely upon this software</b> in any way including for navigation and/or safety of life or property purposes. For this reason the maximum receiver time
+    has been limited to two minutes per run.<p>
+]]></string>
 </resources>

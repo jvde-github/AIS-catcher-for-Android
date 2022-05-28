@@ -29,11 +29,14 @@ import com.jvdegithub.aiscatcher.ui.main.ConsoleLogFragment;
 import com.jvdegithub.aiscatcher.ui.main.NMEALogFragment;
 import com.jvdegithub.aiscatcher.ui.main.StatisticsFragment;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.content.ContextCompat;
 import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.text.Html;
+import android.text.Spanned;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -77,7 +80,9 @@ public class MainActivity<binding> extends AppCompatActivity implements AisCatch
         nmea_fragment = (NMEALogFragment) sectionsPagerAdapter.instantiateItem(viewPager, 2);
         sectionsPagerAdapter.finishUpdate(viewPager);
 
-        Settings.setDefaultOnFirst(this);
+        if(Settings.setDefaultOnFirst(this)) {
+            onOpening();
+        }
 
         bottomNavigationView = binding.bottombar;
         bottomNavigationView.setOnItemSelectedListener(item -> {
@@ -158,50 +163,36 @@ public class MainActivity<binding> extends AppCompatActivity implements AisCatch
         return super.onOptionsItemSelected(item);
 
     }
-
-    static final String LICENSES = "AIS-catcher for Android - GPL license\n\n" +
-            "libusb 1.0.26 - LGPL-2.1 license\n" +
-            "https://github.com/libusb/libusb\n\n" +
-            "rtl-sdr -  GPL-2.0 license\n" +
-            "https://github.com/osmocom/rtl-sdr\n" +
-            "As modified: https://github.com/jvde-github/rtl-sdr\n\n" +
-            "AIS-catcher v0.25 - MIT license\n" +
-            "https://github.com/jvde-github/AIS-catcher\n";
-
     private void onCredit() {
 
-        int width = (int) (getResources().getDisplayMetrics().widthPixels * 0.90);
-        int height = (int) (getResources().getDisplayMetrics().heightPixels * 0.90);
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Credits");
-        builder.setMessage(LICENSES);
-        builder.setCancelable(true);
-        AlertDialog alertDialog = builder.create();
-        alertDialog.show();
-        alertDialog.getWindow().setLayout(width, height); //Controlling width and height.
+        Spanned html = Html.fromHtml((String)getText(R.string.license_text));
+        showDialog(html,"Licenses");
     }
-
-    static final String ABOUT = "Purpose\n" +
-            "The aim of AIS-catcher is to provide a platform to facilitate continuous improvement of receiver models. Any suggestions, observation or sharing of recordings for setups where the current models are struggling is highly appreciated! The algorithm behind the default receiver model was created by investigating signals and trying different ways to get a coherent model running whilst keeping it simple at the same time. If I have some more free time I will try to expand the documentation and implement some improvement ideas.\n" +
-            "\n" +
-            "Disclaimer\n" +
-            "AIS-catcher is created for research and educational purposes under the MIT license. It is a hobby project and not tested and designed for reliability and correctness. You can play with the software but it is the user's responsibility to use it prudently. So, DO NOT rely upon this software in any way including for navigation and/or safety of life or property purposes. There are variations in the legislation concerning radio reception in the different administrations around the world. It is your responsibility to determine whether or not your local administration permits the reception and handling of AIS messages from ships. It is specifically forbidden to use this software for any illegal purpose whatsoever. This is hobby and research software for use only in those regions where such use is permitted.";
 
     private void onAbout() {
+        Spanned html = Html.fromHtml((String)getText(R.string.disclaimer_text));
+        showDialog(html,"About");
+    }
 
+    private void onOpening() {
+        Spanned html = Html.fromHtml((String)getText(R.string.disclaimer_text));
+        showDialog(html,"Welcome!");
+    }
+
+    private void showDialog(@Nullable CharSequence msg, String title)
+    {
         int width = (int) (getResources().getDisplayMetrics().widthPixels * 0.90);
         int height = (int) (getResources().getDisplayMetrics().heightPixels * 0.90);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("About");
-        builder.setMessage(ABOUT);
+        builder.setTitle(title);
+        builder.setMessage(msg);
         builder.setCancelable(true);
+        builder.setPositiveButton("OK",null);
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
         alertDialog.getWindow().setLayout(width, height); //Controlling width and height.
     }
-
     private void onClear() {
         AisCatcherJava.Reset();
     }

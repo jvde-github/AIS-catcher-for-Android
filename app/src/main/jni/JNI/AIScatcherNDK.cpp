@@ -25,6 +25,8 @@
 
 #include <AIS-catcher.h>
 
+const int TIME_CONSTRAINT = 120;
+
 #define LOG_TAG "AIS-catcher JNI"
 
 #define LOGE(...) \
@@ -298,8 +300,9 @@ extern "C"
 JNIEXPORT jint JNICALL
 Java_com_jvdegithub_aiscatcher_AisCatcherJava_Run(JNIEnv *env, jclass) {
 
-    const int TIME_MAX = 120;
+
     const int TIME_INTERVAL = 1000;
+    const int TIME_MAX = (TIME_CONSTRAINT * 1000) / TIME_INTERVAL;
 
     try {
         callbackConsole(env, "Starting device\n");
