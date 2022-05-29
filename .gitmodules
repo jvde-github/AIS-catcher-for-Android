@@ -10,3 +10,6 @@
 [submodule "app/src/main/jni/airspyone_host"]
 	path = app/src/main/jni/airspyone_host
 	url = https://github.com/jvde-github/airspyone_host.git
+[submodule "app/src/main/jni/airspyhf"]
+	path = app/src/main/jni/airspyhf
+	url = https://github.com/jvde-github/airspyhf.git
