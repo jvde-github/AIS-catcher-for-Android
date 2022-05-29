@@ -50,7 +50,7 @@ More to come....
 ## To do
 
 - More testing....
-- Application crashes when Airspy HF+ is disconnected (seems to be a more general issue)
+- <del>Application crashes when Airspy HF+ is disconnected (seems to be a more general issue)</del>
 - Shorter timeouts when connecting to RTL-TCP
 - Simple map
 - Graphs with statistics
