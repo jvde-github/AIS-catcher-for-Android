@@ -18,21 +18,20 @@
 
 package com.jvdegithub.aiscatcher;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.text.InputFilter;
+import android.text.InputType;
+import android.text.method.DigitsKeyListener;
+import android.util.Log;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.EditTextPreference;
 import androidx.preference.ListPreference;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.PreferenceManager;
 import androidx.preference.SeekBarPreference;
-
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.os.Bundle;
-
-import android.text.InputFilter;
-import android.text.InputType;
-import android.text.method.DigitsKeyListener;
-import android.util.Log;
 
 import com.jvdegithub.aiscatcher.tools.InputFilterIP;
 import com.jvdegithub.aiscatcher.tools.InputFilterMinMax;

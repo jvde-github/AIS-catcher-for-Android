@@ -20,32 +20,25 @@ package com.jvdegithub.aiscatcher;
 
 import android.content.Intent;
 import android.os.Bundle;
-
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.tabs.TabLayout;
-
-import com.jvdegithub.aiscatcher.databinding.ActivityMainBinding;
-import com.jvdegithub.aiscatcher.ui.main.ConsoleLogFragment;
-import com.jvdegithub.aiscatcher.ui.main.NMEALogFragment;
-import com.jvdegithub.aiscatcher.ui.main.StatisticsFragment;
-
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
-import androidx.core.content.ContextCompat;
-import androidx.viewpager.widget.ViewPager;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.text.Html;
 import android.text.Spanned;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import com.jvdegithub.aiscatcher.ui.main.SectionsPagerAdapter;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+import androidx.viewpager.widget.ViewPager;
 
-import java.text.ParsePosition;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.tabs.TabLayout;
+import com.jvdegithub.aiscatcher.databinding.ActivityMainBinding;
+import com.jvdegithub.aiscatcher.ui.main.ConsoleLogFragment;
+import com.jvdegithub.aiscatcher.ui.main.NMEALogFragment;
+import com.jvdegithub.aiscatcher.ui.main.SectionsPagerAdapter;
+import com.jvdegithub.aiscatcher.ui.main.StatisticsFragment;
 
 public class MainActivity<binding> extends AppCompatActivity implements AisCatcherJava.AisCallback, DeviceManager.DeviceCallback {
 
