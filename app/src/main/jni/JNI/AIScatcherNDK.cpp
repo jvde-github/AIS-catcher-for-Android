@@ -322,8 +322,7 @@ Java_com_jvdegithub_aiscatcher_AisCatcherJava_Run(JNIEnv *env, jclass) {
                 nmea_msg = "";
             }
 
-            if (++time_idx == TIME_MAX)
-            {
+            if (++time_idx == TIME_MAX) {
                 stop = true;
                 callbackError(env, "Max decoding time of 120 seconds reached");
             }
@@ -351,10 +350,12 @@ Java_com_jvdegithub_aiscatcher_AisCatcherJava_Close(JNIEnv *env, jclass) {
     try {
         if (device) device->Close();
         device = nullptr;
-        UDP_connections.clear();
+
+        for (auto u: UDP_connections) u.closeConnection();
+        UDP_connections.resize(0);
+
         delete model;
         model = nullptr;
-        UDP_connections.resize(0);
     }
     catch (const char *msg) {
         callbackError(env, msg);
@@ -411,7 +412,6 @@ Java_com_jvdegithub_aiscatcher_AisCatcherJava_createReceiver(JNIEnv *env, jclass
         return -1;
     }
 
-
     callbackConsole(env, "Creating Model\n");
     try {
 
@@ -451,7 +451,6 @@ Java_com_jvdegithub_aiscatcher_AisCatcherJava_createUDP(JNIEnv *env, jclass claz
         UDP_connections[UDP_connections.size() - 1].openConnection(host, port);
 
         callbackConsoleFormat(env, "UDP: %s %s\n", host.c_str(), port.c_str());
-
 
     } catch (const char *msg) {
         callbackError(env, msg);
