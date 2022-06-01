@@ -127,12 +127,6 @@ static void callbackNMEA(JNIEnv *env, const std::string &str) {
     env->CallStaticVoidMethod(javaClass, method, jstr);
 }
 
-static void callbackClose(JNIEnv *env) {
-
-    jmethodID method = env->GetStaticMethodID(javaClass, "onClose", "()V");
-    env->CallStaticVoidMethod(javaClass, method);
-}
-
 static void callbackConsole(JNIEnv *env, const std::string &str) {
 
     jstring jstr = env->NewStringUTF(str.c_str());
@@ -165,7 +159,6 @@ static void callbackUpdate(JNIEnv *env) {
 static void callbackError(JNIEnv *env, const std::string &str) {
 
     callbackConsole(env, str);
-    callbackClose(env);
 
     jstring jstr = env->NewStringUTF(str.c_str());
     jmethodID method = env->GetStaticMethodID(javaClass, "onError", "(Ljava/lang/String;)V");
@@ -335,10 +328,6 @@ Java_com_jvdegithub_aiscatcher_AisCatcherJava_Run(JNIEnv *env, jclass) {
         callbackError(env, msg);
         return -1;
     }
-    catch (const char *msg) {
-        callbackError(env, msg);
-        return -1;
-    }
     catch (const std::exception& e)
     {
         callbackError(env, e.what());
@@ -371,7 +360,6 @@ Java_com_jvdegithub_aiscatcher_AisCatcherJava_Close(JNIEnv *env, jclass) {
         callbackError(env, msg);
         return -1;
     }
-    callbackClose(env);
     return 0;
 }
 

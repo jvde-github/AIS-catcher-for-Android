@@ -29,7 +29,18 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.IBinder;
 
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+
 public class AisService extends Service {
+
+    public interface ServiceCallback {
+        void onClose();
+    }
+
+    private void sendBroadcast (){
+        Intent intent = new Intent ("message"); //put the same message as in the filter you used in the activity when registering the receiver
+        LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
+    }
 
     public static boolean isRunning(Context context) {
         ActivityManager manager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
@@ -76,10 +87,12 @@ public class AisService extends Service {
         int source = (int) intent.getExtras().get("source");
         int fd = (int) intent.getExtras().get("USB");
 
-        String msg = "Reciever running - " + DeviceManager.getDeviceType() + " @ " + AisCatcherJava.getSampleRate() / 1000 + "K";
-        startForeground(1001, buildNotification(msg));
+        int r = AisCatcherJava.createReceiver(source, fd);
 
-        if (AisCatcherJava.createReceiver(source, fd) == 0) {
+        if(r == 0)
+        {
+            String msg = "Receiver running - " + DeviceManager.getDeviceType() + " @ " + AisCatcherJava.getSampleRate() / 1000 + "K";
+            startForeground(1001, buildNotification(msg));
 
             new Thread(
                     () -> {
@@ -89,12 +102,17 @@ public class AisService extends Service {
 
                         stopForeground(true);
                         stopSelf();
+                        sendBroadcast();
                     }).start();
         }
         else
         {
+            String msg = "Receiver creation failed";
+            startForeground(1001, buildNotification(msg));
+
             stopForeground(true);
             stopSelf();
+            sendBroadcast();
         }
 
         return super.onStartCommand(intent, flags, startId);

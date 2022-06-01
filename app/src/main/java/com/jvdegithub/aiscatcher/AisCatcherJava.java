@@ -30,8 +30,6 @@ public class AisCatcherJava {
 
         void onError(final String line);
 
-        void onClose();
-
         void onUpdate();
     }
 
@@ -162,12 +160,6 @@ public class AisCatcherJava {
 
         if (callback != null)
             callback.onError(str);
-    }
-
-    public static void onClose() {
-
-        if (callback != null)
-            callback.onClose();
     }
 
     public static void onUpdate() {

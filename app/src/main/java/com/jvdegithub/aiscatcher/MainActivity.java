@@ -18,7 +18,10 @@
 
 package com.jvdegithub.aiscatcher;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.Spanned;
@@ -30,6 +33,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -42,15 +46,15 @@ import com.jvdegithub.aiscatcher.ui.main.StatisticsFragment;
 
 public class MainActivity<binding> extends AppCompatActivity implements AisCatcherJava.AisCallback, DeviceManager.DeviceCallback {
 
-    private ConsoleLogFragment log_fragment;
-    private NMEALogFragment nmea_fragment;
-    private StatisticsFragment stat_fragment;
-    private BottomNavigationView bottomNavigationView;
-
     static {
         System.loadLibrary("AIScatcherNDK");
         AisCatcherJava.Init();
     }
+
+    private ConsoleLogFragment log_fragment;
+    private NMEALogFragment nmea_fragment;
+    private StatisticsFragment stat_fragment;
+    private BottomNavigationView bottomNavigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,9 +101,9 @@ public class MainActivity<binding> extends AppCompatActivity implements AisCatch
         updateUIonSource();
 
         if (AisService.isRunning(getApplicationContext())) {
-            UpdateUIonStart();
+            updateUIwithStart();
         } else {
-            UpdateUIonStop();
+            updateUIwithStop();
         }
     }
 
@@ -109,6 +113,7 @@ public class MainActivity<binding> extends AppCompatActivity implements AisCatch
 
         AisCatcherJava.registerCallback(this);
         DeviceManager.register(this);
+        LocalBroadcastManager.getInstance(this).registerReceiver(bReceiver, new IntentFilter("message"));
     }
 
     @Override
@@ -117,6 +122,7 @@ public class MainActivity<binding> extends AppCompatActivity implements AisCatch
 
         AisCatcherJava.unregisterCallback();
         DeviceManager.unregister();
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(bReceiver);
     }
 
     private void onPlayStop() {
@@ -128,7 +134,7 @@ public class MainActivity<binding> extends AppCompatActivity implements AisCatch
                     serviceIntent.putExtra("source", DeviceManager.getDeviceCode());
                     serviceIntent.putExtra("USB", fd);
                     ContextCompat.startForegroundService(MainActivity.this, serviceIntent);
-                    UpdateUIonStart();
+                    updateUIwithStart();
                 }
                 else
                     Toast.makeText(MainActivity.this, "Cannot open USB device.", Toast.LENGTH_LONG).show();
@@ -139,6 +145,14 @@ public class MainActivity<binding> extends AppCompatActivity implements AisCatch
             AisCatcherJava.forceStop();
         }
     }
+
+    private BroadcastReceiver bReceiver = new BroadcastReceiver(){
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            onAisServiceClosing();
+        }
+    };
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -204,7 +218,7 @@ public class MainActivity<binding> extends AppCompatActivity implements AisCatch
         builder.show();
     }
 
-    private void UpdateUIonStart() {
+    private void updateUIwithStart() {
         MenuItem item = bottomNavigationView.getMenu().findItem(R.id.action_play);
         item.setIcon(R.drawable.ic_baseline_stop_circle_40);
         item.setTitle("Stop");
@@ -212,7 +226,7 @@ public class MainActivity<binding> extends AppCompatActivity implements AisCatch
         bottomNavigationView.getMenu().findItem(R.id.action_source).setEnabled(false);
     }
 
-    private void UpdateUIonStop() {
+    private void updateUIwithStop() {
         MenuItem item = bottomNavigationView.getMenu().findItem(R.id.action_play);
         item.setIcon(R.drawable.ic_baseline_play_circle_filled_40);
         item.setTitle("Start");
@@ -249,10 +263,9 @@ public class MainActivity<binding> extends AppCompatActivity implements AisCatch
         runOnUiThread(() -> Toast.makeText(MainActivity.this, line, Toast.LENGTH_LONG).show());
     }
 
-    @Override
-    public void onClose() {
+    public void onAisServiceClosing() {
         DeviceManager.closeDevice();
-        runOnUiThread(this::UpdateUIonStop);
+        runOnUiThread(this::updateUIwithStop);
     }
 
     @Override
