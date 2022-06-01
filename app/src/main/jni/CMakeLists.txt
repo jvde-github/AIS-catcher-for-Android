@@ -8,6 +8,7 @@ cmake_minimum_required(VERSION 3.10.2)
 project("AIScatcherNDK")
 
 set(OPTIMIZATION_FLAGS "-Ofast")
+
 set(CMAKE_CXX_FLAGS "${OPTIMIZATION_FLAGS}")
 set(CMAKE_C_FLAGS "${OPTIMIZATION_FLAGS}")
 
