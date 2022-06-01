@@ -4,7 +4,7 @@ For this you need a USB radio receiver, like a RTL-SDR dongle, and a so-called O
 The app directly accesses the RTL-SDR via a USB OTG connection and can send received messages via UDP to plotting Apps like [Boat Beacon](https://pocketmariner.com/mobile-apps/boatbeacon/).
 
 If you want to download AIS-catcher from the Google Play store and have a Google account, please get in contact with  [me](mailto:jvde.github@gmail.com) and I will provide you with a link to
-a store link (or download the APK file below). 
+the store location for the internal test (or download the APK file below). 
  
 The requirements to recieve AIS signals are: a RTL-SDR dongle (or alternatively an Airspy, Airspy HF+ or RTL-TCP connection), a simple antenna, 
 an Android device with USB connector and an OTG cable to connect the dongle with your Android device. Please note that this might not work
