@@ -5,7 +5,7 @@ The app directly accesses the RTL-SDR via a USB OTG connection and can send rece
 
 If you want to download AIS-catcher from the Google Play store and have a Google account, please get in contact with  [me](mailto:jvde.github@gmail.com) and I will provide you with a link to
 a store link (or download the APK file below). 
-
+ 
 The requirements to recieve AIS signals are: a RTL-SDR dongle (or alternatively an Airspy, Airspy HF+ or RTL-TCP connection), a simple antenna, 
 an Android device with USB connector and an OTG cable to connect the dongle with your Android device. Please note that this might not work
 on all Android devices. AIS-catcher only receives and processes signals and then forwards the messages over UDP. To make it a bit more interesting you would need an App like
