@@ -10,7 +10,7 @@ android {
         applicationId "com.jvdegithub.aiscatcher"
         minSdk 22
         targetSdk 32
-        versionCode 2
+        versionCode 3
         versionName '0.11'
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
