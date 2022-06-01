@@ -76,10 +76,11 @@ public class AisService extends Service {
         int source = (int) intent.getExtras().get("source");
         int fd = (int) intent.getExtras().get("USB");
 
+        String msg = "Reciever running - " + DeviceManager.getDeviceType() + " @ " + AisCatcherJava.getSampleRate() / 1000 + "K";
+        startForeground(1001, buildNotification(msg));
+
         if (AisCatcherJava.createReceiver(source, fd) == 0) {
 
-            String msg = "Reciever running - " + DeviceManager.getDeviceType() + " @ " + AisCatcherJava.getSampleRate() / 1000 + "K";
-            startForeground(1001, buildNotification(msg));
             new Thread(
                     () -> {
 
@@ -90,6 +91,12 @@ public class AisService extends Service {
                         stopSelf();
                     }).start();
         }
+        else
+        {
+            stopForeground(true);
+            stopSelf();
+        }
+
         return super.onStartCommand(intent, flags, startId);
     }
 

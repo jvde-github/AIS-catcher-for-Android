@@ -307,6 +307,7 @@ Java_com_jvdegithub_aiscatcher_AisCatcherJava_Run(JNIEnv *env, jclass) {
     try {
         callbackConsole(env, "Starting device\n");
         device->Play();
+
         stop = false;
 
         callbackConsole(env, "Run started\n");
@@ -332,6 +333,15 @@ Java_com_jvdegithub_aiscatcher_AisCatcherJava_Run(JNIEnv *env, jclass) {
     }
     catch (const char *msg) {
         callbackError(env, msg);
+        return -1;
+    }
+    catch (const char *msg) {
+        callbackError(env, msg);
+        return -1;
+    }
+    catch (const std::exception& e)
+    {
+        callbackError(env, e.what());
         return -1;
     }
 
@@ -378,11 +388,12 @@ JNIEXPORT jint JNICALL
 Java_com_jvdegithub_aiscatcher_AisCatcherJava_createReceiver(JNIEnv *env, jclass, jint source,
                                                              jint fd) {
     callbackConsole(env, "Creating Receiver\n");
-
+/*
     if (device != nullptr) {
         callbackConsole(env, "Error: device already assigned.");
         return -1;
     }
+*/
 
     if (source == 0) {
         callbackConsole(env, "Device : RTLTCP\n");
@@ -409,6 +420,11 @@ Java_com_jvdegithub_aiscatcher_AisCatcherJava_createReceiver(JNIEnv *env, jclass
     catch (const char *msg) {
         callbackConsole(env, msg);
         device = nullptr;
+        return -1;
+    }
+    catch (const std::exception& e)
+    {
+        callbackError(env, e.what());
         return -1;
     }
 

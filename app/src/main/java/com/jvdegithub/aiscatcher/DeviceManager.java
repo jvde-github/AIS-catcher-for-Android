@@ -99,16 +99,20 @@ public class DeviceManager {
 
     public static int openDevice() {
 
-        int fd = -1;
+        int fd = 0;
 
         AisCatcherJava.onStatus("Opening Device Connection\n");
 
         if (devices.get(deviceIndex).type != DeviceType.RTLTCP) {
 
-            UsbManager mUsbManager = (UsbManager) context.getSystemService(Context.USB_SERVICE);
-            UsbDeviceConnection conn = mUsbManager.openDevice(devices.get(deviceIndex).getDevice());
-            fd = conn.getFileDescriptor();
-            AisCatcherJava.onStatus("Device SN: " + conn.getSerial() + ", FD: " + fd + "\n");
+            try {
+                UsbManager mUsbManager = (UsbManager) context.getSystemService(Context.USB_SERVICE);
+                UsbDeviceConnection conn = mUsbManager.openDevice(devices.get(deviceIndex).getDevice());
+                fd = conn.getFileDescriptor();
+                AisCatcherJava.onStatus("Device SN: " + conn.getSerial() + ", FD: " + fd + "\n");
+            } catch (Exception e){
+                return -1;
+            }
         }
         return fd;
     }

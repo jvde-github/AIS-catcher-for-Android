@@ -123,11 +123,15 @@ public class MainActivity<binding> extends AppCompatActivity implements AisCatch
         if (!AisService.isRunning(getApplicationContext())) {
             if (Settings.Apply(this)) {
                 int fd = DeviceManager.openDevice();
-                Intent serviceIntent = new Intent(MainActivity.this, AisService.class);
-                serviceIntent.putExtra("source", DeviceManager.getDeviceCode());
-                serviceIntent.putExtra("USB", fd);
-                ContextCompat.startForegroundService(MainActivity.this, serviceIntent);
-                UpdateUIonStart();
+                if(fd!=-1) {
+                    Intent serviceIntent = new Intent(MainActivity.this, AisService.class);
+                    serviceIntent.putExtra("source", DeviceManager.getDeviceCode());
+                    serviceIntent.putExtra("USB", fd);
+                    ContextCompat.startForegroundService(MainActivity.this, serviceIntent);
+                    UpdateUIonStart();
+                }
+                else
+                    Toast.makeText(MainActivity.this, "Cannot open USB device.", Toast.LENGTH_LONG).show();
             } else
                 Toast.makeText(MainActivity.this, "Invalid setting", Toast.LENGTH_LONG).show();
 
