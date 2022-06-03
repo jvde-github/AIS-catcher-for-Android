@@ -54,6 +54,9 @@ More to come....
 
 - More testing....
 - <del>Application crashes when Airspy HF+ is disconnected (seems to be a more general issue)</del> Solved.
-- Shorter timeouts when connecting to RTL-TCP
+- <del>Shorter timeouts when connecting to RTL-TCP</del>
+- WiFI-only check when using RTL-TCP our external UDP NMEA broadcast
+- Wakelocks etc...
+- Count bufer under- and over-runs
 - Simple map - radar view
 - Simple graphs with statistics
