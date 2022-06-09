@@ -60,3 +60,4 @@ More to come....
 - Count bufer under- and over-runs
 - Simple map - radar view
 - Simple graphs with statistics
+- Start button not properly reset when receiver stops due to timeout?
