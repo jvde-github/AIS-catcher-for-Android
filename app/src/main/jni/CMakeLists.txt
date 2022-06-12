@@ -56,7 +56,7 @@ include_directories(
         ./rtl-sdr/include
         ./airspyone_host/libairspy/src
         ./airspyhf/libairspyhf/src
-        ./AIS-Catcher ./AIS-Catcher/Application ./AIS-Catcher/IO ./AIS-Catcher/Library ./AIS-Catcher/DSP ./AIS-Catcher/Device)
+        ./AIS-catcher ./AIS-catcher/Application ./AIS-catcher/IO ./AIS-catcher/Library ./AIS-catcher/DSP ./AIS-catcher/Device)
 
 add_definitions(-DHASRTLSDR -DHASRTL_ANDROID -DHASAIRSPY -DHASAIRSPY_ANDROID -D HASAIRSPYHF -DHASAIRSPYHF_ANDROID)
 
