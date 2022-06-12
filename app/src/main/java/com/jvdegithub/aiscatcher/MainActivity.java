@@ -98,13 +98,23 @@ public class MainActivity<binding> extends AppCompatActivity implements AisCatch
         });
 
         DeviceManager.Init(this);
-        updateUIonSource();
 
+    }
+
+    protected void onResume() {
+
+        super.onResume();
+
+        updateUIonSource();
         if (AisService.isRunning(getApplicationContext())) {
             updateUIwithStart();
         } else {
             updateUIwithStop();
         }
+
+        log_fragment.Update("");
+        nmea_fragment.Update("");
+
     }
 
     @Override
