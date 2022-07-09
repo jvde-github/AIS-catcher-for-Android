@@ -1,12 +1,11 @@
 # AIS-catcher for Android - A multi-platform AIS receiver 
 This Android App helps to change your Android device into a dual channel AIS receiver that can be used to pick up AIS signals from nearby vessels, even if offline!
-For this you need a USB radio receiver, like a RTL-SDR dongle, and a so-called OTG cable to be able to connect USB devices to your phone.
-The app directly accesses the RTL-SDR via a USB OTG connection and can send received messages via UDP to plotting Apps like [Boat Beacon](https://pocketmariner.com/mobile-apps/boatbeacon/).
+The app directly accesses a Software Defined Radio USB device and can send received messages via UDP to plotting Apps like [Boat Beacon](https://pocketmariner.com/mobile-apps/boatbeacon/).
 
 If you want to download AIS-catcher from the Google Play store and have a Google account, please get in contact with  [me](mailto:jvde.github@gmail.com) and I will provide you with a link to
 the store location for the internal test (or download the APK file below). 
  
-The requirements to recieve AIS signals are: a RTL-SDR dongle (or alternatively an Airspy, Airspy HF+ or RTL-TCP connection), a simple antenna, 
+The requirements to recieve AIS signals are: a RTL-SDR dongle (or alternatively an Airspy, Airspy HF+ or RTL-TCP/SpyServer connection), a simple antenna, 
 an Android device with USB connector and an OTG cable to connect the dongle with your Android device. Please note that this might not work
 on all Android devices. AIS-catcher only receives and processes signals and then forwards the messages over UDP. To make it a bit more interesting you would need an App like
 [Boat Beacon](https://pocketmariner.com/mobile-apps/boatbeacon/) or [OpenCPN](https://play.google.com/store/apps/details?id=org.opencpn.opencpn_free) to map the received vessel information.
