@@ -424,7 +424,7 @@ Java_com_jvdegithub_aiscatcher_AisCatcherJava_createReceiver(JNIEnv *env, jclass
 
         delete model;
         model = new AIS::ModelDefault();
-        model->buildModel(device->getSampleRate(), false, device);
+        model->buildModel('A','B',device->getSampleRate(), false, device);
 
         callbackConsole(env, "Creating output channels\n");
         for (auto &UDP_connection: UDP_connections) {
