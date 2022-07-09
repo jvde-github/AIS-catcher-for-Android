@@ -105,6 +105,14 @@
             android:singleLine="true"
             android:title="Server Port"/>
 
+        <SeekBarPreference
+            android:key="sGAIN"
+            android:defaultValue="14"
+            android:max="25"
+            android:summary="Level"
+            android:dialogTitle="Gain"
+            android:title="Gain level"/>
+
     </PreferenceCategory>
 
     <PreferenceCategory

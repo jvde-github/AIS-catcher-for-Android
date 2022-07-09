@@ -61,7 +61,8 @@ public class Settings extends AppCompatActivity {
 
         preferences.edit().putString("sRATE", "96K").commit();
         preferences.edit().putString("sHOST", "localhost").commit();
-        preferences.edit().putString("tPORT", "5555").commit();
+        preferences.edit().putString("sPORT", "5555").commit();
+        preferences.edit().putInt("sGAIN", 14).commit();
 
         preferences.edit().putBoolean("u1SWITCH", true).commit();
         preferences.edit().putString("u1HOST", "127.0.0.1").commit();
@@ -93,6 +94,8 @@ public class Settings extends AppCompatActivity {
             // Load the preferences from an XML resource
             setPreferencesFromResource(R.xml.preferences, rootKey);
 
+            ((EditTextPreference) getPreferenceManager().findPreference("sHOST")).setOnBindEditTextListener(validateIP);
+            ((EditTextPreference) getPreferenceManager().findPreference("sPORT")).setOnBindEditTextListener(validatePort);
             ((EditTextPreference) getPreferenceManager().findPreference("tPORT")).setOnBindEditTextListener(validatePort);
             ((EditTextPreference) getPreferenceManager().findPreference("rFREQOFFSET")).setOnBindEditTextListener(validatePPM);
             ((EditTextPreference) getPreferenceManager().findPreference("tHOST")).setOnBindEditTextListener(validateIP);
@@ -101,6 +104,7 @@ public class Settings extends AppCompatActivity {
             ((EditTextPreference) getPreferenceManager().findPreference("u1PORT")).setOnBindEditTextListener(validatePort);
             ((EditTextPreference) getPreferenceManager().findPreference("u2PORT")).setOnBindEditTextListener(validatePort);
             ((SeekBarPreference) getPreferenceManager().findPreference("mLINEARITY")).setUpdatesContinuously(true);
+            ((SeekBarPreference) getPreferenceManager().findPreference("sGAIN")).setUpdatesContinuously(true);
 
             setSummaries();
         }
@@ -108,7 +112,7 @@ public class Settings extends AppCompatActivity {
         private void setSummaries() {
             setSummaryText(new String[]{"tPORT","tHOST","sPORT","sHOST","u1HOST","u1PORT","u2HOST","u2PORT", "rFREQOFFSET"});
             setSummaryList(new String[]{"rTUNER","rRATE","sRATE","tRATE","tTUNER","mRATE","hRATE"});
-            setSummarySeekbar(new String[]{"mLINEARITY"});
+            setSummarySeekbar(new String[]{"mLINEARITY", "sGAIN"});
         }
 
         private void setSummaryText(String[] settings) {
@@ -182,7 +186,7 @@ public class Settings extends AppCompatActivity {
             return false;
         if (!SetDeviceBoolean(new String[]{"rRTLAGC", "rBIASTEE", "mBIASTEE"}, "ON", "OFF", context))
             return false;
-        if (!SetDeviceInteger(new String[]{"mLINEARITY"}, context)) return false;
+        if (!SetDeviceInteger(new String[]{"mLINEARITY", "sGAIN"}, context)) return false;
 
         if (!SetUDPoutput("u1", context)) return false;
         if (!SetUDPoutput("u2", context)) return false;
