@@ -33,7 +33,7 @@ public class DeviceManager {
 
     static Context context = null;
 
-    enum DeviceType {NONE, RTLTCP, RTLSDR, AIRSPY, AIRSPYHF, HACKRF}
+    enum DeviceType {NONE, RTLTCP, RTLSDR, AIRSPY, AIRSPYHF, HACKRF, SPYSERVER }
 
     public interface DeviceCallback {
 
@@ -103,7 +103,7 @@ public class DeviceManager {
 
         AisCatcherJava.onStatus("Opening Device Connection\n");
 
-        if (devices.get(deviceIndex).type != DeviceType.RTLTCP) {
+        if (devices.get(deviceIndex).type != DeviceType.RTLTCP && devices.get(deviceIndex).type != DeviceType.SPYSERVER) {
 
             try {
                 UsbManager mUsbManager = (UsbManager) context.getSystemService(Context.USB_SERVICE);
@@ -131,7 +131,7 @@ public class DeviceManager {
                 return 2;
             case AIRSPYHF:
                 return 3;
-            case HACKRF:
+            case SPYSERVER:
                 return 4;
         }
         return 0;
@@ -141,7 +141,7 @@ public class DeviceManager {
 
         AisCatcherJava.onStatus("Closing USB connection\n");
 
-        if (devices.get(deviceIndex).getType() != DeviceType.RTLTCP && usbDeviceConnection != null) {
+        if (devices.get(deviceIndex).getType() != DeviceType.RTLTCP && devices.get(deviceIndex).getType() != DeviceType.SPYSERVER && usbDeviceConnection != null) {
             usbDeviceConnection.close();
         }
         usbDeviceConnection = null;
@@ -155,6 +155,8 @@ public class DeviceManager {
     private static boolean refreshList(boolean add) {
 
         devices.clear();
+
+        devices.add(new Device(null, "SpyServer", DeviceType.SPYSERVER, 0));
         devices.add(new Device(null, "RTL-TCP", DeviceType.RTLTCP, 0));
 
         UsbManager mUsbManager = (UsbManager) context.getSystemService(Context.USB_SERVICE);
@@ -178,7 +180,7 @@ public class DeviceManager {
         int select = nDev - 1;
         boolean changed = true;
 
-        if (!(add && deviceType == DeviceType.RTLTCP))
+        if (!(add && deviceType == DeviceType.RTLTCP && deviceType == DeviceType.SPYSERVER))
             for (int i = 0; i < devices.size(); i++)
                 if (devices.get(i).getType() == deviceType && devices.get(i).getUID() == deviceUID) {
                     select = i;
@@ -212,6 +214,8 @@ public class DeviceManager {
                 return "AIRSPYHF";
             case HACKRF:
                 return "HACKRF";
+            case SPYSERVER:
+                return "SPYSERVER";
         }
         return "NONE";
     }
@@ -226,7 +230,7 @@ public class DeviceManager {
         String SN;
 
         for (Device dev : devices) {
-            if (dev.type != DeviceType.RTLTCP) {
+            if (dev.type != DeviceType.RTLTCP && dev.type != DeviceType.SPYSERVER) {
                 UsbDeviceConnection usbDeviceConnection = mUsbManager.openDevice(dev.device);
                 SN = usbDeviceConnection.getSerial();
                 usbDeviceConnection.close();

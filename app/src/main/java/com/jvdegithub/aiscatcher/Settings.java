@@ -56,8 +56,12 @@ public class Settings extends AppCompatActivity {
 
         preferences.edit().putString("tRATE", "240K").commit();
         preferences.edit().putString("tTUNER", "Auto").commit();
-        preferences.edit().putString("tHOST", "192.168.1.233").commit();
+        preferences.edit().putString("tHOST", "localhost").commit();
         preferences.edit().putString("tPORT", "12345").commit();
+
+        preferences.edit().putString("sRATE", "96K").commit();
+        preferences.edit().putString("sHOST", "localhost").commit();
+        preferences.edit().putString("tPORT", "5555").commit();
 
         preferences.edit().putBoolean("u1SWITCH", true).commit();
         preferences.edit().putString("u1HOST", "127.0.0.1").commit();
@@ -102,8 +106,8 @@ public class Settings extends AppCompatActivity {
         }
 
         private void setSummaries() {
-            setSummaryText(new String[]{"tPORT","tHOST","u1HOST","u1PORT","u2HOST","u2PORT", "rFREQOFFSET"});
-            setSummaryList(new String[]{"rTUNER","rRATE","tRATE","tTUNER","mRATE","hRATE"});
+            setSummaryText(new String[]{"tPORT","tHOST","sPORT","sHOST","u1HOST","u1PORT","u2HOST","u2PORT", "rFREQOFFSET"});
+            setSummaryList(new String[]{"rTUNER","rRATE","sRATE","tRATE","tTUNER","mRATE","hRATE"});
             setSummarySeekbar(new String[]{"mLINEARITY"});
         }
 
@@ -174,7 +178,7 @@ public class Settings extends AppCompatActivity {
 
     static public boolean Apply(Context context) {
 
-        if (!SetDevice(new String[]{"rRATE", "rTUNER", "rFREQOFFSET", "tRATE", "tTUNER", "tHOST", "tPORT", "mRATE", "hRATE"}, context))
+        if (!SetDevice(new String[]{"rRATE", "rTUNER", "rFREQOFFSET", "sRATE", "sPORT", "sHOST", "tRATE", "tTUNER", "tHOST", "tPORT", "mRATE", "hRATE"}, context))
             return false;
         if (!SetDeviceBoolean(new String[]{"rRTLAGC", "rBIASTEE", "mBIASTEE"}, "ON", "OFF", context))
             return false;

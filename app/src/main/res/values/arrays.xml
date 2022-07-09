@@ -8,6 +8,10 @@
         <item>240K</item><item>288K</item><item>1536K</item><item>2304K</item>
     </string-array>
 
+    <string-array name="spyserver_rate_array">
+        <item>96K</item><item>192K</item><item>768K</item><item>1536K</item>
+    </string-array>
+
     <string-array name="rtlsdr_rate_array">
         <item>240K</item><item>288K</item><item>1536K</item><item>2304K</item>
     </string-array>

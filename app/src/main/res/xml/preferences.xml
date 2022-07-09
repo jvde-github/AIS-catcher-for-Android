@@ -3,42 +3,6 @@
     android:key="first_preferencescreen">
 
     <PreferenceCategory
-        android:key="rtltcp_category"
-        android:title="RTL-TCP">
-
-        <ListPreference
-            android:defaultValue="240K"
-            android:dialogTitle="Sample rate"
-            android:entries="@array/rtltcp_rate_array"
-            android:entryValues="@array/rtltcp_rate_array"
-            android:key="tRATE"
-            android:title="Sample rate" />
-
-        <ListPreference
-            android:defaultValue="Auto"
-            android:dialogTitle="Tuner Gain"
-            android:entries="@array/tuner_array"
-            android:entryValues="@array/tuner_array"
-            android:key="tTUNER"
-            android:title="Tuner" />
-
-        <EditTextPreference
-            android:key="tHOST"
-            android:defaultValue="localhost"
-            android:summary="IP address of RTL-TCP server"
-            android:singleLine="true"
-            android:title="Server IP"/>
-
-        <EditTextPreference
-            android:key="tPORT"
-            android:defaultValue="12345"
-            android:summary="Port of RTL-TCP server"
-            android:singleLine="true"
-            android:title="Server Port"/>
-
-    </PreferenceCategory>
-
-    <PreferenceCategory
         android:key="rtlsdr_category"
         android:title="RTL-SDR">
 
@@ -76,6 +40,70 @@
             android:summary="Frequency Correction"
             android:title="Frequency Correction (PPM)"/>
 
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="rtltcp_category"
+        android:title="RTL-TCP">
+
+        <ListPreference
+            android:defaultValue="240K"
+            android:dialogTitle="Sample rate"
+            android:entries="@array/rtltcp_rate_array"
+            android:entryValues="@array/rtltcp_rate_array"
+            android:key="tRATE"
+            android:title="Sample rate" />
+
+        <ListPreference
+            android:defaultValue="Auto"
+            android:dialogTitle="Tuner Gain"
+            android:entries="@array/tuner_array"
+            android:entryValues="@array/tuner_array"
+            android:key="tTUNER"
+            android:title="Tuner" />
+
+        <EditTextPreference
+            android:key="tHOST"
+            android:defaultValue="localhost"
+            android:summary="IP address of RTL-TCP server"
+            android:singleLine="true"
+            android:title="Server IP"/>
+
+        <EditTextPreference
+            android:key="tPORT"
+            android:defaultValue="12345"
+            android:summary="Port of RTL-TCP server"
+            android:singleLine="true"
+            android:title="Server Port"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="spyserver_category"
+        android:title="SpyServer">
+
+        <ListPreference
+            android:defaultValue="96K"
+            android:dialogTitle="Sample rate"
+            android:entries="@array/spyserver_rate_array"
+            android:entryValues="@array/spyserver_rate_array"
+            android:key="sRATE"
+            android:title="Sample rate" />
+
+        <EditTextPreference
+            android:key="sHOST"
+            android:defaultValue="localhost"
+            android:summary="IP address of SpyServer"
+            android:singleLine="true"
+            android:title="Server IP"/>
+
+        <EditTextPreference
+            android:key="sPORT"
+            android:defaultValue="5555"
+            android:summary="Port of SpyServer"
+            android:singleLine="true"
+            android:title="Server Port"/>
 
     </PreferenceCategory>
 
