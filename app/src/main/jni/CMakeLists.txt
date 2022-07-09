@@ -47,7 +47,7 @@ add_library( # Sets the name of the library.
         ./AIS-catcher/Device/AIRSPYHF.cpp ./AIS-catcher/Device/FileWAV.cpp ./AIS-catcher/Device/RTLSDR.cpp ./AIS-catcher/Device/SDRPLAY.cpp
         ./AIS-catcher/DSP/Demod.cpp ./AIS-catcher/DSP/Model.cpp ./AIS-catcher/Library/AIS.cpp ./AIS-catcher/Device/FileRAW.cpp
         ./AIS-catcher/Device/HACKRF.cpp ./AIS-catcher/Device/RTLTCP.cpp ./AIS-catcher/Device/ZMQ.cpp ./AIS-catcher/Library/Utilities.cpp
-        ./AIS-catcher/Device/AIRSPY.cpp ./AIS-catcher/DSP/DSP.cpp ./AIS-catcher/IO/IO.cpp ./AIS-catcher/Library/TCP.cpp
+        ./AIS-catcher/Device/AIRSPY.cpp ./AIS-catcher/Device/SpyServer.cpp ./AIS-catcher/DSP/DSP.cpp ./AIS-catcher/IO/IO.cpp ./AIS-catcher/Library/TCP.cpp
 
         JNI/AIScatcherNDK.cpp)
 

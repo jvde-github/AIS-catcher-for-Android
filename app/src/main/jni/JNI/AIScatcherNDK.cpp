@@ -44,6 +44,7 @@ const int TIME_CONSTRAINT = 120;
 #include "Device/AIRSPYHF.h"
 #include "Device/HACKRF.h"
 #include "Device/RTLTCP.h"
+#include "Device/SpyServer.h"
 #include "Device/AIRSPY.h"
 
 static int javaVersion;
@@ -213,6 +214,7 @@ public:
 struct Drivers {
     Device::RTLSDR RTLSDR;
     Device::RTLTCP RTLTCP;
+    Device::SpyServer SPYSERVER;
     Device::AIRSPY AIRSPY;
     Device::AIRSPYHF AIRSPYHF;
 } drivers;
@@ -277,6 +279,10 @@ Java_com_jvdegithub_aiscatcher_AisCatcherJava_applySetting(JNIEnv *env, jclass, 
             case 'h':
                 callbackConsoleFormat(env, "Set AIRSPYHF: [%s] %s\n", s.c_str(), p.c_str());
                 drivers.AIRSPYHF.Set(s, p);
+                break;
+            case 's':
+                callbackConsoleFormat(env, "Set SpyServer: [%s] %s\n", s.c_str(), p.c_str());
+                drivers.SPYSERVER.Set(s, p);
                 break;
 
         }
@@ -395,6 +401,9 @@ Java_com_jvdegithub_aiscatcher_AisCatcherJava_createReceiver(JNIEnv *env, jclass
     } else if (source == 3) {
         callbackConsole(env, "Device : AIRSPYHF\n");
         device = &drivers.AIRSPYHF;
+    } else if (source == 4) {
+        callbackConsole(env, "Device : SPYSERVER\n");
+        device = &drivers.SPYSERVER;
     } else {
         callbackConsole(env, "Support for this device not included.");
         return -1;
