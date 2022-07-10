@@ -32,9 +32,9 @@ The software is intended for use **only in those regions** where such use **is p
 
 The maximum time for the receiver is set to two minutes for this reason.
 
-## Latest news: Android version available [here](https://drive.google.com/file/d/1HDm39szX_kF-Bg6KKruabFoWmzveji0w/view?usp=sharing)
+## Latest news: Android version available as [APK](https://drive.google.com/file/d/1HDm39szX_kF-Bg6KKruabFoWmzveji0w/view?usp=sharing)
 
-Feedback is very much appreciated by mailing [me](mailto:jvde.github@gmail.com) or sharing in the Issue section.
+Feedback is very much appreciated by mailing [me](mailto:jvde.github@gmail.com) or sharing in the Issue section. If you have any prior version, I suggest to remove this first.
 
 For a video of a field test of an early version [see YouTube](https://www.youtube.com/shorts/1ArB7GL_yV8). 
 
