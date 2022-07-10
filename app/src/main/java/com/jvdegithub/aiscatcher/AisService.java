@@ -28,10 +28,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.IBinder;
+import android.os.PowerManager;
 
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 public class AisService extends Service {
+
+    PowerManager.WakeLock wakeLock;
 
     public interface ServiceCallback {
         void onClose();
@@ -81,6 +84,20 @@ public class AisService extends Service {
         return notification.build();
     }
 
+
+    public void acquireLocks()
+    {
+        PowerManager powerManager = (PowerManager) getSystemService(POWER_SERVICE);
+        wakeLock = powerManager.newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK | PowerManager.ON_AFTER_RELEASE,
+                "AIS-catcher:WakeLock");
+        wakeLock.acquire();
+    }
+
+    public void releaseLocks()
+    {
+        wakeLock.release();
+    }
+
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
@@ -96,6 +113,7 @@ public class AisService extends Service {
 
             new Thread(
                     () -> {
+                        //acquireLocks();
 
                         AisCatcherJava.Run();
                         AisCatcherJava.Close();
@@ -103,6 +121,8 @@ public class AisService extends Service {
                         stopForeground(true);
                         stopSelf();
                         sendBroadcast();
+
+                        //releaseLocks();
                     }).start();
         }
         else
