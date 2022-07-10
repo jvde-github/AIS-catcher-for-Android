@@ -69,8 +69,8 @@ public class Settings extends AppCompatActivity {
         preferences.edit().putString("u1PORT", "10110").commit();
 
         preferences.edit().putBoolean("u2SWITCH", false).commit();
-        preferences.edit().putString("u2HOST", "192.168.1.239").commit();
-        preferences.edit().putString("u2PORT", "4002").commit();
+        preferences.edit().putString("u2HOST", "127.0.0.1").commit();
+        preferences.edit().putString("u2PORT", "10111").commit();
 
         preferences.edit().putInt("mLINEARITY", 17).commit();
         preferences.edit().putString("mRATE", "2500K").commit();

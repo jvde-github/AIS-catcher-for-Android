@@ -34,7 +34,6 @@ So, <b>DO NOT rely upon this software</b> in any way including for navigation an
 There are variations in the legislation concerning radio reception in the different administrations around the world.
 It is your responsibility to determine whether or not your local administration permits the reception and handling of AIS messages from ships and you can have this App on your phone.
 It is specifically forbidden to use this software for any illegal purpose whatsoever. It is intended <b>for use only</b> in those regions where such use <b>is permitted</b>.<p>
- For this reason the maximum receiver time has been limited to two minutes per run.<p>
 ]]></string>
 
     <string name="short_disclaimer_text"><![CDATA[
@@ -43,7 +42,6 @@ It is specifically forbidden to use this software for any illegal purpose whatso
     This program comes with <b>ABSOLUTELY NO WARRANTY</b>;</p>
     This is free software, and you are welcome to redistribute it
     under certain conditions. for details see <a href="https://github.com/jvde-github/AIS-catcher-for-Android">https://github.com/jvde-github/AIS-catcher-for-Android</a>.<p>
-    <b>DO NOT rely upon this software</b> in any way including for navigation and/or safety of life or property purposes. For this reason the maximum receiver time
-    has been limited to two minutes per run.<p>
+    <b>DO NOT rely upon this software</b> in any way including for navigation and/or safety of life or property purposes.<p>
 ]]></string>
 </resources>

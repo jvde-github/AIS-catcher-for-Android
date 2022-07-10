@@ -25,20 +25,29 @@ public class TextLog {
     private final int MaxCharacters = 100000;
 
     public void Update(String str) {
-        text[active] = text[active] + str;
-        if (text[active].length() > MaxCharacters) {
-            active = 1 - active;
-            text[active] = "";
+        synchronized (text)
+        {
+            text[active] = text[active] + str;
+            if (text[active].length() > MaxCharacters) {
+                active = 1 - active;
+                text[active] = "";
+            }
         }
     }
 
     public String getText() {
-        return text[1 - active] + text[active];
+        synchronized(text)
+        {
+            return text[1 - active] + text[active];
+        }
     }
 
     public void Clear() {
-        text[0] = text[1] = "";
-        active = 0;
+        synchronized(text)
+        {
+            text[0] = text[1] = "";
+            active = 0;
+        }
     }
 
 }

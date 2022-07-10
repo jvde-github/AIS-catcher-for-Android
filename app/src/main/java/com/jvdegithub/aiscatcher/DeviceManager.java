@@ -139,7 +139,7 @@ public class DeviceManager {
 
     public static void closeDevice() {
 
-        AisCatcherJava.onStatus("Closing USB connection\n");
+        AisCatcherJava.onStatus("Closing connection\n");
 
         if (devices.get(deviceIndex).getType() != DeviceType.RTLTCP && devices.get(deviceIndex).getType() != DeviceType.SPYSERVER && usbDeviceConnection != null) {
             usbDeviceConnection.close();

@@ -256,11 +256,9 @@ public class MainActivity<binding> extends AppCompatActivity implements AisCatch
         return true;
     }
 
-
     @Override
     public void onConsole(final String line) {
         log_fragment.Update(line);
-
     }
 
     @Override
@@ -287,6 +285,4 @@ public class MainActivity<binding> extends AppCompatActivity implements AisCatch
     public void onSourceChange() {
         updateUIonSource();
     }
-
-
 }

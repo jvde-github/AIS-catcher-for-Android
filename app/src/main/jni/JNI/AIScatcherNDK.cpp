@@ -83,7 +83,6 @@ void DetachThread()
 }
 */
 
-
 // JAVA interaction and callbacks
 
 void pushStatistics(JNIEnv *env) {
@@ -159,7 +158,7 @@ static void callbackUpdate(JNIEnv *env) {
 
 static void callbackError(JNIEnv *env, const std::string &str) {
 
-    callbackConsole(env, str);
+    callbackConsole(env, str+"\r\n");
 
     jstring jstr = env->NewStringUTF(str.c_str());
     jmethodID method = env->GetStaticMethodID(javaClass, "onError", "(Ljava/lang/String;)V");
@@ -321,11 +320,12 @@ Java_com_jvdegithub_aiscatcher_AisCatcherJava_Run(JNIEnv *env, jclass) {
                 callbackNMEA(env, nmea_msg);
                 nmea_msg = "";
             }
-
+            /*
             if (++time_idx == TIME_MAX) {
                 stop = true;
                 callbackError(env, "Max decoding time of 120 seconds reached");
             }
+             */
         }
 
         device->Stop();
@@ -415,7 +415,7 @@ Java_com_jvdegithub_aiscatcher_AisCatcherJava_createReceiver(JNIEnv *env, jclass
         device->setFrequency(162000000);
     }
     catch (const char *msg) {
-        callbackConsole(env, msg);
+        callbackError(env, msg);
         device = nullptr;
         return -1;
     }
