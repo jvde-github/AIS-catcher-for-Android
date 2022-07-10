@@ -32,21 +32,11 @@ The software is intended for use **only in those regions** where such use **is p
 
 The maximum time for the receiver is set to two minutes for this reason.
 
-## Latest news: Android version available for testing
+## Latest news: Android version available [here](https://drive.google.com/file/d/1HDm39szX_kF-Bg6KKruabFoWmzveji0w/view?usp=sharing)
 
-It is easy to give AIS-catcher a try on your Android device and if you are familiar with AIS and/or AIS-catcher for Linux/Windows the usage should be very intuitive:
-<p align="center">
-<img src="https://raw.githubusercontent.com/jvde-github/AIS-catcher/media/media/AIScatcher%20for%20Android%20screenshot%201.png" width=20% height=20%>
-<img src="https://raw.githubusercontent.com/jvde-github/AIS-catcher/media/media/AIScatcher%20for%20Android%20screenshot%202.png" width=20% height=20%>
-</p>
+Feedback is very much appreciated by mailing [me](mailto:jvde.github@gmail.com) or sharing in the Issue section.
 
-For testing purposes you can download a [APK file from my Google drive](https://drive.google.com/file/d/1HDm39szX_kF-Bg6KKruabFoWmzveji0w/view?usp=sharing) (I might have to give you access). 
-After downloading the file on your phone, just tap to install. After that you should be good to go. Feedback is very much appreciated by mailing [me](mailto:jvde.github@gmail.com) 
-or sharing in the Issue section.
-
-For a video of a field test of an early version [see YouTube](https://www.youtube.com/shorts/1ArB7GL_yV8). Hopefully in the Play Store by the end of this Summer.
-
-More to come....
+For a video of a field test of an early version [see YouTube](https://www.youtube.com/shorts/1ArB7GL_yV8). 
 
 ## Tutorial: connecting AIS-catcher to OpenCPN and BoatBeacon
 
