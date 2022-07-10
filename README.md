@@ -37,7 +37,7 @@ Feedback is very much appreciated by mailing [me](mailto:jvde.github@gmail.com) 
 
 For a video of a field test of an early version [see YouTube](https://www.youtube.com/shorts/1ArB7GL_yV8). 
 
-## Tutorial: connecting AIS-catcher to OpenCPN and BoatBeacon
+## Tutorial: the basics
 
 ### The main screen
 The main screen of AIS-catcher is as follows:
