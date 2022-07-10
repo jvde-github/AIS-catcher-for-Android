@@ -65,8 +65,9 @@ First we are going to set up the outward connections to BoatBeacon and OpenCPN. 
 ### Setting up OpenCPN
 Next we start OpenCPN and click on Settings (top left icon) and choose the Connections tab. We  add a Network connection (UDP at address 0.0.0.0 dataport 10111). You can chose "Show NMEA Debug Window" as extra option that shows the messages that OpenCPN receives from AIS-catcher.
 <p align="center">
-<img src="https://github.com/jvde-github/AIS-catcher/blob/1c2b33d6b7c9df0d5a85e3224a196481d7df92ba/media/running_OCPN%5B1%5D.jpg" width=20% height=20%>
+<img src="https://github.com/jvde-github/AIS-catcher/blob/90d0cb0cedc1220321c474621cb13eb787d6087d/media/OpenCPN_UDP_settings%5B1%5D.jpg" width=20% height=20%>
 </p>
+
 ### Granting AIS-catcher access to the USB dongle
 Next we set up the RTL-SDR dongle. Connect the dongle with your Android device and if all is well you should be asked if AIS-catcher can get access to the USB device. Accept.
 
