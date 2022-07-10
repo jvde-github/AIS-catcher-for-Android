@@ -59,14 +59,16 @@ Next we start OpenCPN and click on **Settings** (top left icon) and choose the *
 </p>
 
 ### Granting AIS-catcher access to the USB dongle
-Next we set up the RTL-SDR dongle. Connect the dongle with your Android device and if all is well you should be asked if AIS-catcher can get access to the USB device. Accept.
+Next we set up the RTL-SDR dongle. Connect the dongle with your Android device and if all is well you should be asked if AIS-catcher can get access to the USB device. Accept. With Dutch language settings (sorry) this should look like:
 
 <p align="center">
 <img src="https://github.com/jvde-github/AIS-catcher/blob/eb25b78295fe2320683bf569c346a2157e8b8c69/media/grant_access_to_USB%5B1%5D.jpg" width=40% height=40%>
 </p>
 
+I would advice to give AIS-catcher permament access to the USB device to be able to skip this step next time.
+
 ### Setting up the RTL-SDR dongle
-Next go back to the "Settings" menu via the 3 vertical dots and set the RTL-SDR settings:
+Next go back to the **Settings** menu via the 3 vertical dots and set up the RTL-SDR settings:
 
 <p align="center">
 <img src="https://github.com/jvde-github/AIS-catcher/blob/b9093aae8ee7545b6dd5f7629e546691c9bce6a8/media/setting_RTL-SDR%5B2%5D.jpg" width=40% height=40%>
@@ -80,7 +82,7 @@ In the Main screen select the **Source** by clicking the right-most item in the 
 </p>
 
 ### Running AIS-catcher
-In the main screen now click **Play** on the left in the bottom navigation bar. This should start the run and a notification is given that a foreground service is started. The navigation tabs allow you to see different statistics during the run (like message count, status messages from the receiver and NMEA lines).
+In the main screen now click **Start** on the left in the bottom navigation bar. This should start the run and a notification is given that a foreground service is started. The navigation tabs allow you to see different statistics during the run (like message count, status messages from the receiver and NMEA lines).
 <p align="center">
 <img src="https://github.com/jvde-github/AIS-catcher/blob/1c2b33d6b7c9df0d5a85e3224a196481d7df92ba/media/running_main_screen%5B1%5D.jpg" width=40% height=40%>
 <img src="https://github.com/jvde-github/AIS-catcher/blob/1c2b33d6b7c9df0d5a85e3224a196481d7df92ba/media/running_console%5B1%5D.jpg" width=40% height=40%>
