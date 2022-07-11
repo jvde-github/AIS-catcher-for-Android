@@ -29,8 +29,10 @@ It is your responsibility to determine whether or not your local administration 
 It is specifically forbidden to use this software for any illegal purpose whatsoever. 
 The software is intended for use **only in those regions** where such use **is permitted**.
 
-## Installation: Android version available as APK [HERE](https://github.com/jvde-github/AIS-catcher-for-Android/tree/media)
+## Installation and Download
 
+You can download AIS-catcher-for-Android in the [Release section](https://github.com/jvde-github/AIS-catcher-for-Android/releases) in the form of an APK-file. 
+The latest development version is available [here](https://github.com/jvde-github/AIS-catcher-for-Android/tree/media)
 Please delete any previous version first! Feedback is very much appreciated by mailing [me](mailto:jvde.github@gmail.com) or sharing in the Issue section. If you have any prior version, I suggest to remove this first.
 
 For a video of a field test of an early version [see YouTube](https://www.youtube.com/shorts/1ArB7GL_yV8). Below we have included a Getting Started tutorial when running with a RTL-SDR dongle. The steps for the AirSpy and TCP connections are very similar. Please notice that your phone or tablet has to power the USB device and run the decoding algorithm and this will be a drain on your battery. When sending UDP NMEA lines over the network or decoding from TCP (SpyServer or RTL-TCP) this will require serious network traffic. Advice is to do this when connected via WiFi.
