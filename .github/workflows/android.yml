@@ -24,10 +24,10 @@ jobs:
         distribution: 'temurin'
         cache: gradle
 
-    - name: Grant execute permission for gradlew
+    - name: Set permissions for gradlew
       run: chmod +x gradlew
       
-    - name: Build Release
+    - name: Build 
       run: ./gradlew build    
       
     - uses: r0adkll/sign-android-release@v1
