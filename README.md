@@ -29,14 +29,12 @@ It is your responsibility to determine whether or not your local administration 
 It is specifically forbidden to use this software for any illegal purpose whatsoever. 
 The software is intended for use **only in those regions** where such use **is permitted**.
 
-The maximum time for the receiver is set to two minutes for this reason.
-
 ## Installation: Android version available as APK [HERE](https://drive.google.com/file/d/1HDm39szX_kF-Bg6KKruabFoWmzveji0w/view?usp=sharing)
 
 Please delete any previous version first! Feedback is very much appreciated by mailing [me](mailto:jvde.github@gmail.com) or sharing in the Issue section. If you have any prior version, I suggest to remove this first.
 
 For a video of a field test of an early version [see YouTube](https://www.youtube.com/shorts/1ArB7GL_yV8). Below we have included a Getting Started tutorial when running with a RTL-SDR dongle. The steps for the AirSpy and TCP connections are very similar. Please notice that your phone or tablet has to power the USB device and run the decoding algorithm and this will be a drain on your battery. When sending UDP NMEA lines over the network or decoding from TCP (SpyServer or RTL-TCP) this will require serious network traffic. Advice is to do this when connected via WiFi.
-Finally, the computational intensive nature of AIS decoding requires the phone to give the Application sufficient run time. On some phones Android might restrict this and some tuning of the phone
+Finally, the computationally intensive nature of AIS decoding requires the phone to give the Application sufficient run time. On some phones Android might restrict this and some tuning of the phone
 settings might be required.
 
 
@@ -112,9 +110,9 @@ AIS-catcher will run as a foreground service. That's all there is to it.
 - <del>Application crashes when AirSpy HF+ is disconnected (seems to be a more general issue)</del> Solved.
 - <del>Shorter timeouts when connecting to RTL-TCP</del>
 - WiFi-only check in case: RTL-TCP streaming or UDP NMEA broadcast to other machines
-- Wakelocks and WiFi performance settings, etc...
-- Add sync locks for updates
+- <del>Wakelocks and </del>WiFi performance settings, etc...
+- <del>Add sync locks for updates</del>
 - Count buffer under- and over-runs
 - Simple map - radar view
 - Simple graphs with statistics
-- Start button not properly reset when receiver stops due to timeout?
+- <del>Start button not properly reset when receiver stops due to timeout?</del>
