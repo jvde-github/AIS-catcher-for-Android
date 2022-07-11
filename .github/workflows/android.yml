@@ -27,11 +27,8 @@ jobs:
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
       
-    - name: Build Debug
-      run: ./gradlew build
-      
     - name: Build Release
-      run: ./gradlew assembleRelease
+      run: ./gradlew build    
       
     - uses: r0adkll/sign-android-release@v1
       name: Sign app APK
