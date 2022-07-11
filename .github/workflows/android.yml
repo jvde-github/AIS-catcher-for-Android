@@ -16,6 +16,7 @@ jobs:
       uses: actions/checkout@v3
       with:
         submodules: recursive
+        
     - name: set up JDK 11
       uses: actions/setup-java@v3
       with:
@@ -52,7 +53,7 @@ jobs:
         path: app/build/outputs/apk/debug/app-debug.apk
 
     - name: Upload Release APK
-    - uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v2
       with:
         name: release-apk
         path: ${{steps.sign_app.outputs.signedReleaseFile}}
