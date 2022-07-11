@@ -29,7 +29,7 @@ It is your responsibility to determine whether or not your local administration 
 It is specifically forbidden to use this software for any illegal purpose whatsoever. 
 The software is intended for use **only in those regions** where such use **is permitted**.
 
-## Installation: Android version available as APK [HERE](https://drive.google.com/file/d/1HDm39szX_kF-Bg6KKruabFoWmzveji0w/view?usp=sharing)
+## Installation: Android version available as APK [HERE](https://github.com/jvde-github/AIS-catcher-for-Android/tree/media)
 
 Please delete any previous version first! Feedback is very much appreciated by mailing [me](mailto:jvde.github@gmail.com) or sharing in the Issue section. If you have any prior version, I suggest to remove this first.
 
