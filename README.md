@@ -2,13 +2,13 @@
 This Android App helps to change your Android device into a dual channel AIS receiver that can be used to pick up AIS signals from nearby vessels, even if offline!
 The App directly accesses a Software Defined Radio USB device and can send received messages via UDP to plotting Apps like [Boat Beacon](https://pocketmariner.com/mobile-apps/boatbeacon/) or [OpenCPN](https://play.google.com/store/apps/details?id=org.opencpn.opencpn_free).
 
-Below you can find a link to the APK file. If you want to download AIS-catcher from the Google Play store and have a Google account, please get in contact with  [me](mailto:jvde.github@gmail.com) and I will provide you with a link to the store location for the internal test (or download the APK file below). 
+Below you can find a link to the APK file. For now I have decided not to make AIS-catcher available in the Play Store, this is too cumbersome for a small and free app. The only way
+to install it is by building yourself or install a pre-build APK file.
  
-The requirements to receive AIS signals are: a RTL-SDR dongle (or alternatively an AirSpy, AirSpy HF+ or RTL-TCP/SpyServer connection), a simple antenna, 
-an Android device with USB connector and an OTG cable to connect the dongle with your Android device. Please note that this might not work
-on all Android devices. AIS-catcher only receives and processes signals and then forwards the messages over UDP. To make it a bit more interesting you would need an App like
+The requirements to receive AIS signals are: a RTL-SDR dongle (or alternatively an AirSpy Mini/R2/HF+), a simple antenna, 
+an Android device with USB connector and an OTG cable to connect the dongle with your Android device. 
+AIS-catcher only receives and processes signals and then forwards the messages over UDP. To make it a bit more interesting you would need an App like
 [Boat Beacon](https://pocketmariner.com/mobile-apps/boatbeacon/) or [OpenCPN](https://play.google.com/store/apps/details?id=org.opencpn.opencpn_free) to map the received vessel information.
-Also, do not forget to set the frequency offset for your RTL-SDR device. 
 
 And one more thing, you need to be in a region where there are ships broadcasting AIS signals, e.g. near the water.
 
@@ -33,7 +33,7 @@ The software is intended for use **only in those regions** where such use **is p
 
 You can download AIS-catcher-for-Android in the [Release section](https://github.com/jvde-github/AIS-catcher-for-Android/releases) in the form of an APK-file. 
 The latest development version is available [here](https://github.com/jvde-github/AIS-catcher-for-Android/tree/media)
-Please delete any previous version first! Feedback is very much appreciated by mailing [me](mailto:jvde.github@gmail.com) or sharing in the Issue section. If you have any prior version, I suggest to remove this first.
+Please delete any previous version first! Feedback is very much appreciated by mailing [me](mailto:jvde.github@gmail.com) or sharing in the Issue section. 
 
 For a video of a field test of an early version [see YouTube](https://www.youtube.com/shorts/1ArB7GL_yV8). Below we have included a Getting Started tutorial when running with a RTL-SDR dongle. The steps for the AirSpy and TCP connections are very similar. Please notice that your phone or tablet has to power the USB device and run the decoding algorithm and this will be a drain on your battery. When sending UDP NMEA lines over the network or decoding from TCP (SpyServer or RTL-TCP) this will require serious network traffic. Advice is to do this when connected via WiFi.
 Finally, the computationally intensive nature of AIS decoding requires the phone to give the Application sufficient run time. On some phones Android might restrict this and some tuning of the phone
