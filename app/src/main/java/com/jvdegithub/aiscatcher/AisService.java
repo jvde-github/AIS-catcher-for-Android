@@ -113,7 +113,7 @@ public class AisService extends Service {
 
             new Thread(
                     () -> {
-                        //acquireLocks();
+                        acquireLocks();
 
                         AisCatcherJava.Run();
                         AisCatcherJava.Close();
@@ -122,7 +122,7 @@ public class AisService extends Service {
                         stopSelf();
                         sendBroadcast();
 
-                        //releaseLocks();
+                        releaseLocks();
                     }).start();
         }
         else

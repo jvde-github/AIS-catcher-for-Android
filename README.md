@@ -1,11 +1,10 @@
 # AIS-catcher for Android - A multi-platform AIS receiver 
 This Android App helps to change your Android device into a dual channel AIS receiver that can be used to pick up AIS signals from nearby vessels, even if offline!
-The app directly accesses a Software Defined Radio USB device and can send received messages via UDP to plotting Apps like [Boat Beacon](https://pocketmariner.com/mobile-apps/boatbeacon/).
+The App directly accesses a Software Defined Radio USB device and can send received messages via UDP to plotting Apps like [Boat Beacon](https://pocketmariner.com/mobile-apps/boatbeacon/).
 
-If you want to download AIS-catcher from the Google Play store and have a Google account, please get in contact with  [me](mailto:jvde.github@gmail.com) and I will provide you with a link to
-the store location for the internal test (or download the APK file below). 
+Below you can find a link to the APK file. If you want to download AIS-catcher from the Google Play store and have a Google account, please get in contact with  [me](mailto:jvde.github@gmail.com) and I will provide you with a link to the store location for the internal test (or download the APK file below). 
  
-The requirements to recieve AIS signals are: a RTL-SDR dongle (or alternatively an Airspy, Airspy HF+ or RTL-TCP/SpyServer connection), a simple antenna, 
+The requirements to receive AIS signals are: a RTL-SDR dongle (or alternatively an AirSpy, AirSpy HF+ or RTL-TCP/SpyServer connection), a simple antenna, 
 an Android device with USB connector and an OTG cable to connect the dongle with your Android device. Please note that this might not work
 on all Android devices. AIS-catcher only receives and processes signals and then forwards the messages over UDP. To make it a bit more interesting you would need an App like
 [Boat Beacon](https://pocketmariner.com/mobile-apps/boatbeacon/) or [OpenCPN](https://play.google.com/store/apps/details?id=org.opencpn.opencpn_free) to map the received vessel information.
@@ -32,80 +31,90 @@ The software is intended for use **only in those regions** where such use **is p
 
 The maximum time for the receiver is set to two minutes for this reason.
 
-## Latest news: Android version available for testing
+## Installation: Android version available as APK [HERE](https://drive.google.com/file/d/1HDm39szX_kF-Bg6KKruabFoWmzveji0w/view?usp=sharing)
 
-It is easy to give AIS-catcher a try on your Android device and if you are familiar with AIS and/or AIS-catcher for Linux/Windows the usage should be very intuitive:
+Feedback is very much appreciated by mailing [me](mailto:jvde.github@gmail.com) or sharing in the Issue section. If you have any prior version, I suggest to remove this first.
+
+For a video of a field test of an early version [see YouTube](https://www.youtube.com/shorts/1ArB7GL_yV8). Below we have included a Getting Started tutorial when running with a RTL-SDR dongle. The steps for the AirSpy and TCP connections are very similar. Please notice that your phone or tablet has to power the USB device and run the decoding algorithm and this will be a drain on your battery. When sending UDP NMEA lines over the network or decoding from TCP (SpyServer or RTL-TCP) this will require serious network traffic. Advice is to do this when connected via WiFi.
+Finally, the computational intensive nature of AIS decoding requires the phone to give the Application sufficient run time. On some phones Android might restrict this and some tuning of the phone
+settings might be required.
+
+
+## Tutorial: Getting Started
+
+### Getting around: the main screen
+The main screen of AIS-catcher is as follows:
 <p align="center">
-<img src="https://raw.githubusercontent.com/jvde-github/AIS-catcher/media/media/AIScatcher%20for%20Android%20screenshot%201.png" width=20% height=20%>
-<img src="https://raw.githubusercontent.com/jvde-github/AIS-catcher/media/media/AIScatcher%20for%20Android%20screenshot%202.png" width=20% height=20%>
+<img src="https://github.com/jvde-github/AIS-catcher/blob/a84ea19fb6198a292390a5b7ce64d06f5070f8a8/media/main_screen%5B1%5D.jpg" width=40% height=40%>
+</p>
+The tabs section at the top provides access to the main statistics and information when AIS-catcher is running. The bottom navigation bar gives access to 
+functions to start/stop the receiver, clear the logs and reset statistics and select the device you want to use for reception (RTL-TCP/SpyServer and supported USB devices like the RTL-SDR).
+
+### Configuring the connection with OpenCPN and/or BoatBeacon
+AIS-catcher is a simple receiver that decodes messages and can send the messages from ships  onward to specialized plotting apps via UDP.
+In this step  we are going to set up the outward connections to BoatBeacon and OpenCPN. For this we will use port ``10110`` for BoatBeacon and ``10111`` for OpenCPN. Press the 3 vertical dots on the top right and select the **Setting** option. Scroll to the bottom and activate the two UDP output connections via the switch and set the parameters as follows:
+<p align="center">
+<img src="https://github.com/jvde-github/AIS-catcher/blob/d7786eb75a15bcf230bf5e3a7f842de32e05f2bf/media/settings_UDP%5B1%5D.jpg" width=40% height=40%>
 </p>
 
-For testing purposes you can download a [APK file from my Google drive](https://drive.google.com/file/d/1HDm39szX_kF-Bg6KKruabFoWmzveji0w/view?usp=sharing) (I might have to give you access). 
-After downloading the file on your phone, just tap to install. After that you should be good to go. Feedback is very much appreciated by mailing [me](mailto:jvde.github@gmail.com) 
-or sharing in the Issue section.
-
-For a video of a field test of an early version [see YouTube](https://www.youtube.com/shorts/1ArB7GL_yV8). Hopefully in the Play Store by the end of this Summer.
-
-More to come....
-
-## Tutorial: connecting AIS-catcher to OpenCPN and BoatBeacon
-
-### The main screen
-The main screen of AIS-catcher looks as follows:
+### Setting up the Connection on OpenCPN 
+Next we start OpenCPN and click on **Options** (top left icon) and choose the **Connections** tab. We need to add a Network connection using UDP at address ``0.0.0.0`` dataport ``10111``. 
+You could initially select ``Show NMEA Debug Window`` as extra option which will give you a window in OpenCPN that shows all incoming NMEA messages it receives from AIS-catcher. This could be helpful
+debugging a connection issue between the receiver and OpenCPN. The **Connections** tab will look something like:
 <p align="center">
-<img src="https://github.com/jvde-github/AIS-catcher/blob/a84ea19fb6198a292390a5b7ce64d06f5070f8a8/media/main_screen%5B1%5D.jpg" width=20% height=20%>
+<img src="https://github.com/jvde-github/AIS-catcher/blob/90d0cb0cedc1220321c474621cb13eb787d6087d/media/OpenCPN_UDP_settings%5B1%5D.jpg" width=40% height=40%>
 </p>
-
-### Setting up the connection with OpenCPN and/or BoatBeacon
-First we are going to set up the outward connections to BoatBeacon and OpenCPN. For this I will use port 10110 for BoatBeacon and 10111 for OpenCPN. Press the 3 vertical dots on the top left and select the settings option. Scroll to the bottom. Activate the two UDP output channels and set as follows:
-<p align="center">
-<img src="https://github.com/jvde-github/AIS-catcher/blob/d7786eb75a15bcf230bf5e3a7f842de32e05f2bf/media/settings_UDP%5B1%5D.jpg" width=20% height=20%>
-</p>
-
-### Setting up OpenCPN
-Next we start OpenCPN and click on Settings (top left icon) and choose the Connections tab. We  add a Network connection (UDP at address 0.0.0.0 dataport 10111). You can chose "Show NMEA Debug Window" as extra option that shows the messages that OpenCPN receives from AIS-catcher.
 
 ### Granting AIS-catcher access to the USB dongle
-Next we set up the RTL-SDR dongle. Connect the dongle with your Android device and if all is well you should be asked if AIS-catcher can get access to the USB device. Accept.
+Next we connect AIS-catcher to the RTL-SDR dongle. By default the user needs to give applications the rights to use a USB device. 
+For this connect the dongle with your Android device using the OTG cable (if needed) and, if all is well, you should be asked if AIS-catcher can get access. 
+With Dutch language settings (sorry) this should look like:
 
 <p align="center">
-<img src="https://github.com/jvde-github/AIS-catcher/blob/eb25b78295fe2320683bf569c346a2157e8b8c69/media/grant_access_to_USB%5B1%5D.jpg" width=20% height=20%>
+<img src="https://github.com/jvde-github/AIS-catcher/blob/eb25b78295fe2320683bf569c346a2157e8b8c69/media/grant_access_to_USB%5B1%5D.jpg" width=40% height=40%>
 </p>
 
-### Setting up the RTL-SDR dongle
-Next go back to the "Settings" menu via the 3 vertical dots and set the RTL-SDR settings:
+Accept the request and consider giving AIS-catcher permanent access to the device so this step can be skipped in the future.
+
+### Configuring the RTL-SDR dongle
+Next go back to the **Settings** menu via the 3 vertical dots on the main screen and set up the RTL-SDR settings:
 
 <p align="center">
-<img src="https://github.com/jvde-github/AIS-catcher/blob/b9093aae8ee7545b6dd5f7629e546691c9bce6a8/media/setting_RTL-SDR%5B2%5D.jpg" width=20% height=20%>
+<img src="https://github.com/jvde-github/AIS-catcher/blob/b9093aae8ee7545b6dd5f7629e546691c9bce6a8/media/setting_RTL-SDR%5B2%5D.jpg" width=40% height=40%>
 </p>
-These settings should be ok but don't forget to set the frequency correction in PPM if needed for your device.
 
-### Selecting the device for receiving AIS messages
-In the Main screen select the source on the right in the bottom navigation bar. Select the RTL-SDR device:
+These settings should be ok but don't forget to set the frequency correction in PPM if needed for your device. You can set the dongle settings at any point in time but they will only
+become active when a new run is started. 
+
+### Selecting the input source
+In the Main screen select the **Source** by clicking the right-most item in the bottom navigation bar. Select the RTL-SDR device:
 <p align="center">
-<img src="https://github.com/jvde-github/AIS-catcher/blob/b3a5d1f26a4452b8707b6d79408b6e6c39d30889/media/slect_device%5B1%5D.jpg" width=20% height=20%>
+<img src="https://github.com/jvde-github/AIS-catcher/blob/b3a5d1f26a4452b8707b6d79408b6e6c39d30889/media/slect_device%5B1%5D.jpg" width=40% height=40%>
 </p>
+
+The bottom navigation bar should show which device is currently active and will be used for AIS reception.
 
 ### Running AIS-catcher
-In the main screen, select Play on the left in the bottom navigation bar. This should start the run. The navigation tabs allow you to see different statistics (like message count, status messages from the receiver and NMEA lines).
+In the main screen now click **Start** on the left in the bottom navigation bar. This starts the run and a notification is given that a foreground service is started. 
+The navigation tabs allow you to see different statistics during the run (like message count (STAT), messages from the receiver (LOG) and received NMEA lines (NMEA) ).
 <p align="center">
-<img src="https://github.com/jvde-github/AIS-catcher/blob/1c2b33d6b7c9df0d5a85e3224a196481d7df92ba/media/running_main_screen%5B1%5D.jpg" width=20% height=20%>
-<img src="https://github.com/jvde-github/AIS-catcher/blob/1c2b33d6b7c9df0d5a85e3224a196481d7df92ba/media/running_console%5B1%5D.jpg" width=20% height=20%>
-<img src="https://github.com/jvde-github/AIS-catcher/blob/1c2b33d6b7c9df0d5a85e3224a196481d7df92ba/media/running_nmea_screen%5B1%5D.jpg" width=20% height=20%>
-<img src="https://github.com/jvde-github/AIS-catcher/blob/1c2b33d6b7c9df0d5a85e3224a196481d7df92ba/media/running_OCPN%5B1%5D.jpg" width=20% height=20%>
+<img src="https://github.com/jvde-github/AIS-catcher/blob/1c2b33d6b7c9df0d5a85e3224a196481d7df92ba/media/running_main_screen%5B1%5D.jpg" width=40% height=40%>
+<img src="https://github.com/jvde-github/AIS-catcher/blob/1c2b33d6b7c9df0d5a85e3224a196481d7df92ba/media/running_console%5B1%5D.jpg" width=40% height=40%>
+<img src="https://github.com/jvde-github/AIS-catcher/blob/1c2b33d6b7c9df0d5a85e3224a196481d7df92ba/media/running_nmea_screen%5B1%5D.jpg" width=40% height=40%>
+<img src="https://github.com/jvde-github/AIS-catcher/blob/1c2b33d6b7c9df0d5a85e3224a196481d7df92ba/media/running_OCPN%5B1%5D.jpg" width=40% height=40%>
 </p>
 
-AIS-catcher will run in the background as a foreground service. 
+AIS-catcher will run as a foreground service. That's all there is to it.
 
 ## To do
 
 - More testing....
-- <del>Application crashes when Airspy HF+ is disconnected (seems to be a more general issue)</del> Solved.
+- <del>Application crashes when AirSpy HF+ is disconnected (seems to be a more general issue)</del> Solved.
 - <del>Shorter timeouts when connecting to RTL-TCP</del>
-- WiFI-only check in case: RTL-TCP streaming or UDP NMEA broadcast to other machines
-- Wakelocks and WiFI performance settings, etc...
+- WiFi-only check in case: RTL-TCP streaming or UDP NMEA broadcast to other machines
+- Wakelocks and WiFi performance settings, etc...
 - Add sync locks for updates
-- Count bufer under- and over-runs
+- Count buffer under- and over-runs
 - Simple map - radar view
 - Simple graphs with statistics
 - Start button not properly reset when receiver stops due to timeout?
