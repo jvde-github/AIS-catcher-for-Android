@@ -7,7 +7,7 @@ on:
     branches: [ "master" ] 
 
 jobs:
-  debug:
+  apk:
 
     runs-on: ubuntu-latest
 
@@ -25,18 +25,13 @@ jobs:
 
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
+      
     - name: Build Debug
       run: ./gradlew build
       
     - name: Build Release
       run: ./gradlew assembleRelease
       
-    - name: Upload APK
-      uses: actions/upload-artifact@v1
-      with:
-        name: debug-apk
-        path: app/build/outputs/apk/debug/app-debug.apk
-        
     - uses: r0adkll/sign-android-release@v1
       name: Sign app APK
       # ID used to access action output
@@ -48,12 +43,17 @@ jobs:
         keyStorePassword: ${{ secrets.KEY_STORE_PASSWORD }}
         keyPassword: ${{ secrets.KEY_PASSWORD }}
       env:
-        # override default build-tools version (29.0.3) -- optional
         BUILD_TOOLS_VERSION: "30.0.2"
+        
+    - name: Upload Debug APK
+      uses: actions/upload-artifact@v1
+      with:
+        name: debug-apk
+        path: app/build/outputs/apk/debug/app-debug.apk
 
-      # Example use of `signedReleaseFile` output -- not needed
+    - name: Upload Release APK
     - uses: actions/upload-artifact@v2
       with:
-        name: Signed app bundle
+        name: release-apk
         path: ${{steps.sign_app.outputs.signedReleaseFile}}
  
