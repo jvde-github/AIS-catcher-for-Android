@@ -102,7 +102,7 @@ The navigation tabs allow you to see different statistics during the run (like m
 <img src="https://github.com/jvde-github/AIS-catcher/blob/1c2b33d6b7c9df0d5a85e3224a196481d7df92ba/media/running_OCPN%5B1%5D.jpg" width=40% height=40%>
 </p>
 
-AIS-catcher will run as a foreground service. That's all there is to it.
+AIS-catcher will run as a foreground service so the app will continue to receive messages when closed. That's all there is to it. Have fun!
 
 ## To do
 
