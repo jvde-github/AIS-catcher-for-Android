@@ -46,11 +46,10 @@ The main screen of AIS-catcher is as follows:
 <p align="center">
 <img src="https://github.com/jvde-github/AIS-catcher/blob/a84ea19fb6198a292390a5b7ce64d06f5070f8a8/media/main_screen%5B1%5D.jpg" width=40% height=40%>
 </p>
-The tabs section at the top provides access to the main statistics and information when AIS-catcher is running. The bottom navigation bar gives access to 
-functions to start/stop the receiver, clear the logs and reset statistics and select the device you want to use for reception (RTL-TCP/SpyServer and supported USB devices like the RTL-SDR).
+The tabs section at the top provides access to the main statistics and information when AIS-catcher is running whereas the bottom navigation bar has the buttons to start/stop the receiver, clear the logs/statistics and select the source device you want to use for reception.
 
 ### Configuring the connection with OpenCPN and/or BoatBeacon
-AIS-catcher is a simple receiver that decodes messages and can send the messages from ships  onward to specialized plotting apps via UDP.
+AIS-catcher is a simple receiver that decodes messages and can send the messages from ships onward to specialized plotting apps via UDP.
 In this step  we are going to set up the outward connections to BoatBeacon and OpenCPN. For this we will use port ``10110`` for BoatBeacon and ``10111`` for OpenCPN. Press the 3 vertical dots on the top right and select the **Setting** option. Scroll to the bottom and activate the two UDP output connections via the switch and set the parameters as follows:
 <p align="center">
 <img src="https://github.com/jvde-github/AIS-catcher/blob/d7786eb75a15bcf230bf5e3a7f842de32e05f2bf/media/settings_UDP%5B1%5D.jpg" width=40% height=40%>
