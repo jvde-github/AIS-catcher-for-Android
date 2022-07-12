@@ -41,7 +41,7 @@ settings might be required.
 
 ## Tutorial: Getting Started
 
-### Getting around: the main screen
+### 1. Getting around: the main screen
 The main screen of AIS-catcher is as follows:
 <p align="center">
 <img src="https://github.com/jvde-github/AIS-catcher/blob/a84ea19fb6198a292390a5b7ce64d06f5070f8a8/media/main_screen%5B1%5D.jpg" width=40% height=40%>
@@ -55,7 +55,7 @@ In this step  we are going to set up the outward connections to BoatBeacon and O
 <img src="https://github.com/jvde-github/AIS-catcher/blob/d7786eb75a15bcf230bf5e3a7f842de32e05f2bf/media/settings_UDP%5B1%5D.jpg" width=40% height=40%>
 </p>
 
-### Setting up the Connection on OpenCPN 
+### 2. Setting up the Connection on OpenCPN 
 Next we start OpenCPN and click on **Options** (top left icon) and choose the **Connections** tab. We need to add a Network connection using UDP at address ``0.0.0.0`` dataport ``10111``. 
 You could initially select ``Show NMEA Debug Window`` as extra option which will give you a window in OpenCPN that shows all incoming NMEA messages it receives from AIS-catcher. This could be helpful
 debugging a connection issue between the receiver and OpenCPN. The **Connections** tab will look something like:
@@ -63,7 +63,7 @@ debugging a connection issue between the receiver and OpenCPN. The **Connections
 <img src="https://github.com/jvde-github/AIS-catcher/blob/90d0cb0cedc1220321c474621cb13eb787d6087d/media/OpenCPN_UDP_settings%5B1%5D.jpg" width=40% height=40%>
 </p>
 
-### Granting AIS-catcher access to the USB dongle
+### 3. Granting AIS-catcher access to the USB dongle
 Next we connect AIS-catcher to the RTL-SDR dongle. By default the user needs to give applications the rights to use a USB device. 
 For this connect the dongle with your Android device using the OTG cable (if needed) and, if all is well, you should be asked if AIS-catcher can get access. 
 With Dutch language settings (sorry) this should look like:
@@ -74,7 +74,7 @@ With Dutch language settings (sorry) this should look like:
 
 Accept the request and consider giving AIS-catcher permanent access to the device so this step can be skipped in the future.
 
-### Configuring the RTL-SDR dongle
+### 4. Configuring the RTL-SDR dongle
 Next go back to the **Settings** menu via the 3 vertical dots on the main screen and set up the RTL-SDR settings:
 
 <p align="center">
@@ -84,7 +84,7 @@ Next go back to the **Settings** menu via the 3 vertical dots on the main screen
 These settings should be ok but don't forget to set the frequency correction in PPM if needed for your device. You can set the dongle settings at any point in time but they will only
 become active when a new run is started. 
 
-### Selecting the input source
+### 5. Selecting the input source
 In the Main screen select the **Source** by clicking the right-most item in the bottom navigation bar. Select the RTL-SDR device:
 <p align="center">
 <img src="https://github.com/jvde-github/AIS-catcher/blob/b3a5d1f26a4452b8707b6d79408b6e6c39d30889/media/slect_device%5B1%5D.jpg" width=40% height=40%>
@@ -92,7 +92,7 @@ In the Main screen select the **Source** by clicking the right-most item in the 
 
 The bottom navigation bar should show which device is currently active and will be used for AIS reception.
 
-### Running AIS-catcher
+### 5. Running AIS-catcher
 In the main screen now click **Start** on the left in the bottom navigation bar. This starts the run and a notification is given that a foreground service is started. 
 The navigation tabs allow you to see different statistics during the run (like message count (STAT), messages from the receiver (LOG) and received NMEA lines (NMEA) ).
 <p align="center">
