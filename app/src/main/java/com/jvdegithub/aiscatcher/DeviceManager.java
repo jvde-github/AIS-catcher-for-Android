@@ -174,6 +174,10 @@ public class DeviceManager {
                     dev = new Device(device, "RTL-SDR", DeviceType.RTLSDR, device.getDeviceId());
                 devices.add(dev);
             }
+            else
+            {
+                AisCatcherJava.onStatus("Warning: USB devices without permission detected - VID: " + device.getVendorId() + " PID " + device.getProductId()  + "\n");
+            }
         }
 
         int nDev = devices.size();
