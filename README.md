@@ -113,6 +113,8 @@ AIS-catcher will run as a foreground service so the app will continue to receive
 ## To do
 
 - More testing....
+- Application crashes when USB device is unplugged whilst in the source selection menu
+- Application should automatically switch to SDR source if not playing and device connected
 - <del>Application crashes when AirSpy HF+ is disconnected (seems to be a more general issue)</del> Solved.
 - <del>Shorter timeouts when connecting to RTL-TCP</del>
 - WiFi-only check in case: RTL-TCP streaming or UDP NMEA broadcast to other machines
