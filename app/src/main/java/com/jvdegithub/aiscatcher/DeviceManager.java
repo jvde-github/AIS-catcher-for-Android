@@ -281,7 +281,7 @@ public class DeviceManager {
     }
 
     public static String[] getDeviceStrings() {
-        UsbManager mUsbManager = (UsbManager) context.getSystemService(Context.USB_SERVICE);
+        //UsbManager mUsbManager = (UsbManager) context.getSystemService(Context.USB_SERVICE);
 
         refreshList(false);
 
@@ -290,11 +290,13 @@ public class DeviceManager {
         String SN;
 
         for (Device dev : devices) {
+            /*
             if (dev.type != DeviceType.RTLTCP && dev.type != DeviceType.SPYSERVER) {
                 SN = dev.device.getSerialNumber();
             } else
                 SN = null;
-
+            */
+            SN = null;
             devs[idx] = (idx + 1) + ": " + dev.description + (SN == null ? "" : ", SN: " + SN);
             idx++;
         }
