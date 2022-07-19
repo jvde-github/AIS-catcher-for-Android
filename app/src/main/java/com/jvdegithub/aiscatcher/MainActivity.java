@@ -147,7 +147,7 @@ public class MainActivity<binding> extends AppCompatActivity implements AisCatch
                     updateUIwithStart();
                 }
                 else
-                    Toast.makeText(MainActivity.this, "Cannot open USB device.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(MainActivity.this, "Cannot open USB device. Give permission first and try again.", Toast.LENGTH_LONG).show();
             } else
                 Toast.makeText(MainActivity.this, "Invalid setting", Toast.LENGTH_LONG).show();
 
