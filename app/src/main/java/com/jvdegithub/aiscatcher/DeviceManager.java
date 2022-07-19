@@ -18,20 +18,30 @@
 
 package com.jvdegithub.aiscatcher;
 
+import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.res.XmlResourceParser;
 import android.hardware.usb.UsbDevice;
 import android.hardware.usb.UsbDeviceConnection;
 import android.hardware.usb.UsbManager;
+import android.util.AttributeSet;
+import android.util.Xml;
+
+import androidx.core.util.Pair;
+
+import org.xmlpull.v1.XmlPullParser;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 
 public class DeviceManager {
 
     static Context context = null;
+    private static final String ACTION_USB_PERMISSION = "com.android.example.USB_PERMISSION";
 
     enum DeviceType {NONE, RTLTCP, RTLSDR, AIRSPY, AIRSPYHF, HACKRF, SPYSERVER }
 
@@ -107,10 +117,23 @@ public class DeviceManager {
 
             try {
                 UsbManager mUsbManager = (UsbManager) context.getSystemService(Context.USB_SERVICE);
-                UsbDeviceConnection conn = mUsbManager.openDevice(devices.get(deviceIndex).getDevice());
-                fd = conn.getFileDescriptor();
-                AisCatcherJava.onStatus("Device SN: " + conn.getSerial() + ", FD: " + fd + "\n");
+
+                if(mUsbManager.hasPermission(devices.get(deviceIndex).getDevice())) {
+                    UsbDeviceConnection conn = mUsbManager.openDevice(devices.get(deviceIndex).getDevice());
+                    fd = conn.getFileDescriptor();
+                    AisCatcherJava.onStatus("Device SN: " + conn.getSerial() + ", FD: " + fd + "\n");
+                }
+                else
+                {
+                    AisCatcherJava.onStatus("No permission to USB device\n");
+                    PendingIntent permissionIntent = PendingIntent.getBroadcast(context, 0, new Intent(ACTION_USB_PERMISSION), 0);
+                    mUsbManager.requestPermission(devices.get(deviceIndex).getDevice(),permissionIntent);
+                    AisCatcherJava.onStatus("Permission requested\n");
+                    return -1;
+
+                }
             } catch (Exception e){
+                AisCatcherJava.onStatus(e.toString());
                 return -1;
             }
         }
@@ -152,6 +175,34 @@ public class DeviceManager {
         refreshList(false);
     }
 
+    private static HashSet<Pair<Integer, Integer>> getSupportedDevices() {
+        HashSet<Pair<Integer, Integer>> pairSet = new HashSet<>();
+        try {
+            final XmlResourceParser xml = context.getResources().getXml(R.xml.usb_device_filter);
+
+            xml.next();
+            int eventType;
+            while ((eventType = xml.getEventType()) != XmlPullParser.END_DOCUMENT) {
+
+                switch (eventType) {
+                    case XmlPullParser.START_TAG:
+                        if (xml.getName().equals("usb-device")) {
+                            final AttributeSet as = Xml.asAttributeSet(xml);
+                            final Integer vendorId = Integer.valueOf( as.getAttributeValue(null, "vendor-id"));
+                            final Integer productId = Integer.valueOf( as.getAttributeValue(null, "product-id"));
+                            pairSet.add(new Pair<>(vendorId, productId));
+                        }
+                        break;
+                }
+                xml.next();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return pairSet;
+    }
+
     private static boolean refreshList(boolean add) {
 
         devices.clear();
@@ -159,10 +210,12 @@ public class DeviceManager {
         devices.add(new Device(null, "SpyServer", DeviceType.SPYSERVER, 0));
         devices.add(new Device(null, "RTL-TCP", DeviceType.RTLTCP, 0));
 
+        final HashSet<Pair<Integer, Integer>> supported = getSupportedDevices();
         UsbManager mUsbManager = (UsbManager) context.getSystemService(Context.USB_SERVICE);
 
         for (UsbDevice device : mUsbManager.getDeviceList().values()) {
-            if (mUsbManager.hasPermission(device)) {
+            final Pair<Integer, Integer> p = new Pair<>(device.getVendorId(), device.getProductId());
+            if (supported.contains(p)) {
                 Device dev;
                 if (device.getVendorId() == 7504 && device.getProductId() == 24737)
                     dev = new Device(device, "Airspy", DeviceType.AIRSPY, device.getDeviceId());
@@ -176,7 +229,7 @@ public class DeviceManager {
             }
             else
             {
-                AisCatcherJava.onStatus("Warning: USB devices without permission detected - VID: " + device.getVendorId() + " PID " + device.getProductId()  + "\n");
+                AisCatcherJava.onStatus("Warning: not supported USB devices connected - VID: " + device.getVendorId() + " PID " + device.getProductId()  + "\n");
             }
         }
 
@@ -238,9 +291,7 @@ public class DeviceManager {
 
         for (Device dev : devices) {
             if (dev.type != DeviceType.RTLTCP && dev.type != DeviceType.SPYSERVER) {
-                UsbDeviceConnection usbDeviceConnection = mUsbManager.openDevice(dev.device);
-                SN = usbDeviceConnection.getSerial();
-                usbDeviceConnection.close();
+                SN = dev.device.getSerialNumber();
             } else
                 SN = null;
 
@@ -257,7 +308,7 @@ public class DeviceManager {
 
         filter.addAction(UsbManager.ACTION_USB_DEVICE_DETACHED);
         filter.addAction(UsbManager.ACTION_USB_DEVICE_ATTACHED);
-        filter.addAction("com.jvdegithub.aiscatcher.USB_PERMISSION");
+        filter.addAction(ACTION_USB_PERMISSION);
 
         context.registerReceiver(mUsbReceiver, filter);
     }
@@ -280,8 +331,8 @@ public class DeviceManager {
                 add = true;
             } else if (UsbManager.ACTION_USB_DEVICE_DETACHED.equals(action)) {
                 action_clean = "USB device disconnected";
-            } else if ("com.jvdegithub.aiscatcher.USB_PERMISSION".equals(action)) {
-                action_clean = "USB device granted extra permission";
+            } else if (ACTION_USB_PERMISSION.equals(action)) {
+                action_clean = "USB device granted extra permission. Try to start again.";
             }
 
             AisCatcherJava.onStatus("Android: " + action_clean + ".\n");
