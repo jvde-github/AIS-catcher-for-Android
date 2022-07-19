@@ -1,49 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <resources>
-    <usb-device vendor-id = "3034" product-id = "10290" type = "RTLSDR" description = "Generic RTL2832U" />
-    <usb-device vendor-id = "3034" product-id = "10296" type = "RTLSDR" description = "Generic RTL2832U OEM" />
-    <usb-device vendor-id = "1043" product-id = "26240" type = "RTLSDR" description = "DigitalNow Quad DVB-T PCI-E card" />
-    <usb-device vendor-id = "1043" product-id = "28431" type = "RTLSDR" description = "Leadtek WinFast DTV Dongle mini D" />
-    <usb-device vendor-id = "1112" product-id = "28799" type = "RTLSDR" description = "Genius TVGo DVB-T03 USB dongle (Ver. B)" />
-    <usb-device vendor-id = "3277" product-id = "169" type = "RTLSDR" description = "Terratec Cinergy T Stick Black (rev 1)" />
-    <usb-device vendor-id = "3277" product-id = "179" type = "RTLSDR" description = "Terratec NOXON DAB/DAB+ USB dongle (rev 1)" />
-    <usb-device vendor-id = "3277" product-id = "180" type = "RTLSDR" description = "Terratec Deutschlandradio DAB Stick" />
-    <usb-device vendor-id = "3277" product-id = "181" type = "RTLSDR" description = "Terratec NOXON DAB Stick - Radio Energy" />
-    <usb-device vendor-id = "3277" product-id = "183" type = "RTLSDR" description = "Terratec Media Broadcast DAB Stick" />
-    <usb-device vendor-id = "3277" product-id = "184" type = "RTLSDR" description = "Terratec BR DAB Stick" />
-    <usb-device vendor-id = "3277" product-id = "185" type = "RTLSDR" description = "Terratec WDR DAB Stick" />
-    <usb-device vendor-id = "3277" product-id = "192" type = "RTLSDR" description = "Terratec MuellerVerlag DAB Stick" />
-    <usb-device vendor-id = "3277" product-id = "198" type = "RTLSDR" description = "Terratec Fraunhofer DAB Stick" />
-    <usb-device vendor-id = "3277" product-id = "211" type = "RTLSDR" description = "Terratec Cinergy T Stick RC (Rev.3)" />
-    <usb-device vendor-id = "3277" product-id = "215" type = "RTLSDR" description = "Terratec T Stick PLUS" />
-    <usb-device vendor-id = "3277" product-id = "224" type = "RTLSDR" description = "Terratec NOXON DAB/DAB+ USB dongle (rev 2)" />
-    <usb-device vendor-id = "5460" product-id = "20512" type = "RTLSDR" description = "PixelView PV-DT235U(RN)" />
-    <usb-device vendor-id = "5620" product-id = "305" type = "RTLSDR" description = "Astrometa DVB-T/DVB-T2" />
-    <usb-device vendor-id = "5620" product-id = "307" type = "RTLSDR" description = "HanfTek DAB+FM+DVB-T" />
-    <usb-device vendor-id = "6235" product-id = "1568" type = "RTLSDR" description = "Compro Videomate U620F" />
-    <usb-device vendor-id = "6235" product-id = "1616" type = "RTLSDR" description = "Compro Videomate U650F" />
-    <usb-device vendor-id = "6235" product-id = "1664" type = "RTLSDR" description = "Compro Videomate U680F" />
-    <usb-device vendor-id = "7040" product-id = "54163" type = "RTLSDR" description = "GIGABYTE GT-U7300" />
-    <usb-device vendor-id = "7040" product-id = "54164" type = "RTLSDR" description = "DIKOM USB-DVBT HD" />
-    <usb-device vendor-id = "7040" product-id = "54165" type = "RTLSDR" description = "Peak 102569AGPK" />
-    <usb-device vendor-id = "7040" product-id = "54167" type = "RTLSDR" description = "KWorld KW-UB450-T USB DVB-T Pico TV" />
-    <usb-device vendor-id = "7040" product-id = "54168" type = "RTLSDR" description = "Zaapa ZT-MINDVBZP" />
-    <usb-device vendor-id = "7040" product-id = "54173" type = "RTLSDR" description = "SVEON STV20 DVB-T USB &amp; FM" />
-    <usb-device vendor-id = "7040" product-id = "54180" type = "RTLSDR" description = "Twintech UT-40" />
-    <usb-device vendor-id = "7040" product-id = "54184" type = "RTLSDR" description = "ASUS U3100MINI_PLUS_V2" />
-    <usb-device vendor-id = "7040" product-id = "54191" type = "RTLSDR" description = "SVEON STV27 DVB-T USB &amp; FM" />
-    <usb-device vendor-id = "7040" product-id = "54192" type = "RTLSDR" description = "SVEON STV21 DVB-T USB &amp; FM" />
-    <usb-device vendor-id = "7449" product-id = "4353" type = "RTLSDR" description = "Dexatek DK DVB-T Dongle (Logilink VG0002A)" />
-    <usb-device vendor-id = "7449" product-id = "4354" type = "RTLSDR" description = "Dexatek DK DVB-T Dongle (MSI DigiVox mini II V3.0)" />
-    <usb-device vendor-id = "7449" product-id = "4355" type = "RTLSDR" description = "Dexatek Technology Ltd. DK 5217 DVB-T Dongle" />
-    <usb-device vendor-id = "7449" product-id = "4356" type = "RTLSDR" description = "MSI DigiVox Micro HD" />
-    <usb-device vendor-id = "8013" product-id = "43011" type = "RTLSDR" description = "Sweex DVB-T USB" />
-    <usb-device vendor-id = "8013" product-id = "47107" type = "RTLSDR" description = "GTek T803" />
-    <usb-device vendor-id = "8013" product-id = "51203" type = "RTLSDR" description = "Lifeview LV5TDeluxe" />
-    <usb-device vendor-id = "8013" product-id = "53894" type = "RTLSDR" description = "MyGica TD312" />
-    <usb-device vendor-id = "8013" product-id = "55299" type = "RTLSDR" description = "PROlectrix DV107669" />
-    <usb-device vendor-id = "7504" product-id = "24737" type = "AIRSPY" description = "Airspy" />
-    <usb-device vendor-id = "7504" product-id = "24713" type = "AIRSPY" description = "HackRF" />
-    <usb-device vendor-id = "1003" product-id = "32780" type = "AIRSPYHF" description = "Airspy HF+" />
+    <usb-device vendor-id = "3034" product-id = "10290" />
+    <usb-device vendor-id = "3034" product-id = "10296" />
+    <usb-device vendor-id = "1043" product-id = "26240" />
+    <usb-device vendor-id = "1043" product-id = "28431" />
+    <usb-device vendor-id = "1112" product-id = "28799" />
+    <usb-device vendor-id = "3277" product-id = "169" />
+    <usb-device vendor-id = "3277" product-id = "179" />
+    <usb-device vendor-id = "3277" product-id = "180" />
+    <usb-device vendor-id = "3277" product-id = "181" />
+    <usb-device vendor-id = "3277" product-id = "183" />
+    <usb-device vendor-id = "3277" product-id = "184" />
+    <usb-device vendor-id = "3277" product-id = "185" />
+    <usb-device vendor-id = "3277" product-id = "192" />
+    <usb-device vendor-id = "3277" product-id = "198" />
+    <usb-device vendor-id = "3277" product-id = "211" />
+    <usb-device vendor-id = "3277" product-id = "215" />
+    <usb-device vendor-id = "3277" product-id = "224" />
+    <usb-device vendor-id = "5460" product-id = "20512" />
+    <usb-device vendor-id = "5620" product-id = "305" />
+    <usb-device vendor-id = "5620" product-id = "307" />
+    <usb-device vendor-id = "6235" product-id = "1568" />
+    <usb-device vendor-id = "6235" product-id = "1616" />
+    <usb-device vendor-id = "6235" product-id = "1664" />
+    <usb-device vendor-id = "7040" product-id = "54163" />
+    <usb-device vendor-id = "7040" product-id = "54164" />
+    <usb-device vendor-id = "7040" product-id = "54165" />
+    <usb-device vendor-id = "7040" product-id = "54167" />
+    <usb-device vendor-id = "7040" product-id = "54168" />
+    <usb-device vendor-id = "7040" product-id = "54173" />
+    <usb-device vendor-id = "7040" product-id = "54180" />
+    <usb-device vendor-id = "7040" product-id = "54184" />
+    <usb-device vendor-id = "7040" product-id = "54191" />
+    <usb-device vendor-id = "7040" product-id = "54192" />
+    <usb-device vendor-id = "7449" product-id = "4353" />
+    <usb-device vendor-id = "7449" product-id = "4354" />
+    <usb-device vendor-id = "7449" product-id = "4355" />
+    <usb-device vendor-id = "7449" product-id = "4356" />
+    <usb-device vendor-id = "8013" product-id = "43011" />
+    <usb-device vendor-id = "8013" product-id = "47107" />
+    <usb-device vendor-id = "8013" product-id = "51203" />
+    <usb-device vendor-id = "8013" product-id = "53894" />
+    <usb-device vendor-id = "8013" product-id = "55299" />
+    <usb-device vendor-id = "7504" product-id = "24737" />
+    <usb-device vendor-id = "7504" product-id = "24713" />
+    <usb-device vendor-id = "1003" product-id = "32780" />
 </resources>
