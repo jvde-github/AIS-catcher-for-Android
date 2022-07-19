@@ -214,8 +214,9 @@ public class DeviceManager {
         UsbManager mUsbManager = (UsbManager) context.getSystemService(Context.USB_SERVICE);
 
         for (UsbDevice device : mUsbManager.getDeviceList().values()) {
-            final Pair<Integer, Integer> p = new Pair<>(device.getVendorId(), device.getProductId());
-            if (supported.contains(p)) {
+
+            if (supported.contains(new Pair<>(device.getVendorId(), device.getProductId()))) {
+
                 Device dev;
                 if (device.getVendorId() == 7504 && device.getProductId() == 24737)
                     dev = new Device(device, "Airspy", DeviceType.AIRSPY, device.getDeviceId());
@@ -225,6 +226,7 @@ public class DeviceManager {
                     dev = new Device(device, "Airspy HF+", DeviceType.AIRSPYHF, device.getDeviceId());
                 else
                     dev = new Device(device, "RTL-SDR", DeviceType.RTLSDR, device.getDeviceId());
+
                 devices.add(dev);
             }
             else
@@ -281,23 +283,15 @@ public class DeviceManager {
     }
 
     public static String[] getDeviceStrings() {
-        //UsbManager mUsbManager = (UsbManager) context.getSystemService(Context.USB_SERVICE);
 
         refreshList(false);
 
         String[] devs = new String[devices.size()];
         int idx = 0;
-        String SN;
 
         for (Device dev : devices) {
-            /*
-            if (dev.type != DeviceType.RTLTCP && dev.type != DeviceType.SPYSERVER) {
-                SN = dev.device.getSerialNumber();
-            } else
-                SN = null;
-            */
-            SN = null;
-            devs[idx] = (idx + 1) + ": " + dev.description + (SN == null ? "" : ", SN: " + SN);
+
+            devs[idx] = (idx + 1) + ": " + dev.description;
             idx++;
         }
 
@@ -340,6 +334,5 @@ public class DeviceManager {
             AisCatcherJava.onStatus("Android: " + action_clean + ".\n");
             refreshList(add);
         }
-
     };
 }
