@@ -198,6 +198,9 @@ public class DeviceManager {
     }
 
     public static void setDevice(int select) {
+        if(select>=devices.size() || select < 0)
+            select = devices.size()-1;
+
         deviceIndex = select;
         Device dev = devices.get(select);
         deviceType = dev.getType();
