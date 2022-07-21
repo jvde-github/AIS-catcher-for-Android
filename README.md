@@ -110,6 +110,34 @@ The navigation tabs allow you to see different statistics during the run (like m
 
 AIS-catcher will run as a foreground service so the app will continue to receive messages when closed. That's all there is to it. Have fun!
 
+## Credits
+
+AIS-catcher for Android uses the following libraries:
+
+**libusb-1.0.26+**: <a href="https://github.com/libusb/libusb">https://github.com/libusb/libusb</a>
+
+libusb is a library for USB device access from Linux, macOS, Windows, OpenBSD/NetBSD, Haiku and Solaris userspace. It is written in C (Haiku backend in C++) and licensed under the GNU Lesser General Public License version 2.1 or, at your option, any later version (see COPYING).
+
+**rtl-sdr**: <a href="https://github.com/osmocom/rtl-sdr">https://github.com/osmocom/rtl-sdr</a>
+
+Turns your Realtek RTL2832 based DVB dongle into a SDR receiver. Licensed under the GPL-2.0 license.
+Modified for Android to open devices with file descriptors: https://github.com/jvde-github/rtl-sdr.
+
+**airspyhf**: <a href="https://github.com/airspy/airspyhf">https://github.com/airspy/airspyhf</a>
+
+This repository contains host software (Linux/Windows) for Airspy HF+, a high performance software defined radio for the HF and VHF bands. Licensed under the BSD-3-Clause license. Modified for Android to open devices with file descriptors: https://github.com/jvde-github/airspyhf.
+
+**airspyone_host**: <a href="https://github.com/airspy/airspyone_host">https://github.com/airspy/airspyone_host</a>
+
+AirSpy usemode driver and associated tools. Modified for file descriptors here: https://github.com/jvde-github/airspyone_host.
+
+**AIS-catcher**: <a href="https://github.com/jvde-github/AIS-catcher">https://github.com/jvde-github/AIS-catcher</a>
+
+AIS receiver for RTL SDR dongles, Airspy R2, Airspy Mini, Airspy HF+, HackRF and SDRplay. Licensed under the GPGL license.
+
+## Privacy Policy
+At the moment we don't collect any user data. This policy will vary per version so please check this policy for each release.
+
 ## To do
 
 - More testing....
