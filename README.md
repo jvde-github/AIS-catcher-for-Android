@@ -142,7 +142,7 @@ At the moment we don't collect any user data. This policy will vary per version 
 ## To do
 
 - More testing....
-- Application crashes when USB device is unplugged whilst in the source selection menu
+- <del>Application crashes when USB device is unplugged whilst in the source selection menu</del>
 - Application should automatically switch to SDR source if not playing and device connected
 - <del>Application crashes when AirSpy HF+ is disconnected (seems to be a more general issue)</del> Solved.
 - <del>Shorter timeouts when connecting to RTL-TCP</del>
