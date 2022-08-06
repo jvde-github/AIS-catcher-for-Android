@@ -173,7 +173,7 @@ class NMEAcounter : public StreamIn<AIS::Message> {
 
 public:
 
-    void Receive(const AIS::Message *data, int len) {
+    void Receive(const AIS::Message *data, int len, TAG &tag) {
         std::string str;
 
         for (int i = 0; i < len; i++) {
@@ -202,7 +202,7 @@ public:
 class RAWcounter : public StreamIn<RAW> {
 public:
 
-    void Receive(const RAW *data, int len) {
+    void Receive(const RAW *data, int len, TAG &tag) {
         const int GB = 1000000000;
         statistics.DataB += data->size;
         statistics.DataGB += statistics.DataB / GB;
