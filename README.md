@@ -8,8 +8,7 @@ The following screenshot was taken in July 2022 with AIS-catcher receiving signa
 <img src="https://github.com/jvde-github/AIS-catcher/blob/152e5460fd938fb701d988f01deccdfa6192443d/media/Screenshot_BoatBeacon%5B1%5D.jpg" width=40% height=40%>
 </p>
 
-Below you can find a link to the APK file. For now I have decided not to make AIS-catcher available in the Play Store, this is too cumbersome for a small and free app. The only way
-to install it is by building yourself or install a pre-build APK file.
+Below you can find a link to the APK file or visit the [Google Play Store](https://play.google.com/store/apps/details?id=com.jvdegithub.aiscatcher&gl=NL).
  
 The requirements to receive AIS signals are: a RTL-SDR dongle (or alternatively an AirSpy Mini/R2/HF+), a simple antenna, 
 an Android device with USB connector and an OTG cable to connect the dongle with your Android device. 
