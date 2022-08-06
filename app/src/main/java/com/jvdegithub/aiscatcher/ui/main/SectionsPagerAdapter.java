@@ -41,6 +41,7 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
         if (position == 0) return StatisticsFragment.newInstance();
         if (position == 1) return ConsoleLogFragment.newInstance();
         if (position == 2) return NMEALogFragment.newInstance();
+        if (position == 3) return MapFragment.newInstance();
         return null;
     }
 
@@ -50,13 +51,13 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
         if (position == 0) return "STAT";
         if (position == 1) return "LOG";
         if (position == 2) return "NMEA";
-
+        if (position == 3) return "SHIPS";
         return "";
     }
 
     @Override
     public int getCount() {
-        return 3;
+        return 4;
 
     }
 }

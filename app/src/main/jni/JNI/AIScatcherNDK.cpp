@@ -39,6 +39,7 @@ const int TIME_CONSTRAINT = 120;
 #include "Common.h"
 #include "Model.h"
 #include "IO.h"
+#include "AISMessageDecoder.h"
 
 #include "Device/RTLSDR.h"
 #include "Device/AIRSPYHF.h"
@@ -65,6 +66,7 @@ struct Statistics {
 } statistics;
 
 std::string nmea_msg;
+std::string json_queue;
 
 JNIEXPORT jint JNICALL JNI_OnLoad(JavaVM *, void *) {
     return JNI_VERSION_1_6;
@@ -127,6 +129,13 @@ static void callbackNMEA(JNIEnv *env, const std::string &str) {
     env->CallStaticVoidMethod(javaClass, method, jstr);
 }
 
+static void callbackMessage(JNIEnv *env, const std::string &str) {
+
+    jstring jstr = env->NewStringUTF(str.c_str());
+    jmethodID method = env->GetStaticMethodID(javaClass, "onMessage", "(Ljava/lang/String;)V");
+    env->CallStaticVoidMethod(javaClass, method, jstr);
+}
+
 static void callbackConsole(JNIEnv *env, const std::string &str) {
 
     jstring jstr = env->NewStringUTF(str.c_str());
@@ -166,6 +175,24 @@ static void callbackError(JNIEnv *env, const std::string &str) {
 }
 
 // AIS-catcher model
+
+class JSONHandler : public StreamIn<std::string> {
+public:
+
+    void Receive(const std::string *data, int len, TAG &tag) {
+        bool seperate = true;
+
+        if(json_queue.empty()) {
+            seperate = false;
+        }
+
+        for(int i = 0; i < len; i++) {
+            if(seperate) json_queue += ',';
+            json_queue += data[i];
+            seperate = true;
+        }
+    }
+};
 
 class NMEAcounter : public StreamIn<AIS::Message> {
     std::string list;
@@ -226,6 +253,10 @@ RAWcounter rawcounter;
 
 Device::Device *device = nullptr;
 AIS::Model *model = nullptr;
+
+AIS::AISMessageDecoder ais_decoder;
+IO::PropertyToJSON to_json;
+JSONHandler json_handler;
 
 bool stop = false;
 
@@ -319,6 +350,11 @@ Java_com_jvdegithub_aiscatcher_AisCatcherJava_Run(JNIEnv *env, jclass) {
             if (!nmea_msg.empty()) {
                 callbackNMEA(env, nmea_msg);
                 nmea_msg = "";
+            }
+            if(!json_queue.empty())
+            {
+                callbackMessage(env,"["+json_queue+"]");
+                json_queue = "";
             }
             /*
             if (++time_idx == TIME_MAX) {
@@ -447,6 +483,15 @@ Java_com_jvdegithub_aiscatcher_AisCatcherJava_createReceiver(JNIEnv *env, jclass
 
     device->out >> rawcounter;
     model->Output() >> NMEAcounter;
+
+    ais_decoder.Clear();
+    to_json.out.Clear();
+
+    model->Output() >> ais_decoder;
+    ais_decoder >> to_json;
+    to_json >> json_handler;
+
+    ais_decoder.setSparse(true);
 
     return 0;
 }

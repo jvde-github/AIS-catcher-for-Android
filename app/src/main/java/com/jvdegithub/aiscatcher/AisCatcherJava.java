@@ -31,6 +31,8 @@ public class AisCatcherJava {
         void onError(final String line);
 
         void onUpdate();
+
+        void onMessage(final String line);
     }
 
     private static AisCallback callback = null;
@@ -147,6 +149,12 @@ public class AisCatcherJava {
         Logs.Nmea.Update(nmea);
         if (callback != null)
             callback.onNMEA(nmea);
+    }
+
+    private static void onMessage(String str) {
+
+        if (callback != null)
+            callback.onMessage(str);
     }
 
     public static void onStatus(String str) {

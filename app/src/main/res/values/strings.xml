@@ -44,4 +44,6 @@ It is specifically forbidden to use this software for any illegal purpose whatso
     under certain conditions. for details see <a href="https://github.com/jvde-github/AIS-catcher-for-Android">https://github.com/jvde-github/AIS-catcher-for-Android</a>.<p>
     <b>DO NOT rely upon this software</b> in any way including for navigation and/or safety of life or property purposes.<p>
 ]]></string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
