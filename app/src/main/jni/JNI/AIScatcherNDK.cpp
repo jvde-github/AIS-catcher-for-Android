@@ -167,13 +167,13 @@ static void callbackError(JNIEnv *env, const std::string &str) {
 
 // AIS-catcher model
 
-class NMEAcounter : public StreamIn<NMEA> {
+class NMEAcounter : public StreamIn<AIS::Message> {
     std::string list;
     bool clean = true;
 
 public:
 
-    void Receive(const NMEA *data, int len) {
+    void Receive(const AIS::Message *data, int len) {
         std::string str;
 
         for (int i = 0; i < len; i++) {
@@ -188,7 +188,7 @@ public:
             else
                 statistics.ChB++;
 
-            int msg = data[i].msg;
+            int msg = data[i].type();
 
             if (msg > 27 || msg < 1) statistics.Error++;
             if (msg <= 27) statistics.Msg[msg]++;
