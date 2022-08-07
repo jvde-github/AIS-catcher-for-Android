@@ -54,7 +54,7 @@ public class MainActivity<binding> extends AppCompatActivity implements AisCatch
 
     private ConsoleLogFragment log_fragment;
     private NMEALogFragment nmea_fragment;
-    private MapFragment map_fragment;
+    //private MapFragment map_fragment;
     private StatisticsFragment stat_fragment;
     private BottomNavigationView bottomNavigationView;
 
@@ -77,7 +77,7 @@ public class MainActivity<binding> extends AppCompatActivity implements AisCatch
         stat_fragment = (StatisticsFragment) sectionsPagerAdapter.instantiateItem(viewPager, 0);
         log_fragment = (ConsoleLogFragment) sectionsPagerAdapter.instantiateItem(viewPager, 1);
         nmea_fragment = (NMEALogFragment) sectionsPagerAdapter.instantiateItem(viewPager, 2);
-        map_fragment = (MapFragment) sectionsPagerAdapter.instantiateItem(viewPager, 3);
+        //map_fragment = (MapFragment) sectionsPagerAdapter.instantiateItem(viewPager, 3);
         sectionsPagerAdapter.finishUpdate(viewPager);
 
         if(Settings.setDefaultOnFirst(this)) {
@@ -271,7 +271,7 @@ public class MainActivity<binding> extends AppCompatActivity implements AisCatch
 
     @Override
     public void onMessage(final String line) {
-        map_fragment.Update(line);
+        //map_fragment.Update(line);
     }
 
     @Override
