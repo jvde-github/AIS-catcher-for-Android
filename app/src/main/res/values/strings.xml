@@ -28,7 +28,18 @@ AIS receiver for RTL SDR dongles, Airspy R2, Airspy Mini, Airspy HF+, HackRF and
 
     <string name="disclaimer_text"><![CDATA[
 <i>AIS-catcher for Android</i> is created for research and educational purposes under the GPL license.<P>
-This is free software that comes with <b>ABSOLUTELY NO WARRANTY</b>. <p>
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.<P>
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+<P>
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <a href="https://www.gnu.org/licenses/">https://www.gnu.org/licenses/</a>.
+<P>
 It is a hobby project and not tested and designed for reliability and correctness. You can play with the software but it is the user responsibility to use it prudently.
 So, <b>DO NOT rely upon this software</b> in any way including for navigation and/or safety of life or property purposes.<p>
 There are variations in the legislation concerning radio reception in the different administrations around the world.
@@ -43,6 +54,20 @@ It is specifically forbidden to use this software for any illegal purpose whatso
     This is free software, and you are welcome to redistribute it
     under certain conditions. for details see <a href="https://github.com/jvde-github/AIS-catcher-for-Android">https://github.com/jvde-github/AIS-catcher-for-Android</a>.<p>
     <b>DO NOT rely upon this software</b> in any way including for navigation and/or safety of life or property purposes.<p>
+<p>
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.<P>
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+<P>
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <a href="https://www.gnu.org/licenses/">https://www.gnu.org/licenses/</a>.
+
+
 ]]></string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
