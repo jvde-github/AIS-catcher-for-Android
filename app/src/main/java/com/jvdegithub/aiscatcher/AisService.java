@@ -101,40 +101,39 @@ public class AisService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
-        int source = (int) intent.getExtras().get("source");
-        int fd = (int) intent.getExtras().get("USB");
+        if(intent != null) {
 
-        int r = AisCatcherJava.createReceiver(source, fd);
+            int source = (int) intent.getExtras().get("source");
+            int fd = (int) intent.getExtras().get("USB");
 
-        if(r == 0)
-        {
-            String msg = "Receiver running - " + DeviceManager.getDeviceType() + " @ " + AisCatcherJava.getSampleRate() / 1000 + "K";
-            startForeground(1001, buildNotification(msg));
+            int r = AisCatcherJava.createReceiver(source, fd);
 
-            new Thread(
-                    () -> {
-                        acquireLocks();
+            if (r == 0) {
+                String msg = "Receiver running - " + DeviceManager.getDeviceType() + " @ " + AisCatcherJava.getSampleRate() / 1000 + "K";
+                startForeground(1001, buildNotification(msg));
 
-                        AisCatcherJava.Run();
-                        AisCatcherJava.Close();
+                new Thread(
+                        () -> {
+                            acquireLocks();
 
-                        stopForeground(true);
-                        stopSelf();
-                        sendBroadcast();
+                            AisCatcherJava.Run();
+                            AisCatcherJava.Close();
 
-                        releaseLocks();
-                    }).start();
+                            stopForeground(true);
+                            stopSelf();
+                            sendBroadcast();
+
+                            releaseLocks();
+                        }).start();
+            } else {
+                String msg = "Receiver creation failed";
+                startForeground(1001, buildNotification(msg));
+
+                stopForeground(true);
+                stopSelf();
+                sendBroadcast();
+            }
         }
-        else
-        {
-            String msg = "Receiver creation failed";
-            startForeground(1001, buildNotification(msg));
-
-            stopForeground(true);
-            stopSelf();
-            sendBroadcast();
-        }
-
         return super.onStartCommand(intent, flags, startId);
     }
 
