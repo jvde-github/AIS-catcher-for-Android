@@ -40,6 +40,7 @@ import java.util.Objects;
 
 public class Settings extends AppCompatActivity {
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,6 +49,12 @@ public class Settings extends AppCompatActivity {
 
     static void setDefault(Context context) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+
+        preferences.edit().putString("oCGF_WIDE", "Default").commit();
+        preferences.edit().putString("oMODEL_TYPE", "Default").commit();
+        preferences.edit().putBoolean("oFP_DS", false).commit();
+
+
         preferences.edit().putString("rRATE", "288K").commit();
         preferences.edit().putBoolean("rRTLAGC", false).commit();
         preferences.edit().putString("rTUNER", "Auto").commit();
@@ -109,9 +116,15 @@ public class Settings extends AppCompatActivity {
             setSummaries();
         }
 
+        static public int getModelType(Context context)
+        {
+            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+            return preferences.getInt("oMODEL_TYPE", 0);
+        }
+
         private void setSummaries() {
             setSummaryText(new String[]{"tPORT","tHOST","sPORT","sHOST","u1HOST","u1PORT","u2HOST","u2PORT", "rFREQOFFSET"});
-            setSummaryList(new String[]{"rTUNER","rRATE","sRATE","tRATE","tTUNER","mRATE","hRATE"});
+            setSummaryList(new String[]{"rTUNER","rRATE","sRATE","tRATE","tTUNER","mRATE","hRATE","oMODEL_TYPE","oCGF_WIDE"});
             setSummarySeekbar(new String[]{"mLINEARITY", "sGAIN"});
         }
 
@@ -191,6 +204,29 @@ public class Settings extends AppCompatActivity {
         if (!SetUDPoutput("u1", context)) return false;
         if (!SetUDPoutput("u2", context)) return false;
         return true;
+    }
+
+    static public int getModelType(Context context)
+    {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        String set = preferences.getString("oMODEL_TYPE", "Default");
+
+        if(set.equals("Default")) return 0;
+        return 1;
+    }
+
+    static public int getCGFSetting(Context context)
+    {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        String set = preferences.getString("oCGF_WIDE", "Default");
+        if(set.equals("Default")) return 0;
+        return 1;
+    }
+
+    static public boolean getFixedPointDownsampling(Context context)
+    {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        return preferences.getBoolean("oFP_DS", false);
     }
 
     static private boolean SetDevice(String[] settings, Context context) {

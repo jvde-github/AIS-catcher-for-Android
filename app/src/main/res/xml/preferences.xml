@@ -198,4 +198,32 @@
 
     </PreferenceCategory>
 
+    <PreferenceCategory
+        android:key="model_category"
+        android:title="Receiver">
+
+        <ListPreference
+            android:defaultValue="Default"
+            android:dialogTitle="Model"
+            android:entries="@array/model_type_array"
+            android:entryValues="@array/model_type_array"
+            android:key="oMODEL_TYPE"
+            android:title="Receiver decoding model" />
+
+        <ListPreference
+            android:defaultValue="Default"
+            android:dialogTitle="Frequency Correction"
+            android:entries="@array/cgf_array"
+            android:entryValues="@array/cgf_array"
+            android:key="oCGF_WIDE"
+            android:title="Applied frequency correction" />
+
+        <SwitchPreferenceCompat
+            android:key="oFP_DS"
+            android:summary="Fixed Point Downsampling"
+            android:defaultValue="False"
+            android:title="Enable fixed point downsampling"/>
+
+    </PreferenceCategory>
+
 </PreferenceScreen>

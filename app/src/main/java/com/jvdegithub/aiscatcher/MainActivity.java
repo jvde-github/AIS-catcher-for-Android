@@ -146,6 +146,11 @@ public class MainActivity<binding> extends AppCompatActivity implements AisCatch
                     Intent serviceIntent = new Intent(MainActivity.this, AisService.class);
                     serviceIntent.putExtra("source", DeviceManager.getDeviceCode());
                     serviceIntent.putExtra("USB", fd);
+                    serviceIntent.putExtra("CGFWIDE", Settings.getCGFSetting(this));
+                    serviceIntent.putExtra("MODELTYPE", Settings.getModelType(this));
+                    serviceIntent.putExtra("FPDS", Settings.getFixedPointDownsampling(this)?1:0);
+
+                    serviceIntent.putExtra("USB", fd);
                     ContextCompat.startForegroundService(MainActivity.this, serviceIntent);
                     updateUIwithStart();
                 }

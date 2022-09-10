@@ -39,7 +39,7 @@ public class AisCatcherJava {
 
     static native int InitNative();
 
-    static native int createReceiver(int source, int FD);
+    static native int createReceiver(int source, int FD, int CGF_wide, int model_type, int FPDS);
 
     static native int Run();
 

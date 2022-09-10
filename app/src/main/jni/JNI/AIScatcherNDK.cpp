@@ -416,8 +416,10 @@ Java_com_jvdegithub_aiscatcher_AisCatcherJava_forceStop(JNIEnv *env, jclass) {
 extern "C"
 JNIEXPORT jint JNICALL
 Java_com_jvdegithub_aiscatcher_AisCatcherJava_createReceiver(JNIEnv *env, jclass, jint source,
-                                                             jint fd) {
-    callbackConsole(env, "Creating Receiver\n");
+                                                             jint fd,  jint CGF_wide, jint model_type, int FPDS) {
+
+    callbackConsoleFormat(env, "Creating Receiver (source = %d, fd = %d, CGF wide = %d, model = %d, FPDS = %d)\n",
+                          (int)source, (int)fd,(int)CGF_wide,(int)model_type,(int)FPDS);
 /*
     if (device != nullptr) {
         callbackConsole(env, "Error: device already assigned.");
@@ -468,7 +470,24 @@ Java_com_jvdegithub_aiscatcher_AisCatcherJava_createReceiver(JNIEnv *env, jclass
                               device->getSampleRate() / 1000);
 
         delete model;
-        model = new AIS::ModelDefault();
+
+        if(model_type == 0) {
+            callbackConsole(env, "Model: default\n");
+            model = new AIS::ModelDefault();
+
+            std::string s = (CGF_wide == 0)?"OFF":"ON";
+            model->Set("CGF_WIDE",s);
+            callbackConsoleFormat(env, "CGF wide: %s\n", s.c_str());
+        }
+        else {
+            callbackConsole(env, "Model: base (FM)\n");
+            model = new AIS::ModelBase();
+        }
+
+        std::string s = (FPDS == 0)?"OFF":"ON";
+        model->Set("FP_DS",s);
+        callbackConsoleFormat(env, "Fixed Point Downsampler: %s\n", s.c_str());
+
         model->buildModel('A','B',device->getSampleRate(), false, device);
 
         callbackConsole(env, "Creating output channels\n");

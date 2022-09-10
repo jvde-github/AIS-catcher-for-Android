@@ -24,4 +24,12 @@
         <item>192K</item><item>768K</item>
     </string-array>
 
+    <string-array name="model_type_array">
+        <item>Default</item><item>FM decoding</item>
+    </string-array>
+
+    <string-array name="cgf_array">
+        <item>Default</item><item>Wide</item>
+    </string-array>
+
 </resources>
