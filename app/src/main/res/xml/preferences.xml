@@ -220,9 +220,9 @@
 
         <SwitchPreferenceCompat
             android:key="oFP_DS"
-            android:summary="Fixed Point Downsampling"
+            android:summary="Enable Fixed Point downsampling"
             android:defaultValue="False"
-            android:title="Enable fixed point downsampling"/>
+            android:title="Fixed Point downsampling"/>
 
     </PreferenceCategory>
 
