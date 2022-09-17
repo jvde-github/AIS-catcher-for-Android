@@ -267,8 +267,6 @@ public class Settings extends AppCompatActivity {
     static private boolean SetUDPoutput(String s, Context context) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
 
-        Log.i("SET UDP", s);
-
         boolean b = preferences.getBoolean(s + "SWITCH", true);
         if (b) {
             String host = preferences.getString(s + "HOST", "");

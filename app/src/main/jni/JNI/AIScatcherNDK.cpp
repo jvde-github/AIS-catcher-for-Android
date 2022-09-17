@@ -246,7 +246,9 @@ struct Drivers {
 } drivers;
 
 //Device::Type type = Device::Type::NONE;
-std::vector<IO::UDP> UDP_connections;
+std::vector<IO::UDP > UDP_connections;
+std::vector<std::string> UDPhost;
+std::vector<std::string> UDPport;
 
 NMEAcounter NMEAcounter;
 RAWcounter rawcounter;
@@ -334,6 +336,14 @@ Java_com_jvdegithub_aiscatcher_AisCatcherJava_Run(JNIEnv *env, jclass) {
     const int TIME_MAX = (TIME_CONSTRAINT * 1000) / TIME_INTERVAL;
 
     try {
+        callbackConsole(env, "Creating output channels\n");
+        UDP_connections.resize(UDPhost.size());
+        for(int i = 0; i < UDPhost.size(); i++)
+        {
+            UDP_connections[i].openConnection(UDPhost[i],UDPport[i]);
+            model->Output() >> UDP_connections[i];
+        }
+
         callbackConsole(env, "Starting device\n");
         device->Play();
 
@@ -365,6 +375,13 @@ Java_com_jvdegithub_aiscatcher_AisCatcherJava_Run(JNIEnv *env, jclass) {
         }
 
         device->Stop();
+
+        model->Output().out.Clear();
+
+        for (auto u: UDP_connections) u.closeConnection();
+        UDP_connections.clear();
+        UDPport.clear();
+        UDPhost.clear();
     }
     catch (const char *msg) {
         callbackError(env, msg);
@@ -391,10 +408,6 @@ Java_com_jvdegithub_aiscatcher_AisCatcherJava_Close(JNIEnv *env, jclass) {
     try {
         if (device) device->Close();
         device = nullptr;
-
-        for (auto u: UDP_connections) u.closeConnection();
-        UDP_connections.resize(0);
-
         delete model;
         model = nullptr;
     }
@@ -490,10 +503,6 @@ Java_com_jvdegithub_aiscatcher_AisCatcherJava_createReceiver(JNIEnv *env, jclass
 
         model->buildModel('A','B',device->getSampleRate(), false, device);
 
-        callbackConsole(env, "Creating output channels\n");
-        for (auto &UDP_connection: UDP_connections) {
-            model->Output() >> UDP_connection;
-        }
     } catch (const char *msg) {
         callbackError(env, msg);
         device = nullptr;
@@ -520,12 +529,15 @@ JNIEXPORT jint JNICALL
 Java_com_jvdegithub_aiscatcher_AisCatcherJava_createUDP(JNIEnv *env, jclass clazz, jstring h,
                                                         jstring p) {
     try {
-        UDP_connections.resize(UDP_connections.size() + 1);
+        UDPport.resize(UDPport.size() + 1);
+        UDPhost.resize(UDPhost.size() + 1);
 
         jboolean b;
         std::string host = (env)->GetStringUTFChars(h, &b);
         std::string port = (env)->GetStringUTFChars(p, &b);
-        UDP_connections[UDP_connections.size() - 1].openConnection(host, port);
+
+        UDPport[UDPport.size() - 1] = port;
+        UDPhost[UDPhost.size() - 1] = host;
 
         callbackConsoleFormat(env, "UDP: %s %s\n", host.c_str(), port.c_str());
 
