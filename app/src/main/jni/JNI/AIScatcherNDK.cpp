@@ -270,7 +270,7 @@ Java_com_jvdegithub_aiscatcher_AisCatcherJava_InitNative(JNIEnv *env, jclass ins
     javaVersion = env->GetVersion();
     javaClass = (jclass) env->NewGlobalRef(instance);
 
-    callbackConsole(env, "AIS-Catcher " VERSION "-22\n");
+    callbackConsole(env, "AIS-Catcher " VERSION "-23\n");
     memset(&statistics, 0, sizeof(statistics));
 
     return 0;
@@ -338,9 +338,8 @@ Java_com_jvdegithub_aiscatcher_AisCatcherJava_Run(JNIEnv *env, jclass) {
     try {
         callbackConsole(env, "Creating output channels\n");
         UDP_connections.resize(UDPhost.size());
-        for(int i = 0; i < UDPhost.size(); i++)
-        {
-            UDP_connections[i].openConnection(UDPhost[i],UDPport[i]);
+        for (int i = 0; i < UDPhost.size(); i++) {
+            UDP_connections[i].openConnection(UDPhost[i], UDPport[i]);
             model->Output() >> UDP_connections[i];
         }
 
@@ -361,19 +360,17 @@ Java_com_jvdegithub_aiscatcher_AisCatcherJava_Run(JNIEnv *env, jclass) {
                 callbackNMEA(env, nmea_msg);
                 nmea_msg = "";
             }
-            if(!json_queue.empty())
-            {
-                callbackMessage(env,"["+json_queue+"]");
-                json_queue = "";
-            }
-            /*
-            if (++time_idx == TIME_MAX) {
-                stop = true;
-                callbackError(env, "Max decoding time of 120 seconds reached");
-            }
-             */
         }
 
+    }
+    catch (const char *msg) {
+        callbackError(env, msg);
+    }
+    catch (const std::exception &e) {
+        callbackError(env, e.what());
+    }
+
+    try {
         device->Stop();
 
         model->Output().out.Clear();
@@ -382,15 +379,8 @@ Java_com_jvdegithub_aiscatcher_AisCatcherJava_Run(JNIEnv *env, jclass) {
         UDP_connections.clear();
         UDPport.clear();
         UDPhost.clear();
-    }
-    catch (const char *msg) {
+    } catch (const char *msg) {
         callbackError(env, msg);
-        return -1;
-    }
-    catch (const std::exception& e)
-    {
-        callbackError(env, e.what());
-        return -1;
     }
 
     if (!stop) {
