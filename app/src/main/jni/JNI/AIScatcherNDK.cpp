@@ -270,7 +270,7 @@ Java_com_jvdegithub_aiscatcher_AisCatcherJava_InitNative(JNIEnv *env, jclass ins
     javaVersion = env->GetVersion();
     javaClass = (jclass) env->NewGlobalRef(instance);
 
-    callbackConsole(env, "AIS-Catcher " VERSION "-23\n");
+    callbackConsole(env, "AIS-Catcher " VERSION "-24\n");
     memset(&statistics, 0, sizeof(statistics));
 
     return 0;
@@ -479,8 +479,8 @@ Java_com_jvdegithub_aiscatcher_AisCatcherJava_createReceiver(JNIEnv *env, jclass
             model = new AIS::ModelDefault();
 
             std::string s = (CGF_wide == 0)?"OFF":"ON";
-            model->Set("CGF_WIDE",s);
-            callbackConsoleFormat(env, "CGF wide: %s\n", s.c_str());
+            model->Set("AFC_WIDE",s);
+            callbackConsoleFormat(env, "AFC wide: %s\n", s.c_str());
         }
         else {
             callbackConsole(env, "Model: base (FM)\n");
