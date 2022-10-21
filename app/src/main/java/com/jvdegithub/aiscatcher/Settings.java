@@ -60,6 +60,7 @@ public class Settings extends AppCompatActivity {
         preferences.edit().putString("rTUNER", "Auto").commit();
         preferences.edit().putBoolean("rBIASTEE", false).commit();
         preferences.edit().putString("rFREQOFFSET", "0").commit();
+        preferences.edit().putBoolean("rBANDWIDTH", false).commit();
 
         preferences.edit().putString("tRATE", "240K").commit();
         preferences.edit().putString("tTUNER", "Auto").commit();
@@ -201,6 +202,8 @@ public class Settings extends AppCompatActivity {
             return false;
         if (!SetDeviceInteger(new String[]{"mLINEARITY", "sGAIN"}, context)) return false;
 
+        if(!SetRTLbandwidth(context)) return false;
+
         if (!SetUDPoutput("u1", context)) return false;
         if (!SetUDPoutput("u2", context)) return false;
         return true;
@@ -236,6 +239,17 @@ public class Settings extends AppCompatActivity {
             String p = preferences.getString(s, "");
             if (Objects.equals(p, "")) return false;
             if (AisCatcherJava.applySetting(s.substring(0, 1), s.substring(1), p) != 0)
+                return false;
+        }
+        return true;
+    }
+
+    static private boolean SetRTLbandwidth(Context context)
+    {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        boolean b = preferences.getBoolean("rBANDWIDTH", false);
+        if(b) {
+            if (AisCatcherJava.applySetting("r", "BW", "192000") != 0)
                 return false;
         }
         return true;

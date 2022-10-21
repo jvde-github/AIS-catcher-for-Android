@@ -40,6 +40,11 @@
             android:summary="Frequency Correction"
             android:title="Frequency Correction (PPM)"/>
 
+        <SwitchPreferenceCompat
+            android:key="rBANDWIDTH"
+            android:summary="Use device bandwidth filter"
+            android:defaultValue="False"
+            android:title="RTL bandwidth filter"/>
 
     </PreferenceCategory>
 

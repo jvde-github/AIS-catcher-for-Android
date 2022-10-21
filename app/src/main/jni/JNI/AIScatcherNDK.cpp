@@ -270,7 +270,7 @@ Java_com_jvdegithub_aiscatcher_AisCatcherJava_InitNative(JNIEnv *env, jclass ins
     javaVersion = env->GetVersion();
     javaClass = (jclass) env->NewGlobalRef(instance);
 
-    callbackConsole(env, "AIS-Catcher " VERSION "-24\n");
+    callbackConsole(env, "AIS-Catcher " VERSION "-25\n");
     memset(&statistics, 0, sizeof(statistics));
 
     return 0;
@@ -334,6 +334,7 @@ Java_com_jvdegithub_aiscatcher_AisCatcherJava_Run(JNIEnv *env, jclass) {
 
     const int TIME_INTERVAL = 1000;
     const int TIME_MAX = (TIME_CONSTRAINT * 1000) / TIME_INTERVAL;
+    const TAG tag;
 
     try {
         callbackConsole(env, "Creating output channels\n");
@@ -344,6 +345,7 @@ Java_com_jvdegithub_aiscatcher_AisCatcherJava_Run(JNIEnv *env, jclass) {
         }
 
         callbackConsole(env, "Starting device\n");
+        device->setTag(tag);
         device->Play();
 
         stop = false;
