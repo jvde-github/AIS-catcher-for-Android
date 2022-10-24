@@ -58,7 +58,7 @@ include_directories(
         ./airspyhf/libairspyhf/src
         ./AIS-catcher ./AIS-catcher/Application ./AIS-catcher/IO ./AIS-catcher/Library ./AIS-catcher/DSP ./AIS-catcher/Device)
 
-add_definitions(-DHASRTLSDR -DHASRTLSDR_BIASTEE -DHASRTL_ANDROID -DHASAIRSPY -DHASAIRSPY_ANDROID -D HASAIRSPYHF -DHASAIRSPYHF_ANDROID)
+add_definitions(-DHASRTLSDR -DHASRTLSDR_BIASTEE -DHASRTL_ANDROID -DHASAIRSPY -DHASAIRSPY_ANDROID -D HASAIRSPYHF -DHASAIRSPYHF_ANDROID -DHASRTLSDR_TUNERBW)
 
 # Searches for a specified prebuilt library and stores the path as a
 # variable. Because CMake includes system libraries in the search path by

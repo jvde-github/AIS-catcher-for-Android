@@ -252,6 +252,10 @@ public class Settings extends AppCompatActivity {
             if (AisCatcherJava.applySetting("r", "BW", "192000") != 0)
                 return false;
         }
+        else {
+            if (AisCatcherJava.applySetting("r", "BW", "0") != 0)
+                return false;
+        }
         return true;
     }
 
