@@ -44,9 +44,9 @@ add_library( # Sets the name of the library.
         ./airspyhf/libairspyhf/src/airspyhf.c
         ./airspyhf/libairspyhf/src/iqbalancer.c
 
-        ./AIS-catcher/Device/AIRSPYHF.cpp ./AIS-catcher/Device/FileWAV.cpp ./AIS-catcher/Device/RTLSDR.cpp ./AIS-catcher/Device/SDRPLAY.cpp
-        ./AIS-catcher/DSP/Demod.cpp ./AIS-catcher/DSP/Model.cpp ./AIS-catcher/Library/AIS.cpp ./AIS-catcher/Device/FileRAW.cpp ./AIS-catcher/Library/AISMessageDecoder.cpp
-        ./AIS-catcher/Device/HACKRF.cpp ./AIS-catcher/Device/RTLTCP.cpp ./AIS-catcher/Device/ZMQ.cpp ./AIS-catcher/Library/Utilities.cpp ./AIS-catcher/Library/Property.cpp
+        ./AIS-catcher/Device/AIRSPYHF.cpp ./AIS-catcher/Device/FileWAV.cpp ./AIS-catcher/Device/RTLSDR.cpp ./AIS-catcher/Device/SDRPLAY.cpp ./AIS-catcher/IO/Network.cpp
+        ./AIS-catcher/DSP/Demod.cpp ./AIS-catcher/DSP/Model.cpp ./AIS-catcher/Library/AIS.cpp ./AIS-catcher/Device/FileRAW.cpp ./AIS-catcher/Library/JSONAIS.cpp ./AIS-catcher/Library/Message.cpp
+        ./AIS-catcher/Device/HACKRF.cpp ./AIS-catcher/Device/RTLTCP.cpp ./AIS-catcher/Device/ZMQ.cpp ./AIS-catcher/Library/Utilities.cpp ./AIS-catcher/Library/JSON.cpp
         ./AIS-catcher/Device/AIRSPY.cpp ./AIS-catcher/Device/SpyServer.cpp ./AIS-catcher/DSP/DSP.cpp ./AIS-catcher/IO/IO.cpp ./AIS-catcher/Library/TCP.cpp
 
         JNI/AIScatcherNDK.cpp)

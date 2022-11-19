@@ -39,7 +39,7 @@ const int TIME_CONSTRAINT = 120;
 #include "Common.h"
 #include "Model.h"
 #include "IO.h"
-#include "AISMessageDecoder.h"
+#include "Network.h"
 
 #include "Device/RTLSDR.h"
 #include "Device/AIRSPYHF.h"
@@ -55,8 +55,7 @@ static jclass javaClass = nullptr;
 static jclass javaStatisticsClass = nullptr;
 
 struct Statistics {
-    long DataB;
-    long DataGB;
+    uint64_t DataSize;
     int Total;
     int ChA;
     int ChB;
@@ -89,12 +88,13 @@ void DetachThread()
 
 void pushStatistics(JNIEnv *env) {
 
+    const int GB = 1000000000;
     env->SetStaticIntField(javaStatisticsClass,
                            env->GetStaticFieldID(javaStatisticsClass, "DataB", "I"),
-                           statistics.DataB);
+                           (int)(statistics.DataSize % GB));
     env->SetStaticIntField(javaStatisticsClass,
                            env->GetStaticFieldID(javaStatisticsClass, "DataGB", "I"),
-                           statistics.DataGB);
+                           (int)(statistics.DataSize / GB));
     env->SetStaticIntField(javaStatisticsClass,
                            env->GetStaticFieldID(javaStatisticsClass, "Total", "I"),
                            statistics.Total);
@@ -176,24 +176,6 @@ static void callbackError(JNIEnv *env, const std::string &str) {
 
 // AIS-catcher model
 
-class JSONHandler : public StreamIn<std::string> {
-public:
-
-    void Receive(const std::string *data, int len, TAG &tag) {
-        bool seperate = true;
-
-        if(json_queue.empty()) {
-            seperate = false;
-        }
-
-        for(int i = 0; i < len; i++) {
-            if(seperate) json_queue += ',';
-            json_queue += data[i];
-            seperate = true;
-        }
-    }
-};
-
 class NMEAcounter : public StreamIn<AIS::Message> {
     std::string list;
     bool clean = true;
@@ -204,13 +186,13 @@ public:
         std::string str;
 
         for (int i = 0; i < len; i++) {
-            for (const auto &s: data[i].sentence) {
+            for (const auto &s: data[i].NMEA) {
                 str.append("\n" + s);
             }
 
             statistics.Total++;
 
-            if (data[i].channel == 'A')
+            if (data[i].getChannel() == 'A')
                 statistics.ChA++;
             else
                 statistics.ChB++;
@@ -230,10 +212,7 @@ class RAWcounter : public StreamIn<RAW> {
 public:
 
     void Receive(const RAW *data, int len, TAG &tag) {
-        const int GB = 1000000000;
-        statistics.DataB += data->size;
-        statistics.DataGB += statistics.DataB / GB;
-        statistics.DataB %= GB;
+        statistics.DataSize += data->size;
     }
 };
 
@@ -255,10 +234,6 @@ RAWcounter rawcounter;
 
 Device::Device *device = nullptr;
 AIS::Model *model = nullptr;
-
-AIS::AISMessageDecoder ais_decoder;
-IO::PropertyToJSON to_json;
-JSONHandler json_handler;
 
 bool stop = false;
 
@@ -503,15 +478,6 @@ Java_com_jvdegithub_aiscatcher_AisCatcherJava_createReceiver(JNIEnv *env, jclass
 
     device->out >> rawcounter;
     model->Output() >> NMEAcounter;
-
-    ais_decoder.Clear();
-    to_json.out.Clear();
-
-    model->Output() >> ais_decoder;
-    ais_decoder >> to_json;
-    to_json >> json_handler;
-
-    ais_decoder.setSparse(true);
 
     return 0;
 }
