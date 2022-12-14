@@ -74,7 +74,10 @@ public class AisService extends Service {
         }
 
         Intent notificationIntent = new Intent(this.getApplicationContext(), MainActivity.class);
-        PendingIntent contentIntent = PendingIntent.getActivity(this.getApplicationContext(), 0, notificationIntent, PendingIntent.FLAG_IMMUTABLE);
+        int f = 0;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S)
+            f = PendingIntent.FLAG_MUTABLE;
+        PendingIntent contentIntent = PendingIntent.getActivity(this.getApplicationContext(), 0, notificationIntent, f);
 
         notification.setContentIntent(contentIntent)
                 .setContentText(msg)

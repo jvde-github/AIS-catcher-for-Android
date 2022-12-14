@@ -245,7 +245,7 @@ Java_com_jvdegithub_aiscatcher_AisCatcherJava_InitNative(JNIEnv *env, jclass ins
     javaVersion = env->GetVersion();
     javaClass = (jclass) env->NewGlobalRef(instance);
 
-    callbackConsole(env, "AIS-Catcher " VERSION "-28\n");
+    callbackConsole(env, "AIS-Catcher " VERSION "-29\n");
     memset(&statistics, 0, sizeof(statistics));
 
     return 0;

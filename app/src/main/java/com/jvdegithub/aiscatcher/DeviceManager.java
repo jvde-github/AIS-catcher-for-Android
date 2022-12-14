@@ -27,6 +27,7 @@ import android.content.res.XmlResourceParser;
 import android.hardware.usb.UsbDevice;
 import android.hardware.usb.UsbDeviceConnection;
 import android.hardware.usb.UsbManager;
+import android.os.Build;
 import android.util.AttributeSet;
 import android.util.Xml;
 
@@ -126,7 +127,11 @@ public class DeviceManager {
                 else
                 {
                     AisCatcherJava.onStatus("No permission to USB device\n");
-                    PendingIntent permissionIntent = PendingIntent.getBroadcast(context, 0, new Intent(ACTION_USB_PERMISSION), 0);
+                    int f = 0;
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S)
+                        f = PendingIntent.FLAG_MUTABLE;
+
+                    PendingIntent permissionIntent = PendingIntent.getBroadcast(context, 0, new Intent(ACTION_USB_PERMISSION), f);
                     mUsbManager.requestPermission(devices.get(deviceIndex).getDevice(),permissionIntent);
                     AisCatcherJava.onStatus("Permission requested\n");
                     return -1;
