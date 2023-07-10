@@ -222,7 +222,8 @@ public class Settings extends AppCompatActivity {
     {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
         String set = preferences.getString("oCGF_WIDE", "Default");
-        if(set.equals("Default")) return 0;
+        if(set.equals("Default")) return 1;
+        if(set.equals("Narrow")) return 0;
         return 1;
     }
 

@@ -235,7 +235,12 @@ RAWcounter rawcounter;
 Device::Device *device = nullptr;
 AIS::Model *model = nullptr;
 
+
 bool stop = false;
+
+void StopRequest() {
+    stop = true;
+}
 
 extern "C"
 JNIEXPORT jint JNICALL
@@ -245,7 +250,7 @@ Java_com_jvdegithub_aiscatcher_AisCatcherJava_InitNative(JNIEnv *env, jclass ins
     javaVersion = env->GetVersion();
     javaClass = (jclass) env->NewGlobalRef(instance);
 
-    callbackConsole(env, "AIS-Catcher " VERSION "-29\n");
+    callbackConsole(env, "AIS-Catcher " VERSION "-30\n");
     memset(&statistics, 0, sizeof(statistics));
 
     return 0;
@@ -261,8 +266,7 @@ Java_com_jvdegithub_aiscatcher_AisCatcherJava_isStreaming(JNIEnv *, jclass) {
 
 extern "C"
 JNIEXPORT jint JNICALL
-Java_com_jvdegithub_aiscatcher_AisCatcherJava_applySetting(JNIEnv *env, jclass, jstring dev,
-                                                           jstring setting, jstring param) {
+Java_com_jvdegithub_aiscatcher_AisCatcherJava_applySetting(JNIEnv *env, jclass, jstring dev, jstring setting, jstring param) {
 
     try {
         jboolean isCopy;
@@ -315,7 +319,8 @@ Java_com_jvdegithub_aiscatcher_AisCatcherJava_Run(JNIEnv *env, jclass) {
         callbackConsole(env, "Creating output channels\n");
         UDP_connections.resize(UDPhost.size());
         for (int i = 0; i < UDPhost.size(); i++) {
-            UDP_connections[i].openConnection(UDPhost[i], UDPport[i]);
+            UDP_connections[i].Set("host",UDPhost[i]).Set("port",UDPport[i]);
+            UDP_connections[i].Start();
             model->Output() >> UDP_connections[i];
         }
 
@@ -350,9 +355,9 @@ Java_com_jvdegithub_aiscatcher_AisCatcherJava_Run(JNIEnv *env, jclass) {
     try {
         device->Stop();
 
-        model->Output().out.Clear();
+        model->Output().out.clear();
 
-        for (auto u: UDP_connections) u.closeConnection();
+        for (auto &u: UDP_connections) u.Stop();
         UDP_connections.clear();
         UDPport.clear();
         UDPhost.clear();
@@ -428,7 +433,7 @@ Java_com_jvdegithub_aiscatcher_AisCatcherJava_createReceiver(JNIEnv *env, jclass
     }
 
     try {
-        device->out.Clear();
+        device->out.clear();
         device->OpenWithFileDescriptor(fd);
         device->setFrequency(162000000);
     }
