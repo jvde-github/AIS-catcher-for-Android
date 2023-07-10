@@ -111,8 +111,10 @@ public class AisService extends Service {
             int cgfwide = (int) intent.getExtras().get("CGFWIDE");
             int modeltype = (int) intent.getExtras().get("MODELTYPE");
             int FPDS = (int) intent.getExtras().get("FPDS");
+            int ServerPort = (int) intent.getExtras().get("SERVER_PORT");
+            int ServerSwitch = (int) intent.getExtras().get("SERVER");
 
-            int r = AisCatcherJava.createReceiver(source, fd, cgfwide, modeltype, FPDS);
+            int r = AisCatcherJava.createReceiver(source, fd, cgfwide, modeltype, FPDS,ServerSwitch,ServerPort);
 
             if (r == 0) {
                 String msg = "Receiver running - " + DeviceManager.getDeviceType() + " @ " + AisCatcherJava.getSampleRate() / 1000 + "K";

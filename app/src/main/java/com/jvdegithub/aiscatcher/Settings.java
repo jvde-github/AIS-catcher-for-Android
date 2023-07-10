@@ -124,7 +124,7 @@ public class Settings extends AppCompatActivity {
         }
 
         private void setSummaries() {
-            setSummaryText(new String[]{"tPORT","tHOST","sPORT","sHOST","u1HOST","u1PORT","u2HOST","u2PORT", "rFREQOFFSET"});
+            setSummaryText(new String[]{"tPORT","tHOST","sPORT","sHOST","u1HOST","u1PORT","u2HOST","u2PORT", "rFREQOFFSET" ,"wPORT"});
             setSummaryList(new String[]{"rTUNER","rRATE","sRATE","tRATE","tTUNER","mRATE","hRATE","oMODEL_TYPE","oCGF_WIDE"});
             setSummarySeekbar(new String[]{"mLINEARITY", "sGAIN"});
         }
@@ -225,6 +225,18 @@ public class Settings extends AppCompatActivity {
         if(set.equals("Default")) return 1;
         if(set.equals("Narrow")) return 0;
         return 1;
+    }
+
+    static public boolean getServerSwitch(Context context)
+    {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        return preferences.getBoolean("wSERVER", false);
+    }
+
+    static public int getServerPort(Context context)
+    {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        return 8100;
     }
 
     static public boolean getFixedPointDownsampling(Context context)

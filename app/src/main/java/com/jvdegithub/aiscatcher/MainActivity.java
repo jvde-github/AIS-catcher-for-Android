@@ -22,6 +22,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.Spanned;
@@ -96,6 +97,9 @@ public class MainActivity<binding> extends AppCompatActivity implements AisCatch
                 case R.id.action_source:
                     onSource();
                     return true;
+                case R.id.action_webclient:
+                    onWeb();
+                    return true;
             }
             return false;
         });
@@ -138,6 +142,11 @@ public class MainActivity<binding> extends AppCompatActivity implements AisCatch
         LocalBroadcastManager.getInstance(this).unregisterReceiver(bReceiver);
     }
 
+    private void onWeb() {
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://localhost:8100"));
+        startActivity(browserIntent);
+    }
+
     private void onPlayStop() {
         if (!AisService.isRunning(getApplicationContext())) {
             if (Settings.Apply(this)) {
@@ -149,6 +158,8 @@ public class MainActivity<binding> extends AppCompatActivity implements AisCatch
                     serviceIntent.putExtra("CGFWIDE", Settings.getCGFSetting(this));
                     serviceIntent.putExtra("MODELTYPE", Settings.getModelType(this));
                     serviceIntent.putExtra("FPDS", Settings.getFixedPointDownsampling(this)?1:0);
+                    serviceIntent.putExtra("SERVER_PORT", Settings.getServerPort(this));
+                    serviceIntent.putExtra("SERVER", Settings.getServerSwitch(this)?1:0);
 
                     serviceIntent.putExtra("USB", fd);
                     ContextCompat.startForegroundService(MainActivity.this, serviceIntent);
