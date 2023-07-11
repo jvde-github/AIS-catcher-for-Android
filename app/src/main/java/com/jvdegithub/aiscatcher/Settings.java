@@ -54,7 +54,7 @@ public class Settings extends AppCompatActivity {
         preferences.edit().putString("oMODEL_TYPE", "Default").commit();
         preferences.edit().putBoolean("oFP_DS", false).commit();
 
-        preferences.edit().putInt("wPORT", 8100).commit();
+        preferences.edit().putString("wPORT", "8100").commit();
         preferences.edit().putBoolean("wSERVER", false).commit();
 
         preferences.edit().putString("rRATE", "288K").commit();
