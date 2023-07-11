@@ -502,8 +502,10 @@ Java_com_jvdegithub_aiscatcher_AisCatcherJava_createReceiver(JNIEnv *env, jclass
     model->Output() >> NMEAcounter;
     json2ais.out.clear();
     model->Output() >> json2ais;
-    if(server)
-        server->connect(model->Output().out,json2ais.out,device->out,device);
+    if(server) {
+        server->connect(*model, json2ais.out, *device);
+        server->Set("STATION","Android");
+    }
 
     return 0;
 }
