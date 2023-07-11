@@ -143,8 +143,17 @@ public class MainActivity<binding> extends AppCompatActivity implements AisCatch
     }
 
     private void onWeb() {
-        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://localhost:8100"));
-        startActivity(browserIntent);
+        if (AisService.isRunning(getApplicationContext())) {
+            if(!Settings.getServerSwitch(this))
+                Toast.makeText(MainActivity.this, "Decoder running but server not active. Enable Server in settings.", Toast.LENGTH_LONG).show();
+            else {
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://localhost:" + Settings.getServerPort(this)));
+                startActivity(browserIntent);
+            }
+        }
+        else
+            Toast.makeText(MainActivity.this, "Webserver not active if decoding not in progress.", Toast.LENGTH_LONG).show();
+
     }
 
     private void onPlayStop() {

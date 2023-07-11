@@ -18,7 +18,7 @@
         android:title="RTLTCP" />
     <item
         android:id="@+id/action_webclient"
-        android:icon="@drawable/ic_baseline_content_copy_24"
+        android:icon="@drawable/ic_baseline_map_24"
         android:orderInCategory="4"
         android:title="Web" />
 </menu>

@@ -54,6 +54,8 @@ public class Settings extends AppCompatActivity {
         preferences.edit().putString("oMODEL_TYPE", "Default").commit();
         preferences.edit().putBoolean("oFP_DS", false).commit();
 
+        preferences.edit().putInt("wPORT", 8100).commit();
+        preferences.edit().putBoolean("wSERVER", false).commit();
 
         preferences.edit().putString("rRATE", "288K").commit();
         preferences.edit().putBoolean("rRTLAGC", false).commit();
@@ -106,6 +108,7 @@ public class Settings extends AppCompatActivity {
             ((EditTextPreference) getPreferenceManager().findPreference("sPORT")).setOnBindEditTextListener(validatePort);
             ((SeekBarPreference) getPreferenceManager().findPreference("sGAIN")).setUpdatesContinuously(true);
             ((EditTextPreference) getPreferenceManager().findPreference("tPORT")).setOnBindEditTextListener(validatePort);
+            ((EditTextPreference) getPreferenceManager().findPreference("wPORT")).setOnBindEditTextListener(validatePort);
             ((EditTextPreference) getPreferenceManager().findPreference("rFREQOFFSET")).setOnBindEditTextListener(validatePPM);
             ((EditTextPreference) getPreferenceManager().findPreference("tHOST")).setOnBindEditTextListener(validateIP);
             ((EditTextPreference) getPreferenceManager().findPreference("u1HOST")).setOnBindEditTextListener(validateIP);
@@ -236,7 +239,12 @@ public class Settings extends AppCompatActivity {
     static public int getServerPort(Context context)
     {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
-        return 8100;
+        String p = preferences.getString("wPORT", "");
+        try {
+            return Integer.parseInt(p);
+        } catch (NumberFormatException e) {
+            return 8100;
+        }
     }
 
     static public boolean getFixedPointDownsampling(Context context)
