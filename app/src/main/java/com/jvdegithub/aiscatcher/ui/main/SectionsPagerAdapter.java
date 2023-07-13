@@ -39,9 +39,10 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
 
         if (position == 0) return StatisticsFragment.newInstance();
-        if (position == 1) return ConsoleLogFragment.newInstance();
-        if (position == 2) return NMEALogFragment.newInstance();
-        if (position == 3) return MapFragment.newInstance();
+        if (position == 3) return ConsoleLogFragment.newInstance();
+        if (position == 1) return WebViewMapFragment.newInstance();
+        if (position == 2) return WebViewPlotsFragment.newInstance();
+        if (position == 4) return NMEALogFragment.newInstance();
         return null;
     }
 
@@ -49,15 +50,17 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
     @Override
     public CharSequence getPageTitle(int position) {
         if (position == 0) return "STAT";
-        if (position == 1) return "LOG";
-        if (position == 2) return "NMEA";
-        if (position == 3) return "SHIPS";
+        if (position == 3) return "LOG";
+        if (position == 1) return "MAP";
+        if (position == 2) return "PLOTS";
+        if (position == 4) return "NMEA";
+
         return "";
     }
 
     @Override
     public int getCount() {
-        return 3;
+        return 4;
 
     }
 }

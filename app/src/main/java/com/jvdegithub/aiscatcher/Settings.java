@@ -54,9 +54,6 @@ public class Settings extends AppCompatActivity {
         preferences.edit().putString("oMODEL_TYPE", "Default").commit();
         preferences.edit().putBoolean("oFP_DS", false).commit();
 
-        preferences.edit().putString("wPORT", "8100").commit();
-        preferences.edit().putBoolean("wSERVER", false).commit();
-
         preferences.edit().putString("rRATE", "288K").commit();
         preferences.edit().putBoolean("rRTLAGC", false).commit();
         preferences.edit().putString("rTUNER", "Auto").commit();
@@ -108,7 +105,6 @@ public class Settings extends AppCompatActivity {
             ((EditTextPreference) getPreferenceManager().findPreference("sPORT")).setOnBindEditTextListener(validatePort);
             ((SeekBarPreference) getPreferenceManager().findPreference("sGAIN")).setUpdatesContinuously(true);
             ((EditTextPreference) getPreferenceManager().findPreference("tPORT")).setOnBindEditTextListener(validatePort);
-            ((EditTextPreference) getPreferenceManager().findPreference("wPORT")).setOnBindEditTextListener(validatePort);
             ((EditTextPreference) getPreferenceManager().findPreference("rFREQOFFSET")).setOnBindEditTextListener(validatePPM);
             ((EditTextPreference) getPreferenceManager().findPreference("tHOST")).setOnBindEditTextListener(validateIP);
             ((EditTextPreference) getPreferenceManager().findPreference("u1HOST")).setOnBindEditTextListener(validateIP);
@@ -127,7 +123,7 @@ public class Settings extends AppCompatActivity {
         }
 
         private void setSummaries() {
-            setSummaryText(new String[]{"tPORT","tHOST","sPORT","sHOST","u1HOST","u1PORT","u2HOST","u2PORT", "rFREQOFFSET" ,"wPORT"});
+            setSummaryText(new String[]{"tPORT","tHOST","sPORT","sHOST","u1HOST","u1PORT","u2HOST","u2PORT", "rFREQOFFSET"});
             setSummaryList(new String[]{"rTUNER","rRATE","sRATE","tRATE","tTUNER","mRATE","hRATE","oMODEL_TYPE","oCGF_WIDE"});
             setSummarySeekbar(new String[]{"mLINEARITY", "sGAIN"});
         }
@@ -228,23 +224,6 @@ public class Settings extends AppCompatActivity {
         if(set.equals("Default")) return 1;
         if(set.equals("Narrow")) return 0;
         return 1;
-    }
-
-    static public boolean getServerSwitch(Context context)
-    {
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
-        return preferences.getBoolean("wSERVER", false);
-    }
-
-    static public int getServerPort(Context context)
-    {
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
-        String p = preferences.getString("wPORT", "");
-        try {
-            return Integer.parseInt(p);
-        } catch (NumberFormatException e) {
-            return 8100;
-        }
     }
 
     static public boolean getFixedPointDownsampling(Context context)

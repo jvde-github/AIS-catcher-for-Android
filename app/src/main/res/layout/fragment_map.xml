@@ -1,28 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/fragmentlog"
+    android:id="@+id/fragmentmap"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.main.MapFragment">
+    tools:context=".ui.main.WebViewMapFragment">
 
-    <ScrollView
-        android:id="@+id/scrollView"
+    <WebView
+        android:id="@+id/webmap"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/greyF5"
-        android:fillViewport="true"
-        android:padding="15dp"
-        android:textColor="@color/black">
-
-        <TextView
-            android:id="@+id/log"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:padding="10dp"
-            android:textColor="@color/black" />
-
-    </ScrollView>
+        />
 
 </FrameLayout>

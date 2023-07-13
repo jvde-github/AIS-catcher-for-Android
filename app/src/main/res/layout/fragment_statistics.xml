@@ -65,11 +65,38 @@
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
                         android:divider="@color/black"
+                        android:showDividers="middle">
+
+                        <TextView
+                            android:layout_width="20dp"
+                            android:layout_height="fill_parent"
+                            android:layout_weight="1"
+                            android:gravity="right"
+                            android:padding="10dp"
+                            android:paddingHorizontal="10dp"
+                            android:text="Server port" />
+
+                        <TextView
+                            android:id="@+id/ServerPort"
+                            android:layout_width="20dp"
+                            android:layout_height="fill_parent"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_weight="1"
+                            android:gravity="left"
+                            android:padding="10dp"
+                            android:paddingHorizontal="10dp"
+                            android:text="0"
+                            android:textStyle="bold" />
+                    </TableRow>
+
+                    <TableRow
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:divider="@color/black"
                         android:paddingTop="10dp"
                         android:showDividers="middle">
 
                         <TextView
-                            android:id="@+id/textView3"
                             android:layout_width="20dp"
                             android:layout_height="fill_parent"
                             android:layout_weight="1"
@@ -98,7 +125,6 @@
                         android:showDividers="middle">
 
                         <TextView
-                            android:id="@+id/textView5"
                             android:layout_width="20dp"
                             android:layout_height="fill_parent"
                             android:layout_weight="1"
@@ -126,7 +152,6 @@
                         android:showDividers="middle">
 
                         <TextView
-                            android:id="@+id/textView7"
                             android:layout_width="20dp"
                             android:layout_height="fill_parent"
                             android:layout_weight="1"

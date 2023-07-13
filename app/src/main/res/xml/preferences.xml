@@ -3,24 +3,6 @@
     android:key="first_preferencescreen">
 
     <PreferenceCategory
-        android:key="server_category"
-        android:title="Web server">
-
-        <SwitchPreferenceCompat
-            android:key="wSERVER"
-            android:summary="Enable build-in webserver"
-            android:defaultValue="False"
-            android:title="Server"/>
-
-        <EditTextPreference
-            android:key="wPORT"
-            android:defaultValue="8100"
-            android:summary="Port for build-in server"
-            android:singleLine="true"
-            android:title="Server Port"/>
-    </PreferenceCategory>
-
-    <PreferenceCategory
         android:key="rtlsdr_category"
         android:title="RTL-SDR">
 

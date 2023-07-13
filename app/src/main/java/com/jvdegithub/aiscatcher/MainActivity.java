@@ -41,21 +41,37 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.tabs.TabLayout;
 import com.jvdegithub.aiscatcher.databinding.ActivityMainBinding;
 import com.jvdegithub.aiscatcher.ui.main.ConsoleLogFragment;
-import com.jvdegithub.aiscatcher.ui.main.MapFragment;
 import com.jvdegithub.aiscatcher.ui.main.NMEALogFragment;
 import com.jvdegithub.aiscatcher.ui.main.SectionsPagerAdapter;
 import com.jvdegithub.aiscatcher.ui.main.StatisticsFragment;
+import com.jvdegithub.aiscatcher.ui.main.WebViewMapFragment;
+import com.jvdegithub.aiscatcher.ui.main.WebViewPlotsFragment;
+
+import java.io.IOException;
+import java.net.ServerSocket;
 
 public class MainActivity<binding> extends AppCompatActivity implements AisCatcherJava.AisCallback, DeviceManager.DeviceCallback {
 
+    public static int port = 0;
+
     static {
+
+        try {
+            ServerSocket serverSocket = new ServerSocket(port);
+            port = serverSocket.getLocalPort();
+            serverSocket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         System.loadLibrary("AIScatcherNDK");
-        AisCatcherJava.Init();
+        AisCatcherJava.Init(port);
     }
 
     private ConsoleLogFragment log_fragment;
     private NMEALogFragment nmea_fragment;
-    //private MapFragment map_fragment;
+    private WebViewMapFragment map_fragment;
+    private WebViewPlotsFragment plots_fragment;
     private StatisticsFragment stat_fragment;
     private BottomNavigationView bottomNavigationView;
 
@@ -76,9 +92,10 @@ public class MainActivity<binding> extends AppCompatActivity implements AisCatch
 
         sectionsPagerAdapter.startUpdate(viewPager);
         stat_fragment = (StatisticsFragment) sectionsPagerAdapter.instantiateItem(viewPager, 0);
-        log_fragment = (ConsoleLogFragment) sectionsPagerAdapter.instantiateItem(viewPager, 1);
-        nmea_fragment = (NMEALogFragment) sectionsPagerAdapter.instantiateItem(viewPager, 2);
-        //map_fragment = (MapFragment) sectionsPagerAdapter.instantiateItem(viewPager, 3);
+        log_fragment = (ConsoleLogFragment) sectionsPagerAdapter.instantiateItem(viewPager, 3);
+        map_fragment = (WebViewMapFragment) sectionsPagerAdapter.instantiateItem(viewPager, 1);
+        plots_fragment = (WebViewPlotsFragment) sectionsPagerAdapter.instantiateItem(viewPager, 2);
+        nmea_fragment = (NMEALogFragment)  sectionsPagerAdapter.instantiateItem(viewPager, 4);
         sectionsPagerAdapter.finishUpdate(viewPager);
 
         if(Settings.setDefaultOnFirst(this)) {
@@ -97,7 +114,7 @@ public class MainActivity<binding> extends AppCompatActivity implements AisCatch
                 case R.id.action_source:
                     onSource();
                     return true;
-                case R.id.action_webclient:
+                case R.id.action_web:
                     onWeb();
                     return true;
             }
@@ -106,6 +123,12 @@ public class MainActivity<binding> extends AppCompatActivity implements AisCatch
 
         DeviceManager.Init(this);
 
+    }
+
+    private void onWeb() {
+
+        Intent  browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://localhost:" + port));
+        startActivity(browserIntent);
     }
 
     protected void onResume() {
@@ -142,20 +165,6 @@ public class MainActivity<binding> extends AppCompatActivity implements AisCatch
         LocalBroadcastManager.getInstance(this).unregisterReceiver(bReceiver);
     }
 
-    private void onWeb() {
-        if (AisService.isRunning(getApplicationContext())) {
-            if(!Settings.getServerSwitch(this))
-                Toast.makeText(MainActivity.this, "Decoder running but server not active. Enable Server in settings.", Toast.LENGTH_LONG).show();
-            else {
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://localhost:" + Settings.getServerPort(this)));
-                startActivity(browserIntent);
-            }
-        }
-        else
-            Toast.makeText(MainActivity.this, "Webserver not active if decoding not in progress.", Toast.LENGTH_LONG).show();
-
-    }
-
     private void onPlayStop() {
         if (!AisService.isRunning(getApplicationContext())) {
             if (Settings.Apply(this)) {
@@ -167,9 +176,6 @@ public class MainActivity<binding> extends AppCompatActivity implements AisCatch
                     serviceIntent.putExtra("CGFWIDE", Settings.getCGFSetting(this));
                     serviceIntent.putExtra("MODELTYPE", Settings.getModelType(this));
                     serviceIntent.putExtra("FPDS", Settings.getFixedPointDownsampling(this)?1:0);
-                    serviceIntent.putExtra("SERVER_PORT", Settings.getServerPort(this));
-                    serviceIntent.putExtra("SERVER", Settings.getServerSwitch(this)?1:0);
-
                     serviceIntent.putExtra("USB", fd);
                     ContextCompat.startForegroundService(MainActivity.this, serviceIntent);
                     updateUIwithStart();

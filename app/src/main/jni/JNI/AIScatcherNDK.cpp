@@ -63,6 +63,8 @@ struct Statistics {
 
 } statistics;
 
+WebClient server;
+
 std::string nmea_msg;
 std::string json_queue;
 
@@ -233,7 +235,6 @@ RAWcounter rawcounter;
 
 Device::Device *device = nullptr;
 AIS::Model *model = nullptr;
-WebClient *server = nullptr;
 AIS::JSONAIS json2ais;
 
 bool stop = false;
@@ -244,14 +245,20 @@ void StopRequest() {
 
 extern "C"
 JNIEXPORT jint JNICALL
-Java_com_jvdegithub_aiscatcher_AisCatcherJava_InitNative(JNIEnv *env, jclass instance) {
+Java_com_jvdegithub_aiscatcher_AisCatcherJava_InitNative(JNIEnv *env, jclass instance, jint port) {
 
     env->GetJavaVM(&javaVm);
     javaVersion = env->GetVersion();
     javaClass = (jclass) env->NewGlobalRef(instance);
 
     callbackConsole(env, "AIS-Catcher " VERSION "-33\n");
+    callbackConsoleFormat(env, "Internal wevbserver running at port %d.\n",port);
+
     memset(&statistics, 0, sizeof(statistics));
+
+    server.Set("PORT",std::to_string(port));
+    server.Set("STATION","Android");
+    server.start();
 
     return 0;
 }
@@ -325,8 +332,7 @@ Java_com_jvdegithub_aiscatcher_AisCatcherJava_Run(JNIEnv *env, jclass) {
             model->Output() >> UDP_connections[i];
         }
         callbackConsole(env, "Starting device\n");
-        if(server)
-            server->start();
+
         device->setTag(tag);
         device->Play();
 
@@ -386,12 +392,6 @@ Java_com_jvdegithub_aiscatcher_AisCatcherJava_Close(JNIEnv *env, jclass) {
         device = nullptr;
         delete model;
         model = nullptr;
-
-        if(server) {
-            server->close();
-            delete server;
-            server = nullptr;
-        }
     }
     catch (const char *msg) {
         callbackError(env, msg);
@@ -411,7 +411,7 @@ Java_com_jvdegithub_aiscatcher_AisCatcherJava_forceStop(JNIEnv *env, jclass) {
 extern "C"
 JNIEXPORT jint JNICALL
 Java_com_jvdegithub_aiscatcher_AisCatcherJava_createReceiver(JNIEnv *env, jclass, jint source,
-                                                             jint fd,  jint CGF_wide, jint model_type, jint FPDS, jint useServer,jint ServerPort) {
+                                                             jint fd,  jint CGF_wide, jint model_type, jint FPDS) {
 
     callbackConsoleFormat(env, "Creating Receiver (source = %d, fd = %d, CGF wide = %d, model = %d, FPDS = %d)\n",
                           (int)source, (int)fd,(int)CGF_wide,(int)model_type,(int)FPDS);
@@ -484,13 +484,6 @@ Java_com_jvdegithub_aiscatcher_AisCatcherJava_createReceiver(JNIEnv *env, jclass
         callbackConsoleFormat(env, "Fixed Point Downsampler: %s\n", s.c_str());
 
         model->buildModel('A','B',device->getSampleRate(), false, device);
-        if(useServer) {
-            server = new WebClient();
-            server->Set("port",std::to_string(ServerPort));
-            callbackConsoleFormat(env, "Creating webserver at port %d\n", ServerPort);
-        }
-        else
-            server = nullptr;
 
     } catch (const char *msg) {
         callbackError(env, msg);
@@ -502,10 +495,7 @@ Java_com_jvdegithub_aiscatcher_AisCatcherJava_createReceiver(JNIEnv *env, jclass
     model->Output() >> NMEAcounter;
     json2ais.out.clear();
     model->Output() >> json2ais;
-    if(server) {
-        server->connect(*model, json2ais.out, *device);
-        server->Set("STATION","Android");
-    }
+    server.connect(*model, json2ais.out, *device);
 
     return 0;
 }

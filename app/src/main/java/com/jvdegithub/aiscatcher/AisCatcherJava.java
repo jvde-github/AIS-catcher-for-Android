@@ -37,9 +37,9 @@ public class AisCatcherJava {
 
     private static AisCallback callback = null;
 
-    static native int InitNative();
+    static native int InitNative(int port);
 
-    static native int createReceiver(int source, int FD, int CGF_wide, int model_type, int FPDS,int Server, int ServerPort);
+    static native int createReceiver(int source, int FD, int CGF_wide, int model_type, int FPDS);
 
     static native int Run();
 
@@ -125,8 +125,8 @@ public class AisCatcherJava {
         static native void Reset();
     }
 
-    public static void Init() {
-        InitNative();
+    public static void Init(int port) {
+        InitNative(port);
         Statistics.Init();
     }
 

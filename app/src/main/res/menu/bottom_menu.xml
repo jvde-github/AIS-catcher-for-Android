@@ -1,11 +1,9 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-
     <item
         android:id="@+id/action_play"
         android:icon="@drawable/ic_baseline_play_circle_filled_40"
         android:orderInCategory="1"
         android:title="Play" />
-
     <item
         android:id="@+id/action_clear"
         android:icon="@drawable/ic_baseline_clear_40"
@@ -17,8 +15,8 @@
         android:orderInCategory="3"
         android:title="RTLTCP" />
     <item
-        android:id="@+id/action_webclient"
-        android:icon="@drawable/ic_baseline_map_24"
-        android:orderInCategory="4"
-        android:title="Web" />
+        android:id="@+id/action_web"
+        android:icon="@drawable/ic_baseline_web_asset_24"
+        android:orderInCategory="3"
+        android:title="Web Client" />
 </menu>

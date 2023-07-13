@@ -29,11 +29,12 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.jvdegithub.aiscatcher.AisCatcherJava;
+import com.jvdegithub.aiscatcher.MainActivity;
 import com.jvdegithub.aiscatcher.R;
 
 public class StatisticsFragment extends Fragment {
 
-    TextView MB, Total, ChannelA, ChannelB, Msg123, Msg5, Msg1819, Msg24, MsgOther;
+    TextView MB, Total, ChannelA, ChannelB, Msg123, Msg5, Msg1819, Msg24, MsgOther, WebPort;
 
     public static StatisticsFragment newInstance() {
         return new StatisticsFragment();
@@ -45,6 +46,7 @@ public class StatisticsFragment extends Fragment {
 
         View rootview = inflater.inflate(R.layout.fragment_statistics, container, false);
 
+        WebPort = rootview.findViewById(R.id.ServerPort);
         MB = rootview.findViewById(R.id.MBs);
         Total = rootview.findViewById(R.id.totalMSG);
         ChannelA = rootview.findViewById(R.id.ChannelAMSG);
@@ -62,11 +64,11 @@ public class StatisticsFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     public void Update() {
         getActivity().runOnUiThread(() -> {
+            WebPort.setText(String.format("%d", MainActivity.port));
             MB.setText(AisCatcherJava.Statistics.getDataString());
             Total.setText(String.format("%d", AisCatcherJava.Statistics.getTotal()));
             ChannelA.setText(String.format("%d", AisCatcherJava.Statistics.getChA()));
