@@ -22,6 +22,8 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.Html;
@@ -81,7 +83,12 @@ public class MainActivity<binding> extends AppCompatActivity implements AisCatch
 
     private StatisticsFragment stat_fragment;
     private BottomNavigationView bottomNavigationView;
+    private boolean isOnline() {
 
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+        return networkInfo != null && networkInfo.isConnected();
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -95,7 +102,8 @@ public class MainActivity<binding> extends AppCompatActivity implements AisCatch
         legacyVersion = currentApiVersion < android.os.Build.VERSION_CODES.N;
 
         Fragment fragment;
-        if (legacyVersion) {
+
+        if (legacyVersion || !isOnline()) {
             stat_fragment =new StatisticsFragment();
             fragment = stat_fragment;
         } else {
@@ -103,9 +111,7 @@ public class MainActivity<binding> extends AppCompatActivity implements AisCatch
             fragment = new WebViewMapFragment();
         }
 
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragment_container, fragment)
-                .commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
 
         if(Settings.setDefaultOnFirst(this)) {
             onOpening();
