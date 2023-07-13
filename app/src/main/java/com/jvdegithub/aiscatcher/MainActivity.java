@@ -28,12 +28,14 @@ import android.text.Html;
 import android.text.Spanned;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.viewpager.widget.ViewPager;
 
@@ -68,10 +70,15 @@ public class MainActivity<binding> extends AppCompatActivity implements AisCatch
         AisCatcherJava.Init(port);
     }
 
+    /*
     private ConsoleLogFragment log_fragment;
     private NMEALogFragment nmea_fragment;
     private WebViewMapFragment map_fragment;
     private WebViewPlotsFragment plots_fragment;
+    */
+
+    boolean legacyVersion = true;
+
     private StatisticsFragment stat_fragment;
     private BottomNavigationView bottomNavigationView;
 
@@ -83,20 +90,22 @@ public class MainActivity<binding> extends AppCompatActivity implements AisCatch
         setContentView(binding.getRoot());
         setSupportActionBar(binding.toolbar);
 
-        ViewPager viewPager = binding.viewPager;
-        TabLayout tabs = binding.tabs;
-        SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager());
+        FrameLayout fragmentContainer = findViewById(R.id.fragment_container);
+        int currentApiVersion = android.os.Build.VERSION.SDK_INT;
+        legacyVersion = currentApiVersion < android.os.Build.VERSION_CODES.N;
 
-        viewPager.setAdapter(sectionsPagerAdapter);
-        tabs.setupWithViewPager(viewPager);
+        Fragment fragment;
+        if (legacyVersion) {
+            stat_fragment =new StatisticsFragment();
+            fragment = stat_fragment;
+        } else {
 
-        sectionsPagerAdapter.startUpdate(viewPager);
-        stat_fragment = (StatisticsFragment) sectionsPagerAdapter.instantiateItem(viewPager, 0);
-        log_fragment = (ConsoleLogFragment) sectionsPagerAdapter.instantiateItem(viewPager, 3);
-        map_fragment = (WebViewMapFragment) sectionsPagerAdapter.instantiateItem(viewPager, 1);
-        plots_fragment = (WebViewPlotsFragment) sectionsPagerAdapter.instantiateItem(viewPager, 2);
-        nmea_fragment = (NMEALogFragment)  sectionsPagerAdapter.instantiateItem(viewPager, 4);
-        sectionsPagerAdapter.finishUpdate(viewPager);
+            fragment = new WebViewMapFragment();
+        }
+
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragment_container, fragment)
+                .commit();
 
         if(Settings.setDefaultOnFirst(this)) {
             onOpening();
@@ -141,10 +150,6 @@ public class MainActivity<binding> extends AppCompatActivity implements AisCatch
         } else {
             updateUIwithStop();
         }
-
-        log_fragment.Update("");
-        nmea_fragment.Update("");
-
     }
 
     @Override
@@ -292,12 +297,12 @@ public class MainActivity<binding> extends AppCompatActivity implements AisCatch
 
     @Override
     public void onConsole(final String line) {
-        log_fragment.Update(line);
+        //log_fragment.Update(line);
     }
 
     @Override
     public void onNMEA(final String line) {
-        nmea_fragment.Update(line);
+        //nmea_fragment.Update(line);
     }
 
     @Override
@@ -317,7 +322,8 @@ public class MainActivity<binding> extends AppCompatActivity implements AisCatch
 
     @Override
     public void onUpdate() {
-        stat_fragment.Update();
+        if(legacyVersion)
+            stat_fragment.Update();
     }
 
     @Override
