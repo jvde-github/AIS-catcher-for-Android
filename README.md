@@ -9,7 +9,17 @@ The following screenshot was taken in July 2022 with AIS-catcher receiving signa
 </p>
 
 Below you can find a link to the APK file or visit the [Google Play Store](https://play.google.com/store/apps/details?id=com.jvdegithub.aiscatcher&gl=NL). The engine and visualizations are based on [AIS-catcher](https://github.com/jvde-github/AIS-catcher). 
- 
+
+AIS-catcher had a recent overhaul. The instructions below still are relevant but the visualization of the results is now based on the same code as the AIS-catcher web interface. The instructions will be updated in due course.
+<p align="center">
+<img src="https://github.com/jvde-github/AIS-catcher-for-Android/assets/52420030/076920d4-e75a-409c-87ea-d286df8eb046" width=20% height=20%>  &nbsp;
+<img src="https://github.com/jvde-github/AIS-catcher-for-Android/assets/52420030/06f73ba9-3e0d-411d-85ef-ecb6730023b4" width=20% height=20%>  &nbsp;
+<img src="https://github.com/jvde-github/AIS-catcher-for-Android/assets/52420030/dd867256-9e7e-4822-a1e2-dc6115400513" width=20% height=20%>  &nbsp; <br>
+<img src="https://github.com/jvde-github/AIS-catcher-for-Android/assets/52420030/f29801ec-a4d5-4e2d-8568-aae240868048" width=20% height=20%>  &nbsp;
+<img src="https://github.com/jvde-github/AIS-catcher-for-Android/assets/52420030/34368bcf-499b-4497-bfb0-2645bfb9fc2a" width=20% height=20%>  &nbsp;
+<img src="https://github.com/jvde-github/AIS-catcher-for-Android/assets/52420030/6e57de02-cd9a-4778-81fe-4df2242e8907" width=20% height=20%>  &nbsp;
+</p>
+
 The requirements to receive AIS signals are: a RTL-SDR dongle (or alternatively an AirSpy Mini/R2/HF+), a simple antenna, 
 an Android device with USB connector and an OTG cable to connect the dongle with your Android device. 
 AIS-catcher only receives and processes signals and then forwards the messages over UDP. To make it a bit more interesting you would need an App like
