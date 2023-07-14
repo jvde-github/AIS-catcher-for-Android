@@ -52,7 +52,7 @@ public class WebViewMapFragment extends Fragment {
         });
 
 
-        webView.loadUrl("http://localhost:" + MainActivity.port + "?welcome=false&noheader=true");
+        webView.loadUrl("http://localhost:" + MainActivity.port + "?welcome=false&android=true");
 
         return rootView;
     }
