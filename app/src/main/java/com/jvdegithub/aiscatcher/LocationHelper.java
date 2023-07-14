@@ -16,7 +16,7 @@ import androidx.core.content.ContextCompat;
 
 public class LocationHelper implements LocationListener {
 
-    private static final int PERMISSION_REQUEST_CODE = 1;
+    public static final int PERMISSION_REQUEST_CODE = 1;
     private Context context;
     private LocationManager locationManager;
     private boolean isUpdatingLocation = false;
@@ -44,6 +44,7 @@ public class LocationHelper implements LocationListener {
                 location.getLatitude(), location.getLongitude()));
         AisCatcherJava.setLatLon((float) location.getLatitude(), (float) location.getLongitude());
     }
+
 
     public void removeLocationUpdates() {
         if (isUpdatingLocation) {

@@ -23,6 +23,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkCapabilities;
 import android.net.Uri;
@@ -34,6 +35,7 @@ import android.view.MenuItem;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -133,206 +135,221 @@ public class MainActivity<binding> extends AppCompatActivity implements AisCatch
 
     }
 
+    // ugly to have the callback in mainactivity, to be cleaned up
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        locationHelper.removeLocationUpdates();
-    }
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == locationHelper.PERMISSION_REQUEST_CODE) {
+            if (grantResults.length > 0
+                    && grantResults[0] == PackageManager.PERMISSION_GRANTED
+                    && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
 
-    private void onWeb() {
-
-        Intent  browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://localhost:" + port));
-        startActivity(browserIntent);
-    }
-
-    protected void onResume() {
-
-        super.onResume();
-
-        updateUIonSource();
-        if (AisService.isRunning(getApplicationContext())) {
-            updateUIwithStart();
-        } else {
-            updateUIwithStop();
+                locationHelper.requestLocationUpdates();
+            } else {
+                // no permission
+            }
         }
     }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-
-        AisCatcherJava.registerCallback(this);
-        DeviceManager.register(this);
-        LocalBroadcastManager.getInstance(this).registerReceiver(bReceiver, new IntentFilter("message"));
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-
-        AisCatcherJava.unregisterCallback();
-        DeviceManager.unregister();
-        LocalBroadcastManager.getInstance(this).unregisterReceiver(bReceiver);
-    }
-
-    private void onPlayStop() {
-        if (!AisService.isRunning(getApplicationContext())) {
-            if (Settings.Apply(this)) {
-                int fd = DeviceManager.openDevice();
-                if(fd!=-1) {
-                    Intent serviceIntent = new Intent(MainActivity.this, AisService.class);
-                    serviceIntent.putExtra("source", DeviceManager.getDeviceCode());
-                    serviceIntent.putExtra("USB", fd);
-                    serviceIntent.putExtra("CGFWIDE", Settings.getCGFSetting(this));
-                    serviceIntent.putExtra("MODELTYPE", Settings.getModelType(this));
-                    serviceIntent.putExtra("FPDS", Settings.getFixedPointDownsampling(this)?1:0);
-                    serviceIntent.putExtra("USB", fd);
-                    ContextCompat.startForegroundService(MainActivity.this, serviceIntent);
-                    updateUIwithStart();
-                }
-                else
-                    Toast.makeText(MainActivity.this, "Cannot open USB device. Give permission first and try again.", Toast.LENGTH_LONG).show();
-            } else
-                Toast.makeText(MainActivity.this, "Invalid setting", Toast.LENGTH_LONG).show();
-
-        } else {
-            AisCatcherJava.forceStop();
-        }
-    }
-
-    private BroadcastReceiver bReceiver = new BroadcastReceiver(){
 
         @Override
-        public void onReceive(Context context, Intent intent) {
-            onAisServiceClosing();
+        protected void onDestroy () {
+            super.onDestroy();
+            locationHelper.removeLocationUpdates();
         }
-    };
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_settings:
-                Intent myIntent = new Intent(MainActivity.this, Settings.class);
-                MainActivity.this.startActivity(myIntent);
-                return true;
-            case R.id.action_default:
-                Settings.setDefault(this);
-                return true;
-            case R.id.action_credit:
-                onCredit();
-                return true;
-            case R.id.action_abouts:
-                onAbout();
-                return true;
+        private void onWeb () {
+
+            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://localhost:" + port));
+            startActivity(browserIntent);
         }
-        return super.onOptionsItemSelected(item);
 
+        protected void onResume () {
+
+            super.onResume();
+
+            updateUIonSource();
+            if (AisService.isRunning(getApplicationContext())) {
+                updateUIwithStart();
+            } else {
+                updateUIwithStop();
+            }
+        }
+
+        @Override
+        protected void onStart () {
+            super.onStart();
+
+            AisCatcherJava.registerCallback(this);
+            DeviceManager.register(this);
+            LocalBroadcastManager.getInstance(this).registerReceiver(bReceiver, new IntentFilter("message"));
+        }
+
+        @Override
+        protected void onStop () {
+            super.onStop();
+
+            AisCatcherJava.unregisterCallback();
+            DeviceManager.unregister();
+            LocalBroadcastManager.getInstance(this).unregisterReceiver(bReceiver);
+        }
+
+        private void onPlayStop () {
+            if (!AisService.isRunning(getApplicationContext())) {
+                if (Settings.Apply(this)) {
+                    int fd = DeviceManager.openDevice();
+                    if (fd != -1) {
+                        Intent serviceIntent = new Intent(MainActivity.this, AisService.class);
+                        serviceIntent.putExtra("source", DeviceManager.getDeviceCode());
+                        serviceIntent.putExtra("USB", fd);
+                        serviceIntent.putExtra("CGFWIDE", Settings.getCGFSetting(this));
+                        serviceIntent.putExtra("MODELTYPE", Settings.getModelType(this));
+                        serviceIntent.putExtra("FPDS", Settings.getFixedPointDownsampling(this) ? 1 : 0);
+                        serviceIntent.putExtra("USB", fd);
+                        ContextCompat.startForegroundService(MainActivity.this, serviceIntent);
+                        updateUIwithStart();
+                    } else
+                        Toast.makeText(MainActivity.this, "Cannot open USB device. Give permission first and try again.", Toast.LENGTH_LONG).show();
+                } else
+                    Toast.makeText(MainActivity.this, "Invalid setting", Toast.LENGTH_LONG).show();
+
+            } else {
+                AisCatcherJava.forceStop();
+            }
+        }
+
+        private BroadcastReceiver bReceiver = new BroadcastReceiver() {
+
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                onAisServiceClosing();
+            }
+        };
+
+        @Override
+        public boolean onOptionsItemSelected (MenuItem item){
+            switch (item.getItemId()) {
+                case R.id.action_settings:
+                    Intent myIntent = new Intent(MainActivity.this, Settings.class);
+                    MainActivity.this.startActivity(myIntent);
+                    return true;
+                case R.id.action_default:
+                    Settings.setDefault(this);
+                    return true;
+                case R.id.action_credit:
+                    onCredit();
+                    return true;
+                case R.id.action_abouts:
+                    onAbout();
+                    return true;
+            }
+            return super.onOptionsItemSelected(item);
+
+        }
+        private void onCredit () {
+
+            Spanned html = Html.fromHtml((String) getText(R.string.license_text));
+            showDialog(html, "Licenses");
+        }
+
+        private void onAbout () {
+            Spanned html = Html.fromHtml((String) getText(R.string.disclaimer_text));
+            showDialog(html, "About");
+        }
+
+        private void onOpening () {
+            Spanned html = Html.fromHtml((String) getText(R.string.disclaimer_text));
+            showDialog(html, "Welcome!");
+        }
+
+        private void showDialog (@Nullable CharSequence msg, String title)
+        {
+            int width = (int) (getResources().getDisplayMetrics().widthPixels * 0.90);
+            int height = (int) (getResources().getDisplayMetrics().heightPixels * 0.90);
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle(title);
+            builder.setMessage(msg);
+            builder.setCancelable(true);
+            builder.setPositiveButton("OK", null);
+            AlertDialog alertDialog = builder.create();
+            alertDialog.show();
+            alertDialog.getWindow().setLayout(width, height); //Controlling width and height.
+        }
+        private void onClear () {
+            AisCatcherJava.Reset();
+        }
+
+        private void onSource () {
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+            String[] devs = DeviceManager.getDeviceStrings();
+
+            builder.setTitle("Select Device");
+            builder.setItems(devs, (dialog, select) -> DeviceManager.setDevice(select));
+            builder.show();
+        }
+
+        private void updateUIwithStart () {
+            MenuItem item = bottomNavigationView.getMenu().findItem(R.id.action_play);
+            item.setIcon(R.drawable.ic_baseline_stop_circle_40);
+            item.setTitle("Stop");
+
+            bottomNavigationView.getMenu().findItem(R.id.action_source).setEnabled(false);
+        }
+
+        private void updateUIwithStop () {
+            MenuItem item = bottomNavigationView.getMenu().findItem(R.id.action_play);
+            item.setIcon(R.drawable.ic_baseline_play_circle_filled_40);
+            item.setTitle("Start");
+            bottomNavigationView.getMenu().findItem(R.id.action_source).setEnabled(true);
+        }
+
+        private void updateUIonSource () {
+
+            MenuItem item = bottomNavigationView.getMenu().findItem(R.id.action_source);
+            item.setTitle(DeviceManager.getDeviceTypeString());
+        }
+
+        @Override
+        public boolean onCreateOptionsMenu (Menu menu){
+
+            getMenuInflater().inflate(R.menu.toolbar_menu, menu);
+            return true;
+        }
+
+        @Override
+        public void onConsole ( final String line){
+            //log_fragment.Update(line);
+        }
+
+        @Override
+        public void onNMEA ( final String line){
+            //nmea_fragment.Update(line);
+        }
+
+        @Override
+        public void onMessage ( final String line){
+            //map_fragment.Update(line);
+        }
+
+        @Override
+        public void onError ( final String line){
+            runOnUiThread(() -> Toast.makeText(MainActivity.this, line, Toast.LENGTH_LONG).show());
+        }
+
+        public void onAisServiceClosing () {
+            DeviceManager.closeDevice();
+            runOnUiThread(this::updateUIwithStop);
+        }
+
+        @Override
+        public void onUpdate () {
+            if (legacyVersion)
+                stat_fragment.Update();
+        }
+
+        @Override
+        public void onSourceChange () {
+            updateUIonSource();
+        }
     }
-    private void onCredit() {
-
-        Spanned html = Html.fromHtml((String)getText(R.string.license_text));
-        showDialog(html,"Licenses");
-    }
-
-    private void onAbout() {
-        Spanned html = Html.fromHtml((String)getText(R.string.disclaimer_text));
-        showDialog(html,"About");
-    }
-
-    private void onOpening() {
-        Spanned html = Html.fromHtml((String)getText(R.string.disclaimer_text));
-        showDialog(html,"Welcome!");
-    }
-
-    private void showDialog(@Nullable CharSequence msg, String title)
-    {
-        int width = (int) (getResources().getDisplayMetrics().widthPixels * 0.90);
-        int height = (int) (getResources().getDisplayMetrics().heightPixels * 0.90);
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(title);
-        builder.setMessage(msg);
-        builder.setCancelable(true);
-        builder.setPositiveButton("OK",null);
-        AlertDialog alertDialog = builder.create();
-        alertDialog.show();
-        alertDialog.getWindow().setLayout(width, height); //Controlling width and height.
-    }
-    private void onClear() {
-        AisCatcherJava.Reset();
-    }
-
-    private void onSource() {
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-        String[] devs = DeviceManager.getDeviceStrings();
-
-        builder.setTitle("Select Device");
-        builder.setItems(devs, (dialog, select) -> DeviceManager.setDevice(select));
-        builder.show();
-    }
-
-    private void updateUIwithStart() {
-        MenuItem item = bottomNavigationView.getMenu().findItem(R.id.action_play);
-        item.setIcon(R.drawable.ic_baseline_stop_circle_40);
-        item.setTitle("Stop");
-
-        bottomNavigationView.getMenu().findItem(R.id.action_source).setEnabled(false);
-    }
-
-    private void updateUIwithStop() {
-        MenuItem item = bottomNavigationView.getMenu().findItem(R.id.action_play);
-        item.setIcon(R.drawable.ic_baseline_play_circle_filled_40);
-        item.setTitle("Start");
-        bottomNavigationView.getMenu().findItem(R.id.action_source).setEnabled(true);
-    }
-
-    private void updateUIonSource() {
-
-        MenuItem item = bottomNavigationView.getMenu().findItem(R.id.action_source);
-        item.setTitle(DeviceManager.getDeviceTypeString());
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-
-        getMenuInflater().inflate(R.menu.toolbar_menu, menu);
-        return true;
-    }
-
-    @Override
-    public void onConsole(final String line) {
-        //log_fragment.Update(line);
-    }
-
-    @Override
-    public void onNMEA(final String line) {
-        //nmea_fragment.Update(line);
-    }
-
-    @Override
-    public void onMessage(final String line) {
-        //map_fragment.Update(line);
-    }
-
-    @Override
-    public void onError(final String line) {
-        runOnUiThread(() -> Toast.makeText(MainActivity.this, line, Toast.LENGTH_LONG).show());
-    }
-
-    public void onAisServiceClosing() {
-        DeviceManager.closeDevice();
-        runOnUiThread(this::updateUIwithStop);
-    }
-
-    @Override
-    public void onUpdate() {
-        if(legacyVersion)
-            stat_fragment.Update();
-    }
-
-    @Override
-    public void onSourceChange() {
-        updateUIonSource();
-    }
-}
