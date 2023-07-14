@@ -18,12 +18,13 @@
 
 package com.jvdegithub.aiscatcher;
 
+import android.Manifest;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
+import android.net.NetworkCapabilities;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.Html;
@@ -39,22 +40,18 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
-import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.tabs.TabLayout;
 import com.jvdegithub.aiscatcher.databinding.ActivityMainBinding;
-import com.jvdegithub.aiscatcher.ui.main.ConsoleLogFragment;
-import com.jvdegithub.aiscatcher.ui.main.NMEALogFragment;
-import com.jvdegithub.aiscatcher.ui.main.SectionsPagerAdapter;
 import com.jvdegithub.aiscatcher.ui.main.StatisticsFragment;
 import com.jvdegithub.aiscatcher.ui.main.WebViewMapFragment;
-import com.jvdegithub.aiscatcher.ui.main.WebViewPlotsFragment;
 
 import java.io.IOException;
 import java.net.ServerSocket;
 
 public class MainActivity<binding> extends AppCompatActivity implements AisCatcherJava.AisCallback, DeviceManager.DeviceCallback {
+
+    private LocationHelper locationHelper;
 
     public static int port = 0;
 
@@ -72,23 +69,17 @@ public class MainActivity<binding> extends AppCompatActivity implements AisCatch
         AisCatcherJava.Init(port);
     }
 
-    /*
-    private ConsoleLogFragment log_fragment;
-    private NMEALogFragment nmea_fragment;
-    private WebViewMapFragment map_fragment;
-    private WebViewPlotsFragment plots_fragment;
-    */
-
     boolean legacyVersion = true;
 
     private StatisticsFragment stat_fragment;
     private BottomNavigationView bottomNavigationView;
-    private boolean isOnline() {
 
+    private boolean isOnline() {
         ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
-        return networkInfo != null && networkInfo.isConnected();
+        NetworkCapabilities networkCapabilities = connectivityManager.getNetworkCapabilities(connectivityManager.getActiveNetwork());
+        return networkCapabilities != null && networkCapabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET);
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -104,10 +95,9 @@ public class MainActivity<binding> extends AppCompatActivity implements AisCatch
         Fragment fragment;
 
         if (legacyVersion || !isOnline()) {
-            stat_fragment =new StatisticsFragment();
+            stat_fragment = new StatisticsFragment();
             fragment = stat_fragment;
         } else {
-
             fragment = new WebViewMapFragment();
         }
 
@@ -116,6 +106,9 @@ public class MainActivity<binding> extends AppCompatActivity implements AisCatch
         if(Settings.setDefaultOnFirst(this)) {
             onOpening();
         }
+
+        locationHelper = new LocationHelper(this);
+        locationHelper.requestLocationUpdates();
 
         bottomNavigationView = binding.bottombar;
         bottomNavigationView.setOnItemSelectedListener(item -> {
@@ -138,6 +131,12 @@ public class MainActivity<binding> extends AppCompatActivity implements AisCatch
 
         DeviceManager.Init(this);
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        locationHelper.removeLocationUpdates();
     }
 
     private void onWeb() {

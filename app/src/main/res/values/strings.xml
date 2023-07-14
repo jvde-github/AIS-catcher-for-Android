@@ -47,28 +47,5 @@ It is your responsibility to determine whether or not your local administration 
 It is specifically forbidden to use this software for any illegal purpose whatsoever. It is intended <b>for use only</b> in those regions where such use <b>is permitted</b>.<p>
 ]]></string>
 
-    <string name="short_disclaimer_text"><![CDATA[
-    AIS-catcher for Android<p>
-    Copyright (C) 2022<p><i>jvde.github@gmail.com</i><p>
-    This program comes with <b>ABSOLUTELY NO WARRANTY</b>;</p>
-    This is free software, and you are welcome to redistribute it
-    under certain conditions. for details see <a href="https://github.com/jvde-github/AIS-catcher-for-Android">https://github.com/jvde-github/AIS-catcher-for-Android</a>.<p>
-    <b>DO NOT rely upon this software</b> in any way including for navigation and/or safety of life or property purposes.<p>
-<p>
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.<P>
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-<P>
-You should have received a copy of the GNU General Public License
-along with this program.  If not, see <a href="https://www.gnu.org/licenses/">https://www.gnu.org/licenses/</a>.
-
-
-]]></string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

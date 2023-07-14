@@ -9,8 +9,8 @@
         <ListPreference
             android:defaultValue="240K"
             android:dialogTitle="Sample rate"
-            android:entries="@array/rtltcp_rate_array"
-            android:entryValues="@array/rtltcp_rate_array"
+            android:entries="@array/rtlsdr_rate_array"
+            android:entryValues="@array/rtlsdr_rate_array"
             android:key="rRATE"
             android:title="Sample rate" />
 

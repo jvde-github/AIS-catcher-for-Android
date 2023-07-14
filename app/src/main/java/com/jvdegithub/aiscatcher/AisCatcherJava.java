@@ -55,6 +55,8 @@ public class AisCatcherJava {
 
     static native int getSampleRate();
 
+    static native void setLatLon(float lat,float lon);
+
     public static class Statistics {
 
         private static int DataB = 0;

@@ -25,7 +25,6 @@
                 android:orientation="vertical">
 
                 <TableLayout
-                    android:id="@+id/stattable"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/white"
@@ -39,7 +38,6 @@
                         android:showDividers="middle">
 
                         <TextView
-                            android:id="@+id/textView"
                             android:layout_width="20dp"
                             android:layout_height="fill_parent"
                             android:layout_weight="1"

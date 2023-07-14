@@ -258,6 +258,7 @@ Java_com_jvdegithub_aiscatcher_AisCatcherJava_InitNative(JNIEnv *env, jclass ins
 
     server.Set("PORT",std::to_string(port));
     server.Set("STATION","Android");
+    server.Set("SHARE_LOC","ON");
     server.start();
 
     return 0;
@@ -321,7 +322,7 @@ Java_com_jvdegithub_aiscatcher_AisCatcherJava_Run(JNIEnv *env, jclass) {
     const int TIME_INTERVAL = 1000;
     const int TIME_MAX = (TIME_CONSTRAINT * 1000) / TIME_INTERVAL;
     TAG tag;
-    tag.mode = 2;
+    tag.mode = 3;
 
     try {
         callbackConsole(env, "Creating output channels\n");
@@ -551,4 +552,12 @@ Java_com_jvdegithub_aiscatcher_AisCatcherJava_00024Statistics_Reset(JNIEnv *env,
     callbackUpdate(env);
     callbackConsole(env, "");
     callbackNMEA(env, "");
+}
+
+extern "C"
+JNIEXPORT void JNICALL
+Java_com_jvdegithub_aiscatcher_AisCatcherJava_setLatLon(JNIEnv *env, jclass clazz, jfloat lat,
+                                                        jfloat lon) {
+    server.Set("LAT",std::to_string(lat));
+    server.Set("LON",std::to_string(lon));
 }
