@@ -51,6 +51,8 @@ android {
             version '3.18.1'
         }
     }
+    buildToolsVersion '30.0.3'
+    ndkVersion '24.0.8215888'
 }
 
 dependencies {

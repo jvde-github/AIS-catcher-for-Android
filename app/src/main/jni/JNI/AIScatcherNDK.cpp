@@ -546,6 +546,8 @@ Java_com_jvdegithub_aiscatcher_AisCatcherJava_00024Statistics_Reset(JNIEnv *env,
 
     memset(&statistics, 0, sizeof(statistics));
 
+    server.Reset();
+
     callbackUpdate(env);
     callbackConsole(env, "");
     callbackNMEA(env, "");
