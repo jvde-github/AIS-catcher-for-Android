@@ -159,6 +159,6 @@ At the moment we don't collect any user data. This policy will vary per version 
 - <del>Wakelocks and </del>WiFi performance settings, etc...
 - <del>Add sync locks for updates</del>
 - Count buffer under- and over-runs
-- Simple map - radar view
-- Simple graphs with statistics
+- <del>Simple map</del> - radar view
+- <del>Simple graphs with statistics</del>
 - <del>Start button not properly reset when receiver stops due to timeout?</del>
