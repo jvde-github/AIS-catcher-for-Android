@@ -305,7 +305,6 @@ public class MainActivity<binding> extends AppCompatActivity implements AisCatch
         }
 
         private void updateUIonSource () {
-
             MenuItem item = bottomNavigationView.getMenu().findItem(R.id.action_source);
             item.setTitle(DeviceManager.getDeviceTypeString());
         }

@@ -244,7 +244,8 @@ public class DeviceManager {
         int select = nDev - 1;
         boolean changed = true;
 
-        if (!(add && deviceType == DeviceType.RTLTCP && deviceType == DeviceType.SPYSERVER))
+        if (!add && (deviceType != DeviceType.RTLTCP && deviceType != DeviceType.SPYSERVER))
+        //if (!(add && deviceType == DeviceType.RTLTCP && deviceType == DeviceType.SPYSERVER))
             for (int i = 0; i < devices.size(); i++)
                 if (devices.get(i).getType() == deviceType && devices.get(i).getUID() == deviceUID) {
                     select = i;
