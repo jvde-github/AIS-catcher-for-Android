@@ -16,10 +16,12 @@ import android.webkit.WebViewClient;
 
 import com.jvdegithub.aiscatcher.MainActivity;
 import com.jvdegithub.aiscatcher.R;
+import com.jvdegithub.aiscatcher.tools.LogBook;
 
 public class WebViewMapFragment extends Fragment {
 
     private WebView webView;
+    private LogBook logbook;
 
     public static WebViewMapFragment newInstance() {
         return new WebViewMapFragment();
@@ -27,6 +29,9 @@ public class WebViewMapFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+        logbook = LogBook.getInstance();
+
         View rootView = inflater.inflate(R.layout.fragment_map, container, false);
         webView = rootView.findViewById(R.id.webmap);
         WebSettings webSettings = webView.getSettings();
@@ -45,8 +50,9 @@ public class WebViewMapFragment extends Fragment {
         webView.setWebChromeClient(new WebChromeClient() {
             @Override
             public boolean onConsoleMessage(ConsoleMessage consoleMessage) {
-                Log.d("Webclient Map", consoleMessage.message() + " -- From line " +
-                        consoleMessage.lineNumber() + " of " + consoleMessage.sourceId());
+                logbook.addLog(String.format("WV: %s (l:%d)",
+                        consoleMessage.message(), consoleMessage.lineNumber() ));
+
                 return true;
             }
         });

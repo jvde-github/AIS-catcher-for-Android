@@ -561,3 +561,10 @@ Java_com_jvdegithub_aiscatcher_AisCatcherJava_setLatLon(JNIEnv *env, jclass claz
     server.Set("LAT",std::to_string(lat));
     server.Set("LON",std::to_string(lon));
 }
+
+extern "C"
+JNIEXPORT jstring JNICALL
+Java_com_jvdegithub_aiscatcher_AisCatcherJava_getLibraryVersion(JNIEnv *env, jobject thiz) {
+    std::string message = VERSION_DESCRIBE;
+    return env->NewStringUTF(message.c_str());
+}

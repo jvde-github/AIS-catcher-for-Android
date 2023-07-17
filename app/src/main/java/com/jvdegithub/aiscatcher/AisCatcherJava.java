@@ -39,6 +39,8 @@ public class AisCatcherJava {
 
     static native int InitNative(int port);
 
+    static native String getLibraryVersion();
+
     static native int createReceiver(int source, int FD, int CGF_wide, int model_type, int FPDS);
 
     static native int Run();
@@ -142,13 +144,11 @@ public class AisCatcherJava {
 
     public static void Reset() {
 
-        Logs.Clear();
         Statistics.Reset();
     }
 
     private static void onNMEA(String nmea) {
 
-        Logs.Nmea.Update(nmea);
         if (callback != null)
             callback.onNMEA(nmea);
     }
@@ -161,7 +161,6 @@ public class AisCatcherJava {
 
     public static void onStatus(String str) {
 
-        Logs.Status.Update(str);
         if (callback != null)
             callback.onConsole(str);
     }

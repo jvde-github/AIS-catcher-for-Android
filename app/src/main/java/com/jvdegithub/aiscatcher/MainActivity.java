@@ -27,9 +27,11 @@ import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkCapabilities;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.Spanned;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
@@ -45,6 +47,7 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.jvdegithub.aiscatcher.databinding.ActivityMainBinding;
+import com.jvdegithub.aiscatcher.tools.LogBook;
 import com.jvdegithub.aiscatcher.ui.main.StatisticsFragment;
 import com.jvdegithub.aiscatcher.ui.main.WebViewMapFragment;
 
@@ -53,8 +56,8 @@ import java.net.ServerSocket;
 
 public class MainActivity<binding> extends AppCompatActivity implements AisCatcherJava.AisCallback, DeviceManager.DeviceCallback {
 
+    private LogBook logbook;
     private LocationHelper locationHelper;
-
     public static int port = 0;
 
     static {
@@ -89,6 +92,8 @@ public class MainActivity<binding> extends AppCompatActivity implements AisCatch
         com.jvdegithub.aiscatcher.databinding.ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         setSupportActionBar(binding.toolbar);
+
+        logbook = LogBook.getInstance();
 
         FrameLayout fragmentContainer = findViewById(R.id.fragment_container);
         int currentApiVersion = android.os.Build.VERSION.SDK_INT;
@@ -241,6 +246,9 @@ public class MainActivity<binding> extends AppCompatActivity implements AisCatch
                 case R.id.action_abouts:
                     onAbout();
                     return true;
+                case R.id.action_logs:
+                    onLogs();
+                    return true;
             }
             return super.onOptionsItemSelected(item);
 
@@ -251,8 +259,25 @@ public class MainActivity<binding> extends AppCompatActivity implements AisCatch
             showDialog(html, "Licenses");
         }
 
+        private void onLogs () {
+
+            Spanned html = Html.fromHtml(logbook.getLogAsString());
+            showDialog(html, "Log");
+        }
+
         private void onAbout () {
-            Spanned html = Html.fromHtml((String) getText(R.string.disclaimer_text));
+            String disclaimerText = getString(R.string.disclaimer_text);
+            String androidVersion = String.format(Build.VERSION.RELEASE);
+            String versionName = String.valueOf(BuildConfig.VERSION_NAME);
+            String versionCode = String.valueOf(BuildConfig.VERSION_CODE);
+            String libraryVersion = AisCatcherJava.getLibraryVersion();
+            String appID = String.valueOf(BuildConfig.APPLICATION_ID);
+            String debug = String.valueOf(BuildConfig.BUILD_TYPE);
+
+            String formattedHtml = String.format(disclaimerText,versionName,versionCode,
+                libraryVersion,appID,debug,androidVersion);
+            Spanned html = Html.fromHtml(formattedHtml);
+
             showDialog(html, "About");
         }
 
@@ -318,7 +343,8 @@ public class MainActivity<binding> extends AppCompatActivity implements AisCatch
 
         @Override
         public void onConsole ( final String line){
-            //log_fragment.Update(line);
+            Log.d("AIS-catcher library",line);
+            logbook.addLog(line);
         }
 
         @Override
