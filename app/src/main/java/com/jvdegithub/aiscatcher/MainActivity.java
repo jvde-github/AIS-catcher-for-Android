@@ -34,6 +34,7 @@ import android.text.Spanned;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.webkit.WebView;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
@@ -97,7 +98,7 @@ public class MainActivity<binding> extends AppCompatActivity implements AisCatch
 
         FrameLayout fragmentContainer = findViewById(R.id.fragment_container);
         int currentApiVersion = android.os.Build.VERSION.SDK_INT;
-        legacyVersion = currentApiVersion < android.os.Build.VERSION_CODES.N;
+        legacyVersion = currentApiVersion < android.os.Build.VERSION_CODES.N & false;
 
         Fragment fragment;
 
@@ -273,17 +274,18 @@ public class MainActivity<binding> extends AppCompatActivity implements AisCatch
             String libraryVersion = AisCatcherJava.getLibraryVersion();
             String appID = String.valueOf(BuildConfig.APPLICATION_ID);
             String debug = String.valueOf(BuildConfig.BUILD_TYPE);
+            WebView webView = new WebView(this);
+            String userAgentString = webView.getSettings().getUserAgentString();
 
             String formattedHtml = String.format(disclaimerText,versionName,versionCode,
-                libraryVersion,appID,debug,androidVersion);
+                libraryVersion,appID,debug,androidVersion, userAgentString);
             Spanned html = Html.fromHtml(formattedHtml);
 
             showDialog(html, "About");
         }
 
         private void onOpening () {
-            Spanned html = Html.fromHtml((String) getText(R.string.disclaimer_text));
-            showDialog(html, "Welcome!");
+            onAbout();
         }
 
         private void showDialog (@Nullable CharSequence msg, String title)

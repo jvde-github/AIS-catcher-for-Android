@@ -59,6 +59,8 @@ public class AisCatcherJava {
 
     static native void setLatLon(float lat,float lon);
 
+    static native void setDeviceDescription(String p, String v, String s);
+
     public static class Statistics {
 
         private static int DataB = 0;

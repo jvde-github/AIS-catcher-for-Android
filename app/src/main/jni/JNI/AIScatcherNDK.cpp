@@ -568,3 +568,31 @@ Java_com_jvdegithub_aiscatcher_AisCatcherJava_getLibraryVersion(JNIEnv *env, job
     std::string message = VERSION_DESCRIBE;
     return env->NewStringUTF(message.c_str());
 }
+
+extern "C"
+JNIEXPORT void JNICALL
+Java_com_jvdegithub_aiscatcher_AisCatcherJava_setDeviceDescription(JNIEnv *env, jclass clazz,
+                                                                   jstring p, jstring v,
+                                                                   jstring s) {
+    const char* pChar = env->GetStringUTFChars(p, NULL);
+    std::string pStr;
+    if (pChar != NULL) {
+        pStr = pChar;
+        env->ReleaseStringUTFChars(p, pChar);
+    }
+
+    const char* vChar = env->GetStringUTFChars(v, NULL);
+    std::string vStr;
+    if (vChar != NULL) {
+        vStr = vChar;
+        env->ReleaseStringUTFChars(v, vChar);
+    }
+
+    const char* sChar = env->GetStringUTFChars(s, NULL);
+    std::string sStr;
+    if (sChar != NULL) {
+        sStr = sChar;
+        env->ReleaseStringUTFChars(s, sChar);
+    }
+
+    server.setDeviceDescription(pStr, vStr, sStr);}

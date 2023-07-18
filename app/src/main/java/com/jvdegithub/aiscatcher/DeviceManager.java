@@ -267,6 +267,8 @@ public class DeviceManager {
         deviceType = dev.getType();
         deviceUID = dev.getUID();
 
+        AisCatcherJava.setDeviceDescription(dev.getDescription(),"","");
+
         onSourceChanged();
     }
 
