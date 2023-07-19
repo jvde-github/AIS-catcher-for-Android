@@ -98,7 +98,7 @@ public class MainActivity<binding> extends AppCompatActivity implements AisCatch
 
         FrameLayout fragmentContainer = findViewById(R.id.fragment_container);
         int currentApiVersion = android.os.Build.VERSION.SDK_INT;
-        legacyVersion = currentApiVersion < android.os.Build.VERSION_CODES.N & false;
+        legacyVersion = currentApiVersion < android.os.Build.VERSION_CODES.N;
 
         Fragment fragment;
 

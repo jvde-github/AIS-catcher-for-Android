@@ -1,5 +1,6 @@
 package com.jvdegithub.aiscatcher.ui.main;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -40,18 +41,23 @@ public class WebViewMapFragment extends Fragment {
 
         webView.setWebViewClient(new WebViewClient());
 
-        /*
-        Activity activity = getActivity();
-        if (activity != null) {
-            webView.addJavascriptInterface(new WebAppInterface(activity), "Android");
-        }
-        */
+        webView.setWebViewClient(new WebViewClient() {
+            @Override
+            public void onPageStarted(WebView view, String url, Bitmap favicon) {
+                webView.setVisibility(View.INVISIBLE);
+            }
+
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                webView.setVisibility(View.VISIBLE);
+            }
+        });
 
         webView.setWebChromeClient(new WebChromeClient() {
             @Override
             public boolean onConsoleMessage(ConsoleMessage consoleMessage) {
-                logbook.addLog(String.format("WV: %s (l:%d)",
-                        consoleMessage.message(), consoleMessage.lineNumber() ));
+                logbook.addLog(String.format("W(%d): %s",
+                        consoleMessage.lineNumber(), consoleMessage.message() ));
 
                 return true;
             }
