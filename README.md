@@ -22,9 +22,7 @@ AIS-catcher had a recent overhaul. The instructions below still are relevant but
 
 The requirements to receive AIS signals are: a RTL-SDR dongle (or alternatively an AirSpy Mini/R2/HF+), a simple antenna, 
 an Android device with USB connector and an OTG cable to connect the dongle with your Android device. 
-AIS-catcher only receives and processes signals and then forwards the messages over UDP. To make it a bit more interesting you would need an App like
-[Boat Beacon](https://pocketmariner.com/mobile-apps/boatbeacon/) or [OpenCPN](https://play.google.com/store/apps/details?id=org.opencpn.opencpn_free) to map the received vessel information.
-
+AIS-catcher only receives and processes signals and then forwards the messages over UDP or visualizes them on the build-in map (internet connection required).
 And one more thing, you need to be in a region where there are ships broadcasting AIS signals, e.g. near the water.
 
 <p align="center">
