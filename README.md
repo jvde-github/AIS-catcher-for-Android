@@ -5,7 +5,7 @@ The App directly accesses a Software Defined Radio USB device and can send recei
 The following screenshot was taken in July 2022 with AIS-catcher receiving signals for a few minutes on a Samsung Galaxy S6 on a beach near The Hague with a simple antenna. Ship positions are plotted with the BoatBeacon app.
  
 <p align="center">
-<img src="https://github.com/jvde-github/AIS-catcher/blob/152e5460fd938fb701d988f01deccdfa6192443d/media/Screenshot_BoatBeacon%5B1%5D.jpg" width=40% height=40%>
+<img src="https://github.com/jvde-github/AIS-catcher-for-Android/assets/52420030/e863cd33-c9e9-4d1d-a6dc-32fd2b956b3a" width=40% height=40%>
 </p>
 
 Below you can find a link to the APK file or visit the [Google Play Store](https://play.google.com/store/apps/details?id=com.jvdegithub.aiscatcher&gl=NL). The engine and visualizations are based on [AIS-catcher](https://github.com/jvde-github/AIS-catcher). 
@@ -22,9 +22,7 @@ AIS-catcher had a recent overhaul. The instructions below still are relevant but
 
 The requirements to receive AIS signals are: a RTL-SDR dongle (or alternatively an AirSpy Mini/R2/HF+), a simple antenna, 
 an Android device with USB connector and an OTG cable to connect the dongle with your Android device. 
-AIS-catcher only receives and processes signals and then forwards the messages over UDP. To make it a bit more interesting you would need an App like
-[Boat Beacon](https://pocketmariner.com/mobile-apps/boatbeacon/) or [OpenCPN](https://play.google.com/store/apps/details?id=org.opencpn.opencpn_free) to map the received vessel information.
-
+AIS-catcher only receives and processes signals and then forwards the messages over UDP or visualizes them on the build-in map (internet connection required).
 And one more thing, you need to be in a region where there are ships broadcasting AIS signals, e.g. near the water.
 
 <p align="center">
