@@ -1,9 +1,12 @@
 package com.jvdegithub.aiscatcher.tools;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class LogBook {
+
     private static LogBook instance;
     private List<String> logs;
     private static final int MAX_LOGS = 50;
@@ -23,7 +26,7 @@ public class LogBook {
         if (logs.size() >= MAX_LOGS) {
             logs.remove(0);
         }
-        logs.add(log);
+        logs.add(MessageFormat.format("[{0, time}] {1}",new Date(), log));
         notifyLogUpdate(log);
     }
 
