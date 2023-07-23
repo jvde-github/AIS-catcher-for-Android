@@ -24,8 +24,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
-import android.net.ConnectivityManager;
-import android.net.NetworkCapabilities;
+
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -80,12 +79,6 @@ public class MainActivity<binding> extends AppCompatActivity implements AisCatch
     private StatisticsFragment stat_fragment;
     private BottomNavigationView bottomNavigationView;
 
-    private boolean isOnline() {
-        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkCapabilities networkCapabilities = connectivityManager.getNetworkCapabilities(connectivityManager.getActiveNetwork());
-        return networkCapabilities != null && networkCapabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET);
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -97,12 +90,13 @@ public class MainActivity<binding> extends AppCompatActivity implements AisCatch
         logbook = LogBook.getInstance();
 
         FrameLayout fragmentContainer = findViewById(R.id.fragment_container);
+
         int currentApiVersion = android.os.Build.VERSION.SDK_INT;
         legacyVersion = currentApiVersion < android.os.Build.VERSION_CODES.N;
 
         Fragment fragment;
 
-        if (legacyVersion || !isOnline()) {
+        if (legacyVersion) {
             stat_fragment = new StatisticsFragment();
             fragment = stat_fragment;
         } else {
