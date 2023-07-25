@@ -1,6 +1,6 @@
 # AIS-catcher for Android - A multi-platform AIS receiver 
 This Android App helps to change your Android device into a dual channel AIS receiver that can be used to pick up AIS signals from nearby vessels, even if offline!
-The App directly accesses a Software Defined Radio USB device and visualize received vessels on the built-in map or send received messages via UDP to plotting Apps like [Boat Beacon](https://pocketmariner.com/mobile-apps/boatbeacon/) or [OpenCPN](https://play.google.com/store/apps/details?id=org.opencpn.opencpn_free). A lightweight AIS receiver system when travelling. AIS-catcher for Android has been tested on an Odroid running Android.
+The App directly accesses a Software Defined Radio USB device, like a  RTL-SDR dongle or an AirSpy decvice. Received vessels are visualized on the built-in map or messages are sent via UDP to plotting Apps like [Boat Beacon](https://pocketmariner.com/mobile-apps/boatbeacon/) or [OpenCPN](https://play.google.com/store/apps/details?id=org.opencpn.opencpn_free). A lightweight AIS receiver system when travelling. AIS-catcher for Android has been tested on an Odroid running Android.
 
 An impression of AIS-catcher on the beach on a Galaxy Note 20 in July 2023 (thanks and credit: Roger G7RUH)
 <p align="center">
