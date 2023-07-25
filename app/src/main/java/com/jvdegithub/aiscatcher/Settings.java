@@ -25,12 +25,15 @@ import android.text.InputFilter;
 import android.text.InputType;
 import android.text.method.DigitsKeyListener;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.EditTextPreference;
 import androidx.preference.ListPreference;
+import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.PreferenceManager;
+import androidx.preference.PreferenceScreen;
 import androidx.preference.SeekBarPreference;
 
 import com.jvdegithub.aiscatcher.tools.InputFilterIP;
@@ -40,6 +43,10 @@ import java.util.Objects;
 
 public class Settings extends AppCompatActivity {
 
+    static boolean is_enabled = true;
+    public static void setEnabled(boolean e) {
+        is_enabled = e;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -155,6 +162,15 @@ public class Settings extends AppCompatActivity {
             super.onResume();
             getPreferenceScreen().getSharedPreferences()
                     .registerOnSharedPreferenceChangeListener(this);
+            if(!is_enabled)
+                Toast.makeText(getContext(), "Settings disabled during run", Toast.LENGTH_SHORT).show();
+
+            PreferenceScreen preferenceScreen = getPreferenceScreen();
+            for (int i = 0; i < preferenceScreen.getPreferenceCount(); i++) {
+                Preference preference = preferenceScreen.getPreference(i);
+                preference.setEnabled(is_enabled);
+            }
+
         }
 
         @Override

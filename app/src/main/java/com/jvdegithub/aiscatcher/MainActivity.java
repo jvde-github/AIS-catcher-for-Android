@@ -316,6 +316,8 @@ public class MainActivity<binding> extends AppCompatActivity implements AisCatch
             item.setTitle("Stop");
 
             bottomNavigationView.getMenu().findItem(R.id.action_source).setEnabled(false);
+            Settings.setEnabled(false);
+
         }
 
         private void updateUIwithStop () {
@@ -323,6 +325,7 @@ public class MainActivity<binding> extends AppCompatActivity implements AisCatch
             item.setIcon(R.drawable.ic_baseline_play_circle_filled_40);
             item.setTitle("Start");
             bottomNavigationView.getMenu().findItem(R.id.action_source).setEnabled(true);
+            Settings.setEnabled(true);
         }
 
         private void updateUIonSource () {
