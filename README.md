@@ -1,12 +1,13 @@
 # AIS-catcher for Android - A multi-platform AIS receiver 
 This Android App helps to change your Android device into a dual channel AIS receiver that can be used to pick up AIS signals from nearby vessels, even if offline!
-The App directly accesses a Software Defined Radio USB device and can send received messages via UDP to plotting Apps like [Boat Beacon](https://pocketmariner.com/mobile-apps/boatbeacon/) or [OpenCPN](https://play.google.com/store/apps/details?id=org.opencpn.opencpn_free). A lightweight AIS receiver system when travelling. AIS-catcher for Android has been tested on an Odroid running Android.
+The App directly accesses a Software Defined Radio USB device and visualize received vessels on the built-in map or send received messages via UDP to plotting Apps like [Boat Beacon](https://pocketmariner.com/mobile-apps/boatbeacon/) or [OpenCPN](https://play.google.com/store/apps/details?id=org.opencpn.opencpn_free). A lightweight AIS receiver system when travelling. AIS-catcher for Android has been tested on an Odroid running Android.
 
-The following screenshot was taken in July 2022 with AIS-catcher receiving signals for a few minutes on a Samsung Galaxy S6 on a beach near The Hague with a simple antenna. Ship positions are plotted with the BoatBeacon app.
- 
+An impression of AIS-catcher on the beach on a Galaxy Note 20 in July 2023 (thanks and credit: Roger G7RUH)
 <p align="center">
-<img src="https://github.com/jvde-github/AIS-catcher-for-Android/assets/52420030/e863cd33-c9e9-4d1d-a6dc-32fd2b956b3a" width=40% height=40%>
+<img src="https://github.com/jvde-github/AIS-catcher-for-Android/assets/52420030/11dbab61-03aa-4f7c-a9f5-ccd8f6ee29b5" width=30% height=30%>
+<img src="https://github.com/jvde-github/AIS-catcher-for-Android/assets/52420030/03c4da4d-dc26-4499-9adb-f36c0e4f5c5a" width=30% height=30%>
 </p>
+
 
 Below you can find a link to the APK file or visit the [Google Play Store](https://play.google.com/store/apps/details?id=com.jvdegithub.aiscatcher&gl=NL). The engine and visualizations are based on [AIS-catcher](https://github.com/jvde-github/AIS-catcher). 
 
