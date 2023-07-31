@@ -1,5 +1,6 @@
 package com.jvdegithub.aiscatcher.ui.main;
 
+import android.app.UiModeManager;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.net.ConnectivityManager;
@@ -76,8 +77,15 @@ public class WebViewMapFragment extends Fragment {
             }
         });
 
+        String url = "http://localhost:" + MainActivity.port + "?welcome=false&android=true";
 
-        webView.loadUrl("http://localhost:" + MainActivity.port + "?welcome=false&android=true");
+        UiModeManager uiManager = (UiModeManager) getContext().getSystemService(Context.UI_MODE_SERVICE);
+        boolean isDarkMode = (uiManager.getNightMode() == UiModeManager.MODE_NIGHT_YES);
+
+        if (isDarkMode) {
+            url += "&dark_mode=true&map=DarkMatter";
+        }
+        webView.loadUrl(url);
 
         return rootView;
     }
