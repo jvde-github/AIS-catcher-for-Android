@@ -3,6 +3,19 @@
     android:key="first_preferencescreen">
 
     <PreferenceCategory
+        android:key="system_category"
+        android:title="System">
+
+        <SwitchPreferenceCompat
+            android:key="sFORCEDARK"
+            android:enabled="false"
+            android:summary="Force app theme to Dark Mode"
+            android:defaultValue="False"
+            android:title="Force Dark Mode"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
         android:key="rtlsdr_category"
         android:title="RTL-SDR">
 

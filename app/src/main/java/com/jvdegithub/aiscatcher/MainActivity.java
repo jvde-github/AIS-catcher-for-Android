@@ -23,6 +23,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 
 import android.net.Uri;
@@ -44,6 +45,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+import androidx.preference.PreferenceManager;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.jvdegithub.aiscatcher.databinding.ActivityMainBinding;
@@ -59,7 +61,6 @@ public class MainActivity<binding> extends AppCompatActivity implements AisCatch
     private LogBook logbook;
     private LocationHelper locationHelper;
     public static int port = 0;
-
     static {
 
         try {
@@ -132,7 +133,6 @@ public class MainActivity<binding> extends AppCompatActivity implements AisCatch
         });
 
         DeviceManager.Init(this);
-
     }
 
     // ugly to have the callback in mainactivity, to be cleaned up
