@@ -26,6 +26,7 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 
+import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -42,6 +43,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
@@ -57,6 +59,8 @@ import java.io.IOException;
 import java.net.ServerSocket;
 
 public class MainActivity<binding> extends AppCompatActivity implements AisCatcherJava.AisCallback, DeviceManager.DeviceCallback {
+
+    private SharedPreferences.OnSharedPreferenceChangeListener preferenceChangeListener;
 
     private LogBook logbook;
     private LocationHelper locationHelper;
@@ -87,6 +91,8 @@ public class MainActivity<binding> extends AppCompatActivity implements AisCatch
         com.jvdegithub.aiscatcher.databinding.ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         setSupportActionBar(binding.toolbar);
+
+        setDarkMode(true);
 
         logbook = LogBook.getInstance();
 
@@ -133,6 +139,17 @@ public class MainActivity<binding> extends AppCompatActivity implements AisCatch
         });
 
         DeviceManager.Init(this);
+
+        preferenceChangeListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
+            public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+                if (key.equals("sFORCEDARK"))
+                    setDarkMode(false);
+            }
+        };
+
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        sharedPreferences.registerOnSharedPreferenceChangeListener(preferenceChangeListener);
+
     }
 
     // ugly to have the callback in mainactivity, to be cleaned up
@@ -155,6 +172,16 @@ public class MainActivity<binding> extends AppCompatActivity implements AisCatch
         protected void onDestroy () {
             super.onDestroy();
             locationHelper.removeLocationUpdates();
+            PreferenceManager.getDefaultSharedPreferences(this)
+                    .unregisterOnSharedPreferenceChangeListener(preferenceChangeListener);
+
+        }
+
+        public void setDarkMode(boolean only_force) {
+            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+            boolean sForceDark = sharedPreferences.getBoolean("sFORCEDARK", false);
+            if(!only_force || sForceDark)
+                AppCompatDelegate.setDefaultNightMode(sForceDark ? AppCompatDelegate.MODE_NIGHT_YES : AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
         }
 
         private void onWeb () {

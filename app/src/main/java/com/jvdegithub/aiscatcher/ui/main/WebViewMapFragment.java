@@ -2,12 +2,16 @@ package com.jvdegithub.aiscatcher.ui.main;
 
 import android.app.UiModeManager;
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.net.ConnectivityManager;
 import android.net.NetworkCapabilities;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
+import androidx.preference.PreferenceManager;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -79,12 +83,11 @@ public class WebViewMapFragment extends Fragment {
 
         String url = "http://localhost:" + MainActivity.port + "?welcome=false&android=true";
 
-        UiModeManager uiManager = (UiModeManager) getContext().getSystemService(Context.UI_MODE_SERVICE);
-        boolean isDarkMode = (uiManager.getNightMode() == UiModeManager.MODE_NIGHT_YES);
-
-        if (isDarkMode) {
+        int currentNightMode = AppCompatDelegate.getDefaultNightMode();
+        if ((getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_YES)
             url += "&dark_mode=true&map=DarkMatter";
-        }
+        else
+            url += "&dark_mode=false&map=Voyager";
         webView.loadUrl(url);
 
         return rootView;

@@ -8,7 +8,6 @@
 
         <SwitchPreferenceCompat
             android:key="sFORCEDARK"
-            android:enabled="false"
             android:summary="Force app theme to Dark Mode"
             android:defaultValue="False"
             android:title="Force Dark Mode"/>
