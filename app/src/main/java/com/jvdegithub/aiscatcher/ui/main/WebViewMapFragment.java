@@ -85,11 +85,18 @@ public class WebViewMapFragment extends Fragment {
 
         int currentNightMode = AppCompatDelegate.getDefaultNightMode();
         if ((getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_YES)
-            url += "&dark_mode=true&map=DarkMatter";
+            url += "&dark_mode=true";
         else
-            url += "&dark_mode=false&map=Voyager";
+            url += "&dark_mode=false";
         webView.loadUrl(url);
+        logbook.addLog("Opening: " + url);
 
         return rootView;
     }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        webView.stopLoading();
+        logbook.addLog("View is destroyed.");    }
 }

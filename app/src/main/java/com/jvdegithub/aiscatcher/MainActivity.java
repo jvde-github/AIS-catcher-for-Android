@@ -147,26 +147,25 @@ public class MainActivity<binding> extends AppCompatActivity implements AisCatch
             }
         };
 
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        sharedPreferences.registerOnSharedPreferenceChangeListener(preferenceChangeListener);
+            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+            sharedPreferences.registerOnSharedPreferenceChangeListener(preferenceChangeListener);
+        }
 
-    }
+        // ugly to have the callback in mainactivity, to be cleaned up
+        @Override
+        public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+            super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+            if (requestCode == locationHelper.PERMISSION_REQUEST_CODE) {
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED
+                        && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
 
-    // ugly to have the callback in mainactivity, to be cleaned up
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == locationHelper.PERMISSION_REQUEST_CODE) {
-            if (grantResults.length > 0
-                    && grantResults[0] == PackageManager.PERMISSION_GRANTED
-                    && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
-
-                locationHelper.requestLocationUpdates();
-            } else {
-                // no permission
+                    locationHelper.requestLocationUpdates();
+                } else {
+                    // no permission
+                }
             }
         }
-    }
 
         @Override
         protected void onDestroy () {
