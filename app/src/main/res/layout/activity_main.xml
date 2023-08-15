@@ -43,8 +43,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="?attr/colorPrimaryVariant"
-                app:itemIconTint="@color/white"
-                app:itemTextColor="@color/white"
+                app:itemIconTint="@color/bottom_navigation_colors"
+                app:itemTextColor="@color/bottom_navigation_colors"
                 app:labelVisibilityMode="labeled"
                 app:menu="@menu/bottom_menu" />
         </LinearLayout>

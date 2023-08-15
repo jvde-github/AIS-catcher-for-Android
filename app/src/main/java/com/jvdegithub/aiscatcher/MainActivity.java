@@ -27,6 +27,9 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 
 import android.content.res.Configuration;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -338,12 +341,11 @@ public class MainActivity<binding> extends AppCompatActivity implements AisCatch
 
         private void updateUIwithStart () {
             MenuItem item = bottomNavigationView.getMenu().findItem(R.id.action_play);
+
             item.setIcon(R.drawable.ic_baseline_stop_circle_40);
             item.setTitle("Stop");
-
             bottomNavigationView.getMenu().findItem(R.id.action_source).setEnabled(false);
             Settings.setEnabled(false);
-
         }
 
         private void updateUIwithStop () {
