@@ -115,7 +115,7 @@ public class AisService extends Service {
             int r = AisCatcherJava.createReceiver(source, fd, cgfwide, modeltype, FPDS);
 
             if (r == 0) {
-                String msg = "Receiver running - " + DeviceManager.getDeviceType() + " @ " + AisCatcherJava.getSampleRate() / 1000 + "K";
+                String msg = "Receiver running - " + DeviceManager.getDeviceTypeDescription() + " @ " + AisCatcherJava.getRateDescription();
                 startForeground(1001, buildNotification(msg));
 
                 new Thread(

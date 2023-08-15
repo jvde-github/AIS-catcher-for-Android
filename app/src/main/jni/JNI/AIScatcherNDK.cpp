@@ -223,6 +223,7 @@ struct Drivers {
     Device::SpyServer SPYSERVER;
     Device::AIRSPY AIRSPY;
     Device::AIRSPYHF AIRSPYHF;
+    //Device::SerialPort Serial;
 } drivers;
 
 //Device::Type type = Device::Type::NONE;
@@ -391,8 +392,11 @@ Java_com_jvdegithub_aiscatcher_AisCatcherJava_Close(JNIEnv *env, jclass) {
     try {
         if (device) device->Close();
         device = nullptr;
-        delete model;
-        model = nullptr;
+
+        if(model) {
+            delete model;
+            model = nullptr;
+        }
     }
     catch (const char *msg) {
         callbackError(env, msg);
@@ -465,26 +469,38 @@ Java_com_jvdegithub_aiscatcher_AisCatcherJava_createReceiver(JNIEnv *env, jclass
         callbackConsoleFormat(env, "Building model with sampling rate: %dK\n",
                               device->getSampleRate() / 1000);
 
-        delete model;
+        if(model != nullptr) {
+            delete model;
+            model = nullptr;
+        }
 
-        if(model_type == 0) {
-            callbackConsole(env, "Model: default\n");
-            model = new AIS::ModelDefault();
+        if(device && device->getFormat() == Format::TXT) {
+            callbackConsole(env, "Model: NMEA\n");
 
-            std::string s = (CGF_wide == 0)?"OFF":"ON";
-            model->Set("AFC_WIDE",s);
-            callbackConsoleFormat(env, "AFC wide: %s\n", s.c_str());
+            model = new AIS::ModelNMEA();
+            model->buildModel('A','B',device->getSampleRate(), false, device);
         }
         else {
-            callbackConsole(env, "Model: base (FM)\n");
-            model = new AIS::ModelBase();
+            if(model_type == 0) {
+
+                callbackConsole(env, "Model: default\n");
+                model = new AIS::ModelDefault();
+
+                std::string s = (CGF_wide == 0)?"OFF":"ON";
+                model->Set("AFC_WIDE",s);
+                callbackConsoleFormat(env, "AFC wide: %s\n", s.c_str());
+            }
+            else {
+                callbackConsole(env, "Model: base (FM)\n");
+                model = new AIS::ModelBase();
+            }
+
+            std::string s = (FPDS == 0)?"OFF":"ON";
+            model->Set("FP_DS",s);
+            callbackConsoleFormat(env, "Fixed Point Downsampler: %s\n", s.c_str());
+
+            model->buildModel('A','B',device->getSampleRate(), false, device);
         }
-
-        std::string s = (FPDS == 0)?"OFF":"ON";
-        model->Set("FP_DS",s);
-        callbackConsoleFormat(env, "Fixed Point Downsampler: %s\n", s.c_str());
-
-        model->buildModel('A','B',device->getSampleRate(), false, device);
 
     } catch (const char *msg) {
         callbackError(env, msg);
@@ -595,4 +611,11 @@ Java_com_jvdegithub_aiscatcher_AisCatcherJava_setDeviceDescription(JNIEnv *env, 
         env->ReleaseStringUTFChars(s, sChar);
     }
 
-    server.setDeviceDescription(pStr, vStr, sStr);}
+    server.setDeviceDescription(pStr, vStr, sStr);
+}
+
+extern "C"
+JNIEXPORT jstring JNICALL
+Java_com_jvdegithub_aiscatcher_AisCatcherJava_getRateDescription(JNIEnv *env, jclass clazz) {
+    return env->NewStringUTF(device->getRateDescription().c_str());
+}

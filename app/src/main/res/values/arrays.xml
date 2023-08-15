@@ -32,4 +32,8 @@
         <item>Default</item><item>Wide</item> <item>Narrow</item>
     </string-array>
 
+    <string-array name="tcp_protocol_array">
+        <item>RTLTCP</item><item>TXT</item>
+    </string-array>
+
 </resources>

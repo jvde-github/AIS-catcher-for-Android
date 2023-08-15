@@ -62,7 +62,29 @@
 
     <PreferenceCategory
         android:key="rtltcp_category"
-        android:title="RTL-TCP">
+        android:title="TCP input">
+
+        <EditTextPreference
+            android:key="tHOST"
+            android:defaultValue="localhost"
+            android:summary="IP address of RTL-TCP server"
+            android:singleLine="true"
+            android:title="Server IP"/>
+
+        <EditTextPreference
+            android:key="tPORT"
+            android:defaultValue="12345"
+            android:summary="Port of RTL-TCP server"
+            android:singleLine="true"
+            android:title="Server Port"/>
+
+        <ListPreference
+            android:defaultValue="RTLTCP"
+            android:dialogTitle="Protocol"
+            android:entries="@array/tcp_protocol_array"
+            android:entryValues="@array/tcp_protocol_array"
+            android:key="tPROTOCOL"
+            android:title="Protocol" />
 
         <ListPreference
             android:defaultValue="240K"
@@ -79,20 +101,6 @@
             android:entryValues="@array/tuner_array"
             android:key="tTUNER"
             android:title="Tuner" />
-
-        <EditTextPreference
-            android:key="tHOST"
-            android:defaultValue="localhost"
-            android:summary="IP address of RTL-TCP server"
-            android:singleLine="true"
-            android:title="Server IP"/>
-
-        <EditTextPreference
-            android:key="tPORT"
-            android:defaultValue="12345"
-            android:summary="Port of RTL-TCP server"
-            android:singleLine="true"
-            android:title="Server Port"/>
 
     </PreferenceCategory>
 

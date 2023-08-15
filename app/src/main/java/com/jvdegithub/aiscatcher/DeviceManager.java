@@ -149,6 +149,22 @@ public class DeviceManager {
         return deviceType;
     }
 
+    public static String getDeviceTypeDescription() {
+
+        switch (deviceType) {
+            case RTLTCP:
+                return "TCP";
+            case RTLSDR:
+                return "RTL-SDR";
+            case AIRSPY:
+                return "AirSpy";
+            case AIRSPYHF:
+                return "AirSpy HF+";
+            case SPYSERVER:
+                return "SpyServer";
+        }
+        return "Unknown";
+    }
     public static int getDeviceCode() {
         switch (deviceType) {
             case RTLTCP:
@@ -213,7 +229,7 @@ public class DeviceManager {
         devices.clear();
 
         devices.add(new Device(null, "SpyServer", DeviceType.SPYSERVER, 0));
-        devices.add(new Device(null, "RTL-TCP", DeviceType.RTLTCP, 0));
+        devices.add(new Device(null, "TCP", DeviceType.RTLTCP, 0));
 
         final HashSet<Pair<Integer, Integer>> supported = getSupportedDevices();
         UsbManager mUsbManager = (UsbManager) context.getSystemService(Context.USB_SERVICE);
@@ -271,25 +287,6 @@ public class DeviceManager {
 
         onSourceChanged();
     }
-
-    public static String getDeviceTypeString() {
-        switch (getDeviceType()) {
-            case RTLTCP:
-                return "RTLTCP";
-            case RTLSDR:
-                return "RTLSDR";
-            case AIRSPY:
-                return "AIRSPY";
-            case AIRSPYHF:
-                return "AIRSPYHF";
-            case HACKRF:
-                return "HACKRF";
-            case SPYSERVER:
-                return "SPYSERVER";
-        }
-        return "NONE";
-    }
-
     public static String[] getDeviceStrings() {
 
         refreshList(false);

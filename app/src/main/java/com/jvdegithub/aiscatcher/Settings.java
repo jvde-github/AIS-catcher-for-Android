@@ -68,6 +68,7 @@ public class Settings extends AppCompatActivity {
         preferences.edit().putString("rFREQOFFSET", "0").commit();
         preferences.edit().putBoolean("rBANDWIDTH", false).commit();
 
+        preferences.edit().putString("tPROTOCOL", "RTLTCP").commit();
         preferences.edit().putString("tRATE", "240K").commit();
         preferences.edit().putString("tTUNER", "Auto").commit();
         preferences.edit().putString("tHOST", "localhost").commit();
@@ -131,7 +132,7 @@ public class Settings extends AppCompatActivity {
 
         private void setSummaries() {
             setSummaryText(new String[]{"tPORT","tHOST","sPORT","sHOST","u1HOST","u1PORT","u2HOST","u2PORT", "rFREQOFFSET"});
-            setSummaryList(new String[]{"rTUNER","rRATE","sRATE","tRATE","tTUNER","mRATE","hRATE","oMODEL_TYPE","oCGF_WIDE"});
+            setSummaryList(new String[]{"rTUNER","rRATE","sRATE","tRATE","tPROTOCOL","tTUNER","mRATE","hRATE","oMODEL_TYPE","oCGF_WIDE"});
             setSummarySeekbar(new String[]{"mLINEARITY", "sGAIN"});
         }
 
@@ -171,6 +172,29 @@ public class Settings extends AppCompatActivity {
                 preference.setEnabled(is_enabled);
             }
 
+            final Preference tPROTOCOL = findPreference("tPROTOCOL");
+
+            tPROTOCOL.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+                @Override
+                public boolean onPreferenceChange(Preference preference, Object newValue) {
+                    if ("TXT".equals(newValue.toString())) {
+                        findPreference("tRATE").setEnabled(false);
+                        findPreference("tTUNER").setEnabled(false);
+                    } else {
+                        findPreference("tRATE").setEnabled(is_enabled & true);
+                        findPreference("tTUNER").setEnabled(is_enabled & true);
+                    }
+                    return true;
+                }
+            });
+
+            String currentProtocolValue = tPROTOCOL.getSharedPreferences().getString("tPROTOCOL", "");
+            if ("TXT".equals(currentProtocolValue)) {
+                findPreference("tRATE").setEnabled(false);
+                findPreference("tTUNER").setEnabled(false);
+            } else {
+                findPreference("tRATE").setEnabled(is_enabled & true);
+                findPreference("tTUNER").setEnabled(is_enabled & true);            }
         }
 
         @Override
@@ -178,6 +202,11 @@ public class Settings extends AppCompatActivity {
             super.onPause();
             getPreferenceScreen().getSharedPreferences()
                     .unregisterOnSharedPreferenceChangeListener(this);
+
+            Preference tPROTOCOL = findPreference("tPROTOCOL");
+            if (tPROTOCOL != null) {
+                tPROTOCOL.setOnPreferenceChangeListener(null); // Remove the listener
+            }
         }
 
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
@@ -211,7 +240,7 @@ public class Settings extends AppCompatActivity {
 
     static public boolean Apply(Context context) {
 
-        if (!SetDevice(new String[]{"rRATE", "rTUNER", "rFREQOFFSET", "sRATE", "sPORT", "sHOST", "tRATE", "tTUNER", "tHOST", "tPORT", "mRATE", "hRATE"}, context))
+        if (!SetDevice(new String[]{"rRATE", "rTUNER", "rFREQOFFSET", "sRATE", "sPORT", "sHOST", "tRATE", "tPROTOCOL","tTUNER", "tHOST", "tPORT", "mRATE", "hRATE"}, context))
             return false;
         if (!SetDeviceBoolean(new String[]{"rRTLAGC", "rBIASTEE", "mBIASTEE"}, "ON", "OFF", context))
             return false;
