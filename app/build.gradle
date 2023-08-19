@@ -4,14 +4,14 @@ plugins {
 
 android {
 
-    compileSdk 32
+    compileSdk 33
 
     defaultConfig {
         applicationId "com.jvdegithub.aiscatcher"
         minSdk 23
-        targetSdk 32
-        versionCode 66
-        versionName '0.66'
+        targetSdk 33
+        versionCode 68
+        versionName '0.68'
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         externalNativeBuild {

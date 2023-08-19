@@ -227,7 +227,7 @@ struct Drivers {
 } drivers;
 
 //Device::Type type = Device::Type::NONE;
-std::vector<IO::UDP > UDP_connections;
+std::vector<IO::UDPStreamer > UDP_connections;
 std::vector<std::string> UDPhost;
 std::vector<std::string> UDPport;
 
@@ -323,7 +323,7 @@ Java_com_jvdegithub_aiscatcher_AisCatcherJava_Run(JNIEnv *env, jclass) {
     const int TIME_INTERVAL = 1000;
     const int TIME_MAX = (TIME_CONSTRAINT * 1000) / TIME_INTERVAL;
     TAG tag;
-    tag.mode = 3;
+    tag.mode = 7;
 
     try {
         callbackConsole(env, "Creating output channels\n");

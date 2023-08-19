@@ -8,6 +8,7 @@ cmake_minimum_required(VERSION 3.10.2)
 project("AIScatcherNDK")
 
 set(OPTIMIZATION_FLAGS "-Ofast")
+#set(OPTIMIZATION_FLAGS "-g")
 
 set(CMAKE_CXX_FLAGS "${OPTIMIZATION_FLAGS}")
 set(CMAKE_C_FLAGS "${OPTIMIZATION_FLAGS}")
@@ -49,7 +50,7 @@ add_library( # Sets the name of the library.
         ./AIS-catcher/Library/AIS.cpp ./AIS-catcher/Library/JSONAIS.cpp ./AIS-catcher/Library/Keys.cpp
         ./AIS-catcher/Device/FileRAW.cpp ./AIS-catcher/Device/HACKRF.cpp ./AIS-catcher/Device/UDP.cpp ./AIS-catcher/Device/RTLTCP.cpp
         ./AIS-catcher/Device/ZMQ.cpp ./AIS-catcher/Device/SoapySDR.cpp ./AIS-catcher/Device/SpyServer.cpp ./AIS-catcher/Library/Message.cpp ./AIS-catcher/Library/NMEA.cpp
-        ./AIS-catcher/Library/Utilities.cpp ./AIS-catcher/Library/TCP.cpp ./AIS-catcher/JSON/JSON.cpp ./AIS-catcher/IO/Network.cpp ./AIS-catcher/IO/Server.cpp
+        ./AIS-catcher/Library/Utilities.cpp ./AIS-catcher/Library/TCP.cpp ./AIS-catcher/JSON/JSON.cpp ./AIS-catcher/IO/Network.cpp ./AIS-catcher/IO/HTTPServer.cpp
         ./AIS-catcher/JSON/StringBuilder.cpp ./AIS-catcher/JSON/Parser.cpp ./AIS-catcher/Device/AIRSPY.cpp ./AIS-catcher/Device/Serial.cpp
         ./AIS-catcher/DSP/DSP.cpp  ./AIS-catcher/IO/IO.cpp
 
