@@ -18,6 +18,8 @@
 
 package com.jvdegithub.aiscatcher;
 
+import static android.Manifest.permission.POST_NOTIFICATIONS;
+
 import android.Manifest;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -47,6 +49,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
@@ -90,6 +93,13 @@ public class MainActivity<binding> extends AppCompatActivity implements AisCatch
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        /* ask for permission to post notifications if needed ..... */
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (ContextCompat.checkSelfPermission(this, POST_NOTIFICATIONS) == PackageManager.PERMISSION_DENIED) {
+                ActivityCompat.requestPermissions(this, new String[]{POST_NOTIFICATIONS}, 101);
+            }
+        }
 
         com.jvdegithub.aiscatcher.databinding.ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -164,8 +174,6 @@ public class MainActivity<binding> extends AppCompatActivity implements AisCatch
                         && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
 
                     locationHelper.requestLocationUpdates();
-                } else {
-                    // no permission
                 }
             }
         }
