@@ -19,6 +19,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.ConsoleMessage;
 import android.webkit.WebChromeClient;
+import android.webkit.WebResourceRequest;
+import android.webkit.WebResourceResponse;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -27,6 +29,10 @@ import android.widget.RelativeLayout;
 import com.jvdegithub.aiscatcher.MainActivity;
 import com.jvdegithub.aiscatcher.R;
 import com.jvdegithub.aiscatcher.tools.LogBook;
+
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 
 public class WebViewMapFragment extends Fragment {
 
@@ -60,6 +66,43 @@ public class WebViewMapFragment extends Fragment {
             logbook.addLog("Device is offline.");
         }
         webView.setWebViewClient(new WebViewClient() {
+
+            @Override
+            public WebResourceResponse shouldInterceptRequest(WebView view, WebResourceRequest request) {
+                String url = request.getUrl().toString();
+
+                if (url.startsWith("https://cdn.jsdelivr.net/npm/") || url.startsWith("https://unpkg.com/")) {
+                    // Determine the prefix based on which one is matched
+                    String prefix = url.startsWith("https://cdn.jsdelivr.net/npm/") ? "https://cdn.jsdelivr.net/npm/" : "https://unpkg.com/";
+
+                    // Remove the prefix to get the remaining path
+                    String remainingPath = url.substring(prefix.length());
+
+                    try {
+                        // Load the local asset using AssetManager
+                        InputStream inputStream = getContext().getAssets().open(remainingPath);
+
+                        // Determine the appropriate content type
+                        String contentType;
+                        if (remainingPath.endsWith(".css")) {
+                            contentType = "text/css";
+                        } else {
+                            // Handle other content types if needed
+                            contentType = "text/plain"; // Default to plain text
+                        }
+
+                        WebResourceResponse response = new WebResourceResponse(contentType, "UTF-8", inputStream);
+                        logbook.addLog("Loaded locally : " + remainingPath);
+
+                        return response;
+                    } catch (IOException e) {
+                        logbook.addLog("Cannot load " + remainingPath);
+                    }
+                }
+
+                // Return null for other URLs to load them normally
+                return null;
+            }
             @Override
             public void onPageStarted(WebView view, String url, Bitmap favicon) {
                 webView.setVisibility(View.INVISIBLE);
