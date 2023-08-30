@@ -15,25 +15,7 @@
             android:id="@+id/webmap"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_above="@+id/offline_bar"
             />
-
-        <RelativeLayout
-            android:id="@+id/offline_bar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:background="@android:color/holo_red_dark"
-            android:visibility="gone">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:text="Offline: Content may be limited."
-                android:textColor="@android:color/white"
-                android:textSize="18sp" />
-        </RelativeLayout>
 
     </RelativeLayout>
 

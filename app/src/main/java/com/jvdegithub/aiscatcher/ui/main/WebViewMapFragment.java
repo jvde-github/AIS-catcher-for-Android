@@ -60,11 +60,6 @@ public class WebViewMapFragment extends Fragment {
         webSettings.setJavaScriptEnabled(true);
         webSettings.setDomStorageEnabled(true);
 
-        if(!isOnline()) {
-            RelativeLayout offlineBar = rootView.findViewById(R.id.offline_bar);
-            offlineBar.setVisibility(View.VISIBLE);
-            logbook.addLog("Device is offline.");
-        }
         webView.setWebViewClient(new WebViewClient() {
 
             @Override
@@ -84,12 +79,13 @@ public class WebViewMapFragment extends Fragment {
                             contentType = "text/css";
                         } else if (remainingPath.endsWith(".svg")) {
                             contentType = "image/svg+xml";
+                        } else if (remainingPath.endsWith(".png")) {
+                            contentType = "image/png";
                         } else {
                             contentType = "text/plain"; // Default to plain text
                         }
 
                         WebResourceResponse response = new WebResourceResponse(contentType, "UTF-8", inputStream);
-                        logbook.addLog("Loaded locally : " + remainingPath);
 
                         return response;
                     } catch (IOException e) {
