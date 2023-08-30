@@ -71,23 +71,20 @@ public class WebViewMapFragment extends Fragment {
             public WebResourceResponse shouldInterceptRequest(WebView view, WebResourceRequest request) {
                 String url = request.getUrl().toString();
 
-                if (url.startsWith("https://cdn.jsdelivr.net/npm/") || url.startsWith("https://unpkg.com/")) {
-                    // Determine the prefix based on which one is matched
-                    String prefix = url.startsWith("https://cdn.jsdelivr.net/npm/") ? "https://cdn.jsdelivr.net/npm/" : "https://unpkg.com/";
+                if (url.startsWith("https://cdn.jsdelivr.net/") || url.startsWith("https://unpkg.com/")) {
+                    String prefix = url.startsWith("https://cdn.jsdelivr.net/") ? "https://cdn.jsdelivr.net/" : "https://unpkg.com/";
 
-                    // Remove the prefix to get the remaining path
                     String remainingPath = url.substring(prefix.length());
 
                     try {
-                        // Load the local asset using AssetManager
                         InputStream inputStream = getContext().getAssets().open(remainingPath);
 
-                        // Determine the appropriate content type
                         String contentType;
                         if (remainingPath.endsWith(".css")) {
                             contentType = "text/css";
+                        } else if (remainingPath.endsWith(".svg")) {
+                            contentType = "image/svg+xml";
                         } else {
-                            // Handle other content types if needed
                             contentType = "text/plain"; // Default to plain text
                         }
 
@@ -100,7 +97,6 @@ public class WebViewMapFragment extends Fragment {
                     }
                 }
 
-                // Return null for other URLs to load them normally
                 return null;
             }
             @Override

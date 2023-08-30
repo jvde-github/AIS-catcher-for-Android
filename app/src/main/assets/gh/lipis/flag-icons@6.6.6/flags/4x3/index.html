@@ -1,0 +1,2405 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="description" content="lipis/flag-icons CDN by jsDelivr - A free, fast, and reliable Open Source CDN for npm and GitHub">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>lipis/flag-icons CDN by jsDelivr - A free, fast, and reliable Open Source CDN</title>
+		<style>
+			body {
+				font: 15px/1.4em Arial, "Helvetica Neue", Helvetica, sans-serif;
+				margin: 0;
+				padding: 20px 20px 30px;
+				background-color: #ffffff;
+			}
+
+			.container {
+				max-width: 960px;
+				margin: 0 auto;
+				padding: 10px 0;
+				background-color: #fff;
+			}
+
+			.header {
+				display: -webkit-box;
+				display: -ms-flexbox;
+				display: flex;
+				-webkit-box-align: center;
+				-ms-flex-align: center;
+				align-items: center;
+				-webkit-box-pack: justify;
+				-ms-flex-pack: justify;
+				justify-content: space-between;
+				flex-wrap: wrap;
+			}
+
+			h1 {
+				font-size: 28px;
+				line-height: 38px;
+				margin: 0 0 15px;
+			}
+
+			h2 {
+				font-size: 18px;
+				font-weight: 400;
+				margin: 0;
+			}
+
+			.versions {
+				max-width: 400px;
+				padding: 2px 12px 2px 6px;
+			}
+
+			.description {
+				margin: 10px 0;
+				font-size: 16px;
+				color: #666;
+			}
+
+			.path {
+				display: -webkit-box;
+				display: -ms-flexbox;
+				display: flex;
+				-webkit-box-align: center;
+				-ms-flex-align: center;
+				align-items: center;
+				-webkit-box-pack: justify;
+				-ms-flex-pack: justify;
+				justify-content: space-between;
+				flex-wrap: wrap;
+				margin: 15px 0 0;
+				padding: 15px 0 30px;
+				border-top: 1px solid #e5e5e5;
+			}
+
+			.path .versions,
+			.path ol {
+				margin: 15px 0 0;
+			}
+
+			.path ol {
+				padding: 0;
+				list-style: none;
+				font-size: 18px;
+				font-weight: 400;
+			}
+
+			.path ol li {
+				display: inline;
+			}
+
+			.listing {
+				border: 1px solid #dfe3e7;
+				border-radius: 6px;
+				-webkit-box-shadow: 0 5px 10px -5px #dfe3e7;
+				box-shadow: 0 5px 10px -5px #dfe3e7;
+			}
+
+			table {
+				width: 100%;
+				border-spacing: 0;
+			}
+
+			th, td {
+				padding: 8px 20px;
+				border-bottom: 1px solid #dfe3e7;
+			}
+
+			tr:last-child td {
+				border-bottom: 0;
+			}
+
+			.name.level-up {
+				border-bottom: 1px solid #dfe3e7;
+			}
+
+			.name.level-up a {
+				padding-left: 0;
+			}
+
+			.name {
+				width: auto;
+				text-align: left;
+				padding-right: 20px;
+			}
+
+			.name a {
+				color: #17233b;
+				padding-left: 5px;
+				position: relative;
+			}
+
+			.name svg {
+				display: inline-block;
+				margin-bottom: -4px;
+			}
+
+			.size {
+				max-width: 80px;
+				text-align: right;
+				color: #444;
+			}
+
+			th.name, th.size {
+				color: #999;
+				text-transform: uppercase;
+				font-size: 12px;
+				letter-spacing: 1px;
+			}
+
+			a {
+				color: #ff5627;
+				text-decoration: none;
+			}
+
+			a:hover, a:focus {
+				color: #ff5627;
+				text-decoration: underline;
+			}
+
+			.landing {
+				margin-top: 30px;
+				text-align: center;
+			}
+
+			.landing p {
+				margin: 0 0 15px;
+			}
+
+			.landing a {
+				display: block;
+				text-overflow: ellipsis;
+				overflow: hidden;
+			}
+
+			footer {
+				max-width: 960px;
+				display: -webkit-box;
+				display: -ms-flexbox;
+				display: flex;
+				-webkit-box-orient: vertical;
+				-webkit-box-direction: normal;
+				-ms-flex-direction: column;
+				flex-direction: column;
+				-webkit-box-pack: justify;
+				-ms-flex-pack: justify;
+				justify-content: space-between;
+				margin: 0 auto;
+				padding: 20px 0 0 0;
+				text-align: center;
+				font-size: 14px;
+				color: #666;
+				border-top: 1px solid #edf0f2;
+			}
+
+			.footer-left, .footer-right {
+				display: -webkit-box;
+				display: -ms-flexbox;
+				display: flex;
+				-webkit-box-orient: vertical;
+				-webkit-box-direction: normal;
+				-ms-flex-direction: column;
+				flex-direction: column;
+				-webkit-box-align: center;
+				-ms-flex-align: center;
+				align-items: center;
+				margin-bottom: 20px;
+			}
+
+			.logo {
+				width: 115px;
+			}
+
+			.copyright {
+				color: #79849a;
+				margin: 0;
+			}
+
+			@media (min-width: 576px) {
+				.footer-left, .footer-right {
+					-ms-flex-pack: distribute;
+					justify-content: space-around;
+					-webkit-box-orient: horizontal;
+					-webkit-box-direction: normal;
+					-ms-flex-direction: row;
+					flex-direction: row;
+				}
+			}
+
+			@media (min-width: 768px) {
+				body {
+					padding-top: 40px;
+				}
+
+				footer {
+					-webkit-box-orient: horizontal;
+					-webkit-box-direction: normal;
+					-ms-flex-direction: row;
+					flex-direction: row;
+					padding-top: 30px;
+				}
+
+				.container {
+					padding-bottom: 20px;
+				}
+
+				.footer-right a:first-child, .logo {
+					margin-right: 20px;
+				}
+
+				.landing {
+					display: -webkit-box;
+					display: -ms-flexbox;
+					display: flex;
+					-webkit-box-align: start;
+					-ms-flex-align: start;
+					align-items: flex-start;
+					-webkit-box-pack: justify;
+					-ms-flex-pack: justify;
+					justify-content: space-between;
+					margin-top: 40px;
+				}
+
+				.landing .right {
+					text-align: right;
+				}
+			}
+
+			.select-css {
+				display: block;
+				padding: 8px 20px 8px 12px;
+				box-sizing: border-box;
+				margin: 0;
+				border: 1px solid #aaa;
+				border-radius: .5em;
+				-moz-appearance: none;
+				-webkit-appearance: none;
+				appearance: none;
+				background-color: #fff;
+				background-image: url('https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/icons/caret-down-fill.svg');
+				background-repeat: no-repeat, repeat;
+				background-position: right 8px top 50%, 0 0;
+				background-size: 10px auto, 100%;
+				outline: none;
+			}
+
+			.select-css::-ms-expand {
+				display: none;
+			}
+
+			.select-css:hover {
+				border-color: #888;
+			}
+
+			.select-css option {
+				font-weight: normal;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="container">
+			<div class="header">
+				<h1>lipis/flag-icons CDN files</h1>
+
+				<a class="badge" href="https://www.jsdelivr.com/package/gh/lipis/flag-icons" title="jsDelivr monthly hits">
+					<img alt="jsDelivr monthly hits badge" src="https://data.jsdelivr.com/v1/package/gh/lipis/flag-icons/badge">
+				</a>
+			</div>
+
+
+			<div class="path">
+				<ol itemscope itemtype="https://schema.org/BreadcrumbList">
+					<li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+						<a itemscope itemtype="https://schema.org/WebPage" itemprop="item"
+						   itemid="/gh/lipis/flag-icons@6.6.6/"
+						   href="/gh/lipis/flag-icons@6.6.6/" rel="nofollow">
+							<span itemprop="name">lipis/flag-icons@6.6.6</span></a> /
+						<meta itemprop="position" content="0">
+					</li>
+					<li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+						<a itemscope itemtype="https://schema.org/WebPage" itemprop="item"
+						   itemid="/gh/lipis/flag-icons@6.6.6/flags/"
+						   href="/gh/lipis/flag-icons@6.6.6/flags/" rel="nofollow">
+							<span itemprop="name">flags</span></a> /
+						<meta itemprop="position" content="1">
+					</li>
+					<li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+						<span itemprop="name">4x3</span>
+						<meta itemprop="position" content="2">
+					</li>
+				</ol>
+
+				<select class="versions select-css">
+					<option value="lipis/flag-icons@6.11.0">lipis/flag-icons@6.11.0</option>
+					<option value="lipis/flag-icons@6.10.1">lipis/flag-icons@6.10.1</option>
+					<option value="lipis/flag-icons@6.10.0">lipis/flag-icons@6.10.0</option>
+					<option value="lipis/flag-icons@6.9.5">lipis/flag-icons@6.9.5</option>
+					<option value="lipis/flag-icons@6.9.4">lipis/flag-icons@6.9.4</option>
+					<option value="lipis/flag-icons@6.9.3">lipis/flag-icons@6.9.3</option>
+					<option value="lipis/flag-icons@6.9.2">lipis/flag-icons@6.9.2</option>
+					<option value="lipis/flag-icons@6.9.1">lipis/flag-icons@6.9.1</option>
+					<option value="lipis/flag-icons@6.9.0">lipis/flag-icons@6.9.0</option>
+					<option value="lipis/flag-icons@6.8.0">lipis/flag-icons@6.8.0</option>
+					<option value="lipis/flag-icons@6.7.0">lipis/flag-icons@6.7.0</option>
+					<option value="lipis/flag-icons@6.6.6">lipis/flag-icons@6.6.6</option>
+					<option value="lipis/flag-icons@6.6.5">lipis/flag-icons@6.6.5</option>
+					<option value="lipis/flag-icons@6.6.4">lipis/flag-icons@6.6.4</option>
+					<option value="lipis/flag-icons@6.6.3">lipis/flag-icons@6.6.3</option>
+					<option value="lipis/flag-icons@6.6.2">lipis/flag-icons@6.6.2</option>
+					<option value="lipis/flag-icons@6.6.1">lipis/flag-icons@6.6.1</option>
+					<option value="lipis/flag-icons@6.6.0">lipis/flag-icons@6.6.0</option>
+					<option value="lipis/flag-icons@6.5.1">lipis/flag-icons@6.5.1</option>
+					<option value="lipis/flag-icons@6.5.0">lipis/flag-icons@6.5.0</option>
+					<option value="lipis/flag-icons@6.4.6">lipis/flag-icons@6.4.6</option>
+					<option value="lipis/flag-icons@6.4.5">lipis/flag-icons@6.4.5</option>
+					<option value="lipis/flag-icons@6.4.4">lipis/flag-icons@6.4.4</option>
+					<option value="lipis/flag-icons@6.4.3">lipis/flag-icons@6.4.3</option>
+					<option value="lipis/flag-icons@6.4.2">lipis/flag-icons@6.4.2</option>
+					<option value="lipis/flag-icons@6.4.1">lipis/flag-icons@6.4.1</option>
+					<option value="lipis/flag-icons@6.4.0">lipis/flag-icons@6.4.0</option>
+					<option value="lipis/flag-icons@6.3.0">lipis/flag-icons@6.3.0</option>
+					<option value="lipis/flag-icons@6.2.0">lipis/flag-icons@6.2.0</option>
+					<option value="lipis/flag-icons@4.1.5">lipis/flag-icons@4.1.5</option>
+					<option value="lipis/flag-icons@4.1.4">lipis/flag-icons@4.1.4</option>
+					<option value="lipis/flag-icons@4.1.3">lipis/flag-icons@4.1.3</option>
+					<option value="lipis/flag-icons@4.1.2">lipis/flag-icons@4.1.2</option>
+					<option value="lipis/flag-icons@4.1.1">lipis/flag-icons@4.1.1</option>
+					<option value="lipis/flag-icons@4.1.0">lipis/flag-icons@4.1.0</option>
+					<option value="lipis/flag-icons@0.8.1">lipis/flag-icons@0.8.1</option>
+					<option value="lipis/flag-icons@3.5.0">lipis/flag-icons@3.5.0</option>
+					<option value="lipis/flag-icons@3.4.6">lipis/flag-icons@3.4.6</option>
+					<option value="lipis/flag-icons@3.4.5">lipis/flag-icons@3.4.5</option>
+					<option value="lipis/flag-icons@3.4.4">lipis/flag-icons@3.4.4</option>
+					<option value="lipis/flag-icons@3.4.3">lipis/flag-icons@3.4.3</option>
+					<option value="lipis/flag-icons@3.4.2">lipis/flag-icons@3.4.2</option>
+					<option value="lipis/flag-icons@3.4.1">lipis/flag-icons@3.4.1</option>
+					<option value="lipis/flag-icons@3.4.0">lipis/flag-icons@3.4.0</option>
+					<option value="lipis/flag-icons@3.3.0">lipis/flag-icons@3.3.0</option>
+					<option value="lipis/flag-icons@3.2.1">lipis/flag-icons@3.2.1</option>
+					<option value="lipis/flag-icons@3.2.0">lipis/flag-icons@3.2.0</option>
+					<option value="lipis/flag-icons@3.1.0">lipis/flag-icons@3.1.0</option>
+					<option value="lipis/flag-icons@3.0.0">lipis/flag-icons@3.0.0</option>
+					<option value="lipis/flag-icons@2.9.0">lipis/flag-icons@2.9.0</option>
+					<option value="lipis/flag-icons@2.8.0">lipis/flag-icons@2.8.0</option>
+					<option value="lipis/flag-icons@2.7.0">lipis/flag-icons@2.7.0</option>
+					<option value="lipis/flag-icons@2.6.0">lipis/flag-icons@2.6.0</option>
+					<option value="lipis/flag-icons@2.5.0">lipis/flag-icons@2.5.0</option>
+					<option value="lipis/flag-icons@2.4.0">lipis/flag-icons@2.4.0</option>
+					<option value="lipis/flag-icons@2.3.1">lipis/flag-icons@2.3.1</option>
+					<option value="lipis/flag-icons@2.3.0">lipis/flag-icons@2.3.0</option>
+					<option value="lipis/flag-icons@2.2.0">lipis/flag-icons@2.2.0</option>
+					<option value="lipis/flag-icons@2.1.0">lipis/flag-icons@2.1.0</option>
+					<option value="lipis/flag-icons@2.0.0">lipis/flag-icons@2.0.0</option>
+					<option value="lipis/flag-icons@1.4.0">lipis/flag-icons@1.4.0</option>
+					<option value="lipis/flag-icons@1.3.0">lipis/flag-icons@1.3.0</option>
+					<option value="lipis/flag-icons@1.2.0">lipis/flag-icons@1.2.0</option>
+					<option value="lipis/flag-icons@1.1.0">lipis/flag-icons@1.1.0</option>
+					<option value="lipis/flag-icons@1.0.0">lipis/flag-icons@1.0.0</option>
+					<option value="lipis/flag-icons@0.8.6">lipis/flag-icons@0.8.6</option>
+					<option value="lipis/flag-icons@0.8.5">lipis/flag-icons@0.8.5</option>
+					<option value="lipis/flag-icons@0.8.4">lipis/flag-icons@0.8.4</option>
+					<option value="lipis/flag-icons@0.8.3">lipis/flag-icons@0.8.3</option>
+					<option value="lipis/flag-icons@0.8.2">lipis/flag-icons@0.8.2</option>
+					<option value="lipis/flag-icons@0.8.0">lipis/flag-icons@0.8.0</option>
+					<option value="lipis/flag-icons@0.7.1">lipis/flag-icons@0.7.1</option>
+					<option value="lipis/flag-icons@0.7.0">lipis/flag-icons@0.7.0</option>
+					<option value="lipis/flag-icons@0.6.5">lipis/flag-icons@0.6.5</option>
+					<option value="lipis/flag-icons@0.6.4">lipis/flag-icons@0.6.4</option>
+					<option value="lipis/flag-icons@0.6.3">lipis/flag-icons@0.6.3</option>
+					<option value="lipis/flag-icons@0.6.2">lipis/flag-icons@0.6.2</option>
+					<option value="lipis/flag-icons@0.6.1">lipis/flag-icons@0.6.1</option>
+					<option value="lipis/flag-icons@0.6.0">lipis/flag-icons@0.6.0</option>
+					<option value="lipis/flag-icons@0.5.1">lipis/flag-icons@0.5.1</option>
+					<option value="lipis/flag-icons@0.5.0">lipis/flag-icons@0.5.0</option>
+					<option value="lipis/flag-icons@0.4.0">lipis/flag-icons@0.4.0</option>
+					<option value="lipis/flag-icons@0.3.0">lipis/flag-icons@0.3.0</option>
+					<option value="lipis/flag-icons@0.2.0">lipis/flag-icons@0.2.0</option>
+					<option value="lipis/flag-icons@0.1.0">lipis/flag-icons@0.1.0</option>
+				</select>
+			</div>
+
+			<div class="listing">
+				<table>
+					<tbody>
+					<tr>
+						<td class="name level-up" colspan="2"><a href="../">...</a></td>
+					</tr>
+
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/ac.svg">ac.svg</a>
+						</td>
+						<td class="size">30.16 KB</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/ad.svg">ad.svg</a>
+						</td>
+						<td class="size">33.06 KB</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/ae.svg">ae.svg</a>
+						</td>
+						<td class="size">251 B</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/af.svg">af.svg</a>
+						</td>
+						<td class="size">20.74 KB</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/ag.svg">ag.svg</a>
+						</td>
+						<td class="size">740 B</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/ai.svg">ai.svg</a>
+						</td>
+						<td class="size">36.52 KB</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/al.svg">al.svg</a>
+						</td>
+						<td class="size">3.14 KB</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/am.svg">am.svg</a>
+						</td>
+						<td class="size">228 B</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/ao.svg">ao.svg</a>
+						</td>
+						<td class="size">1.56 KB</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/aq.svg">aq.svg</a>
+						</td>
+						<td class="size">2.76 KB</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/ar.svg">ar.svg</a>
+						</td>
+						<td class="size">3.43 KB</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/as.svg">as.svg</a>
+						</td>
+						<td class="size">31.61 KB</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/at.svg">at.svg</a>
+						</td>
+						<td class="size">237 B</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/au.svg">au.svg</a>
+						</td>
+						<td class="size">1.31 KB</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/aw.svg">aw.svg</a>
+						</td>
+						<td class="size">9.71 KB</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/ax.svg">ax.svg</a>
+						</td>
+						<td class="size">550 B</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/az.svg">az.svg</a>
+						</td>
+						<td class="size">509 B</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/ba.svg">ba.svg</a>
+						</td>
+						<td class="size">1.27 KB</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/bb.svg">bb.svg</a>
+						</td>
+						<td class="size">607 B</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/bd.svg">bd.svg</a>
+						</td>
+						<td class="size">187 B</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/be.svg">be.svg</a>
+						</td>
+						<td class="size">287 B</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/bf.svg">bf.svg</a>
+						</td>
+						<td class="size">353 B</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/bg.svg">bg.svg</a>
+						</td>
+						<td class="size">283 B</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/bh.svg">bh.svg</a>
+						</td>
+						<td class="size">252 B</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/bi.svg">bi.svg</a>
+						</td>
+						<td class="size">1.05 KB</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/bj.svg">bj.svg</a>
+						</td>
+						<td class="size">493 B</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/bl.svg">bl.svg</a>
+						</td>
+						<td class="size">289 B</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/bm.svg">bm.svg</a>
+						</td>
+						<td class="size">22.31 KB</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/bn.svg">bn.svg</a>
+						</td>
+						<td class="size">14.03 KB</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/bo.svg">bo.svg</a>
+						</td>
+						<td class="size">110.79 KB</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/bq.svg">bq.svg</a>
+						</td>
+						<td class="size">221 B</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/br.svg">br.svg</a>
+						</td>
+						<td class="size">8 KB</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/bs.svg">bs.svg</a>
+						</td>
+						<td class="size">543 B</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/bt.svg">bt.svg</a>
+						</td>
+						<td class="size">24.72 KB</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/bv.svg">bv.svg</a>
+						</td>
+						<td class="size">576 B</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/bw.svg">bw.svg</a>
+						</td>
+						<td class="size">249 B</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/by.svg">by.svg</a>
+						</td>
+						<td class="size">5.81 KB</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/bz.svg">bz.svg</a>
+						</td>
+						<td class="size">45.7 KB</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/ca.svg">ca.svg</a>
+						</td>
+						<td class="size">643 B</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/cc.svg">cc.svg</a>
+						</td>
+						<td class="size">3.06 KB</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/cd.svg">cd.svg</a>
+						</td>
+						<td class="size">346 B</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/cefta.svg">cefta.svg</a>
+						</td>
+						<td class="size">915 B</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/cf.svg">cf.svg</a>
+						</td>
+						<td class="size">681 B</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/cg.svg">cg.svg</a>
+						</td>
+						<td class="size">478 B</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/ch.svg">ch.svg</a>
+						</td>
+						<td class="size">290 B</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/ci.svg">ci.svg</a>
+						</td>
+						<td class="size">277 B</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/ck.svg">ck.svg</a>
+						</td>
+						<td class="size">1.85 KB</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/cl.svg">cl.svg</a>
+						</td>
+						<td class="size">554 B</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/cm.svg">cm.svg</a>
+						</td>
+						<td class="size">820 B</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/cn.svg">cn.svg</a>
+						</td>
+						<td class="size">795 B</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/co.svg">co.svg</a>
+						</td>
+						<td class="size">286 B</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/cp.svg">cp.svg</a>
+						</td>
+						<td class="size">289 B</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/cr.svg">cr.svg</a>
+						</td>
+						<td class="size">290 B</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/cu.svg">cu.svg</a>
+						</td>
+						<td class="size">613 B</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/cv.svg">cv.svg</a>
+						</td>
+						<td class="size">1.37 KB</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/cw.svg">cw.svg</a>
+						</td>
+						<td class="size">672 B</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/cx.svg">cx.svg</a>
+						</td>
+						<td class="size">2.4 KB</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/cy.svg">cy.svg</a>
+						</td>
+						<td class="size">5.79 KB</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/cz.svg">cz.svg</a>
+						</td>
+						<td class="size">225 B</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/de.svg">de.svg</a>
+						</td>
+						<td class="size">210 B</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/dg.svg">dg.svg</a>
+						</td>
+						<td class="size">22.6 KB</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/dj.svg">dj.svg</a>
+						</td>
+						<td class="size">582 B</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/dk.svg">dk.svg</a>
+						</td>
+						<td class="size">236 B</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/dm.svg">dm.svg</a>
+						</td>
+						<td class="size">15.58 KB</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/do.svg">do.svg</a>
+						</td>
+						<td class="size">379.75 KB</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/dz.svg">dz.svg</a>
+						</td>
+						<td class="size">294 B</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/ea.svg">ea.svg</a>
+						</td>
+						<td class="size">89.66 KB</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/ec.svg">ec.svg</a>
+						</td>
+						<td class="size">28.66 KB</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/ee.svg">ee.svg</a>
+						</td>
+						<td class="size">318 B</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/eg.svg">eg.svg</a>
+						</td>
+						<td class="size">9.72 KB</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/eh.svg">eh.svg</a>
+						</td>
+						<td class="size">784 B</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/er.svg">er.svg</a>
+						</td>
+						<td class="size">3.12 KB</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/es.svg">es.svg</a>
+						</td>
+						<td class="size">89.66 KB</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/es-ct.svg">es-ct.svg</a>
+						</td>
+						<td class="size">255 B</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/es-ga.svg">es-ga.svg</a>
+						</td>
+						<td class="size">28.03 KB</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/et.svg">et.svg</a>
+						</td>
+						<td class="size">1.19 KB</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/eu.svg">eu.svg</a>
+						</td>
+						<td class="size">1.22 KB</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/fi.svg">fi.svg</a>
+						</td>
+						<td class="size">234 B</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/fj.svg">fj.svg</a>
+						</td>
+						<td class="size">25.3 KB</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/fk.svg">fk.svg</a>
+						</td>
+						<td class="size">29.28 KB</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/fm.svg">fm.svg</a>
+						</td>
+						<td class="size">766 B</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/fo.svg">fo.svg</a>
+						</td>
+						<td class="size">561 B</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/fr.svg">fr.svg</a>
+						</td>
+						<td class="size">289 B</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/ga.svg">ga.svg</a>
+						</td>
+						<td class="size">271 B</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/gb.svg">gb.svg</a>
+						</td>
+						<td class="size">535 B</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/gb-eng.svg">gb-eng.svg</a>
+						</td>
+						<td class="size">239 B</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/gb-nir.svg">gb-nir.svg</a>
+						</td>
+						<td class="size">23.16 KB</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/gb-sct.svg">gb-sct.svg</a>
+						</td>
+						<td class="size">228 B</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/gb-wls.svg">gb-wls.svg</a>
+						</td>
+						<td class="size">8.96 KB</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/gd.svg">gd.svg</a>
+						</td>
+						<td class="size">1.64 KB</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/ge.svg">ge.svg</a>
+						</td>
+						<td class="size">1.36 KB</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/gf.svg">gf.svg</a>
+						</td>
+						<td class="size">289 B</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/gg.svg">gg.svg</a>
+						</td>
+						<td class="size">592 B</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/gh.svg">gh.svg</a>
+						</td>
+						<td class="size">278 B</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/gi.svg">gi.svg</a>
+						</td>
+						<td class="size">2.88 KB</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/gl.svg">gl.svg</a>
+						</td>
+						<td class="size">223 B</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/gm.svg">gm.svg</a>
+						</td>
+						<td class="size">537 B</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/gn.svg">gn.svg</a>
+						</td>
+						<td class="size">292 B</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/gp.svg">gp.svg</a>
+						</td>
+						<td class="size">289 B</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/gq.svg">gq.svg</a>
+						</td>
+						<td class="size">5.05 KB</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/gr.svg">gr.svg</a>
+						</td>
+						<td class="size">868 B</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/gs.svg">gs.svg</a>
+						</td>
+						<td class="size">32.19 KB</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/gt.svg">gt.svg</a>
+						</td>
+						<td class="size">35.28 KB</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/gu.svg">gu.svg</a>
+						</td>
+						<td class="size">5 KB</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/gw.svg">gw.svg</a>
+						</td>
+						<td class="size">810 B</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/gy.svg">gy.svg</a>
+						</td>
+						<td class="size">485 B</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/hk.svg">hk.svg</a>
+						</td>
+						<td class="size">3.41 KB</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/hm.svg">hm.svg</a>
+						</td>
+						<td class="size">1.31 KB</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/hn.svg">hn.svg</a>
+						</td>
+						<td class="size">1.08 KB</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/hr.svg">hr.svg</a>
+						</td>
+						<td class="size">40.58 KB</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/ht.svg">ht.svg</a>
+						</td>
+						<td class="size">14.68 KB</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/hu.svg">hu.svg</a>
+						</td>
+						<td class="size">271 B</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/ic.svg">ic.svg</a>
+						</td>
+						<td class="size">286 B</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/id.svg">id.svg</a>
+						</td>
+						<td class="size">178 B</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/ie.svg">ie.svg</a>
+						</td>
+						<td class="size">289 B</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/il.svg">il.svg</a>
+						</td>
+						<td class="size">897 B</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/im.svg">im.svg</a>
+						</td>
+						<td class="size">9.68 KB</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/in.svg">in.svg</a>
+						</td>
+						<td class="size">1.04 KB</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/io.svg">io.svg</a>
+						</td>
+						<td class="size">22.6 KB</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/iq.svg">iq.svg</a>
+						</td>
+						<td class="size">1.44 KB</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/ir.svg">ir.svg</a>
+						</td>
+						<td class="size">15.05 KB</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/is.svg">is.svg</a>
+						</td>
+						<td class="size">515 B</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/it.svg">it.svg</a>
+						</td>
+						<td class="size">289 B</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/je.svg">je.svg</a>
+						</td>
+						<td class="size">7.2 KB</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/jm.svg">jm.svg</a>
+						</td>
+						<td class="size">386 B</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/jo.svg">jo.svg</a>
+						</td>
+						<td class="size">711 B</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/jp.svg">jp.svg</a>
+						</td>
+						<td class="size">465 B</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/ke.svg">ke.svg</a>
+						</td>
+						<td class="size">1.34 KB</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/kg.svg">kg.svg</a>
+						</td>
+						<td class="size">3.29 KB</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/kh.svg">kh.svg</a>
+						</td>
+						<td class="size">7.1 KB</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/ki.svg">ki.svg</a>
+						</td>
+						<td class="size">5.67 KB</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/km.svg">km.svg</a>
+						</td>
+						<td class="size">1.03 KB</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/kn.svg">kn.svg</a>
+						</td>
+						<td class="size">805 B</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/kp.svg">kp.svg</a>
+						</td>
+						<td class="size">785 B</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/kr.svg">kr.svg</a>
+						</td>
+						<td class="size">1.01 KB</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/kw.svg">kw.svg</a>
+						</td>
+						<td class="size">500 B</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/ky.svg">ky.svg</a>
+						</td>
+						<td class="size">23.8 KB</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/kz.svg">kz.svg</a>
+						</td>
+						<td class="size">11.07 KB</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/la.svg">la.svg</a>
+						</td>
+						<td class="size">451 B</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/lb.svg">lb.svg</a>
+						</td>
+						<td class="size">2.75 KB</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/lc.svg">lc.svg</a>
+						</td>
+						<td class="size">367 B</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/li.svg">li.svg</a>
+						</td>
+						<td class="size">8.1 KB</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/lk.svg">lk.svg</a>
+						</td>
+						<td class="size">11.06 KB</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/lr.svg">lr.svg</a>
+						</td>
+						<td class="size">717 B</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/ls.svg">ls.svg</a>
+						</td>
+						<td class="size">1.18 KB</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/lt.svg">lt.svg</a>
+						</td>
+						<td class="size">439 B</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/lu.svg">lu.svg</a>
+						</td>
+						<td class="size">225 B</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/lv.svg">lv.svg</a>
+						</td>
+						<td class="size">230 B</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/ly.svg">ly.svg</a>
+						</td>
+						<td class="size">528 B</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/ma.svg">ma.svg</a>
+						</td>
+						<td class="size">247 B</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/mc.svg">mc.svg</a>
+						</td>
+						<td class="size">234 B</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/md.svg">md.svg</a>
+						</td>
+						<td class="size">10.99 KB</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/me.svg">me.svg</a>
+						</td>
+						<td class="size">61.4 KB</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/mf.svg">mf.svg</a>
+						</td>
+						<td class="size">289 B</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/mg.svg">mg.svg</a>
+						</td>
+						<td class="size">299 B</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/mh.svg">mh.svg</a>
+						</td>
+						<td class="size">738 B</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/mk.svg">mk.svg</a>
+						</td>
+						<td class="size">379 B</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/ml.svg">ml.svg</a>
+						</td>
+						<td class="size">273 B</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/mm.svg">mm.svg</a>
+						</td>
+						<td class="size">696 B</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/mn.svg">mn.svg</a>
+						</td>
+						<td class="size">1.41 KB</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/mo.svg">mo.svg</a>
+						</td>
+						<td class="size">1.47 KB</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/mp.svg">mp.svg</a>
+						</td>
+						<td class="size">22.85 KB</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/mq.svg">mq.svg</a>
+						</td>
+						<td class="size">289 B</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/mr.svg">mr.svg</a>
+						</td>
+						<td class="size">443 B</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/ms.svg">ms.svg</a>
+						</td>
+						<td class="size">6.34 KB</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/mt.svg">mt.svg</a>
+						</td>
+						<td class="size">8.58 KB</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/mu.svg">mu.svg</a>
+						</td>
+						<td class="size">316 B</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/mv.svg">mv.svg</a>
+						</td>
+						<td class="size">286 B</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/mw.svg">mw.svg</a>
+						</td>
+						<td class="size">3.62 KB</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/mx.svg">mx.svg</a>
+						</td>
+						<td class="size">93.17 KB</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/my.svg">my.svg</a>
+						</td>
+						<td class="size">674 B</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/mz.svg">mz.svg</a>
+						</td>
+						<td class="size">2.55 KB</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/na.svg">na.svg</a>
+						</td>
+						<td class="size">996 B</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/nc.svg">nc.svg</a>
+						</td>
+						<td class="size">1.25 KB</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/ne.svg">ne.svg</a>
+						</td>
+						<td class="size">273 B</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/nf.svg">nf.svg</a>
+						</td>
+						<td class="size">5.7 KB</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/ng.svg">ng.svg</a>
+						</td>
+						<td class="size">257 B</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/ni.svg">ni.svg</a>
+						</td>
+						<td class="size">18.1 KB</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/nl.svg">nl.svg</a>
+						</td>
+						<td class="size">221 B</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/no.svg">no.svg</a>
+						</td>
+						<td class="size">318 B</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/np.svg">np.svg</a>
+						</td>
+						<td class="size">1.03 KB</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/nr.svg">nr.svg</a>
+						</td>
+						<td class="size">641 B</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/nu.svg">nu.svg</a>
+						</td>
+						<td class="size">864 B</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/nz.svg">nz.svg</a>
+						</td>
+						<td class="size">2.14 KB</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/om.svg">om.svg</a>
+						</td>
+						<td class="size">22.15 KB</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/pa.svg">pa.svg</a>
+						</td>
+						<td class="size">738 B</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/pe.svg">pe.svg</a>
+						</td>
+						<td class="size">72.44 KB</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/pf.svg">pf.svg</a>
+						</td>
+						<td class="size">4.18 KB</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/pg.svg">pg.svg</a>
+						</td>
+						<td class="size">1.62 KB</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/ph.svg">ph.svg</a>
+						</td>
+						<td class="size">1.47 KB</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/pk.svg">pk.svg</a>
+						</td>
+						<td class="size">736 B</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/pl.svg">pl.svg</a>
+						</td>
+						<td class="size">219 B</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/pm.svg">pm.svg</a>
+						</td>
+						<td class="size">289 B</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/pn.svg">pn.svg</a>
+						</td>
+						<td class="size">13.67 KB</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/pr.svg">pr.svg</a>
+						</td>
+						<td class="size">628 B</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/ps.svg">ps.svg</a>
+						</td>
+						<td class="size">552 B</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/pt.svg">pt.svg</a>
+						</td>
+						<td class="size">8.17 KB</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/pw.svg">pw.svg</a>
+						</td>
+						<td class="size">461 B</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/py.svg">py.svg</a>
+						</td>
+						<td class="size">16.84 KB</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/qa.svg">qa.svg</a>
+						</td>
+						<td class="size">356 B</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/re.svg">re.svg</a>
+						</td>
+						<td class="size">289 B</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/ro.svg">ro.svg</a>
+						</td>
+						<td class="size">302 B</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/rs.svg">rs.svg</a>
+						</td>
+						<td class="size">182.84 KB</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/ru.svg">ru.svg</a>
+						</td>
+						<td class="size">283 B</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/rw.svg">rw.svg</a>
+						</td>
+						<td class="size">744 B</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/sa.svg">sa.svg</a>
+						</td>
+						<td class="size">10.04 KB</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/sb.svg">sb.svg</a>
+						</td>
+						<td class="size">944 B</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/sc.svg">sc.svg</a>
+						</td>
+						<td class="size">317 B</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/sd.svg">sd.svg</a>
+						</td>
+						<td class="size">488 B</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/se.svg">se.svg</a>
+						</td>
+						<td class="size">213 B</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/sg.svg">sg.svg</a>
+						</td>
+						<td class="size">883 B</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/sh.svg">sh.svg</a>
+						</td>
+						<td class="size">30.16 KB</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/si.svg">si.svg</a>
+						</td>
+						<td class="size">2 KB</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/sj.svg">sj.svg</a>
+						</td>
+						<td class="size">318 B</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/sk.svg">sk.svg</a>
+						</td>
+						<td class="size">1.17 KB</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/sl.svg">sl.svg</a>
+						</td>
+						<td class="size">272 B</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/sm.svg">sm.svg</a>
+						</td>
+						<td class="size">15.56 KB</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/sn.svg">sn.svg</a>
+						</td>
+						<td class="size">421 B</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/so.svg">so.svg</a>
+						</td>
+						<td class="size">488 B</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/sr.svg">sr.svg</a>
+						</td>
+						<td class="size">312 B</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/ss.svg">ss.svg</a>
+						</td>
+						<td class="size">383 B</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/st.svg">st.svg</a>
+						</td>
+						<td class="size">913 B</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/sv.svg">sv.svg</a>
+						</td>
+						<td class="size">81.33 KB</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/sx.svg">sx.svg</a>
+						</td>
+						<td class="size">12.96 KB</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/sy.svg">sy.svg</a>
+						</td>
+						<td class="size">306 B</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/sz.svg">sz.svg</a>
+						</td>
+						<td class="size">4.68 KB</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/ta.svg">ta.svg</a>
+						</td>
+						<td class="size">30.16 KB</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/tc.svg">tc.svg</a>
+						</td>
+						<td class="size">6.98 KB</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/td.svg">td.svg</a>
+						</td>
+						<td class="size">264 B</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/tf.svg">tf.svg</a>
+						</td>
+						<td class="size">1.06 KB</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/tg.svg">tg.svg</a>
+						</td>
+						<td class="size">719 B</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/th.svg">th.svg</a>
+						</td>
+						<td class="size">284 B</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/tj.svg">tj.svg</a>
+						</td>
+						<td class="size">1.78 KB</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/tk.svg">tk.svg</a>
+						</td>
+						<td class="size">782 B</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/tl.svg">tl.svg</a>
+						</td>
+						<td class="size">594 B</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/tm.svg">tm.svg</a>
+						</td>
+						<td class="size">31.44 KB</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/tn.svg">tn.svg</a>
+						</td>
+						<td class="size">746 B</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/to.svg">to.svg</a>
+						</td>
+						<td class="size">352 B</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/tr.svg">tr.svg</a>
+						</td>
+						<td class="size">550 B</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/tt.svg">tt.svg</a>
+						</td>
+						<td class="size">312 B</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/tv.svg">tv.svg</a>
+						</td>
+						<td class="size">1.39 KB</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/tw.svg">tw.svg</a>
+						</td>
+						<td class="size">2.43 KB</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/tz.svg">tz.svg</a>
+						</td>
+						<td class="size">540 B</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/ua.svg">ua.svg</a>
+						</td>
+						<td class="size">232 B</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/ug.svg">ug.svg</a>
+						</td>
+						<td class="size">3.85 KB</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/um.svg">um.svg</a>
+						</td>
+						<td class="size">4.41 KB</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/un.svg">un.svg</a>
+						</td>
+						<td class="size">19.7 KB</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/us.svg">us.svg</a>
+						</td>
+						<td class="size">4.32 KB</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/uy.svg">uy.svg</a>
+						</td>
+						<td class="size">1.67 KB</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/uz.svg">uz.svg</a>
+						</td>
+						<td class="size">1.42 KB</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/va.svg">va.svg</a>
+						</td>
+						<td class="size">89.03 KB</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/vc.svg">vc.svg</a>
+						</td>
+						<td class="size">445 B</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/ve.svg">ve.svg</a>
+						</td>
+						<td class="size">1.14 KB</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/vg.svg">vg.svg</a>
+						</td>
+						<td class="size">10.47 KB</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/vi.svg">vi.svg</a>
+						</td>
+						<td class="size">8.54 KB</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/vn.svg">vn.svg</a>
+						</td>
+						<td class="size">485 B</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/vu.svg">vu.svg</a>
+						</td>
+						<td class="size">2.07 KB</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/wf.svg">wf.svg</a>
+						</td>
+						<td class="size">289 B</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/ws.svg">ws.svg</a>
+						</td>
+						<td class="size">687 B</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/xk.svg">xk.svg</a>
+						</td>
+						<td class="size">9.18 KB</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/xx.svg">xx.svg</a>
+						</td>
+						<td class="size">286 B</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/ye.svg">ye.svg</a>
+						</td>
+						<td class="size">272 B</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/yt.svg">yt.svg</a>
+						</td>
+						<td class="size">289 B</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/za.svg">za.svg</a>
+						</td>
+						<td class="size">863 B</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/zm.svg">zm.svg</a>
+						</td>
+						<td class="size">5.37 KB</td>
+					</tr>
+					<tr>
+						<td class="name">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4C4 2.89543 4.89543 2 6 2H11L16 7V16C16 17.1046 15.1046 18 14 18H6C4.89543 18 4 17.1046 4 16V4Z" stroke="#5C667A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<a rel="nofollow" href="/gh/lipis/flag-icons@6.6.6/flags/4x3/zw.svg">zw.svg</a>
+						</td>
+						<td class="size">6.62 KB</td>
+					</tr>
+					</tbody>
+				</table>
+			</div>
+
+			<div class="landing">
+				<p class="left">Free Open Source CDN for <strong>lipis/flag-icons</strong></p>
+
+				<p class="right">
+					Looking for a nice landing page for your package?
+					<a href="https://www.jsdelivr.com/package/gh/lipis/flag-icons">https://www.jsdelivr.com/package/gh/lipis/flag-icons</a>
+				</p>
+			</div>
+		</div>
+
+		<footer>
+			<div class="footer-left">
+				<svg class="logo" viewBox="0 0 140 34" xmlns="http://www.w3.org/2000/svg">
+					<g fill="#1e3b45">
+						<path
+							d="m43.616 19.576c0 4.005-1.389 6.008-4.168 6.008-.432 0-.853-.059-1.261-.174v-1.112c.455.154.883.232 1.285.232 1.065 0 1.833-.404 2.304-1.209.471-.807.706-2.063.706-3.769v-10.859h1.134z"/>
+						<path
+							d="m47.065 24.705v-1.309c1.188.756 2.393 1.135 3.612 1.135 1.296 0 2.28-.268 2.952-.805.671-.537 1.007-1.288 1.007-2.251 0-.85-.226-1.528-.678-2.032-.451-.506-1.429-1.194-2.935-2.067-1.682-.979-2.747-1.799-3.195-2.46-.447-.66-.671-1.422-.671-2.286 0-1.172.455-2.169 1.366-2.988.911-.817 2.126-1.227 3.647-1.227.988 0 1.975.166 2.963.498v1.204c-.972-.44-2.011-.66-3.113-.66-1.127 0-2.02.287-2.681.858-.659.571-.99 1.297-.99 2.177 0 .848.226 1.524.677 2.026.452.5 1.426 1.184 2.923 2.048 1.551.881 2.584 1.663 3.097 2.345.514.684.77 1.469.77 2.356 0 1.274-.442 2.311-1.325 3.114-.884.803-2.133 1.204-3.746 1.204-.572 0-1.229-.09-1.973-.266-.745-.178-1.313-.383-1.707-.614z"/>
+						<path
+							d="m59.104 25.295v-16.602h5.881c5.895 0 8.844 2.698 8.844 8.093 0 2.585-.805 4.65-2.413 6.194-1.61 1.543-3.753 2.315-6.431 2.315zm3.74-13.556v10.522h1.852c1.621 0 2.892-.485 3.814-1.458s1.383-2.296 1.383-3.97c0-1.583-.457-2.827-1.372-3.734-.914-.907-2.199-1.36-3.85-1.36z"/>
+						<path
+							d="m86.841 25.295h-9.957v-16.602h9.574v3.046h-5.834v3.693h5.43v3.032h-5.43v3.796h6.217z"/>
+						<path d="m99.893 25.295h-9.887v-16.602h3.74v13.568h6.147z"/>
+						<path d="m105.989 8.693v16.602h-3.74v-16.602z"/>
+						<path
+							d="m123.834 8.693-5.719 16.602h-4.236l-5.651-16.602h4.029l3.462 11.553c.186.625.297 1.178.336 1.657h.068c.055-.518.174-1.084.36-1.702l3.439-11.508z"/>
+						<path
+							d="m140 25.295h-4.295l-2.581-4.273c-.193-.322-.379-.613-.555-.868-.178-.254-.358-.473-.539-.654-.182-.18-.369-.321-.567-.416-.197-.096-.41-.145-.643-.145h-1.006v6.356h-3.74v-16.602h5.926c4.029 0 6.043 1.506 6.043 4.515 0 .578-.088 1.114-.266 1.604s-.428.932-.752 1.325c-.324.395-.717.733-1.176 1.02-.459.285-.969.508-1.534.67v.047c.248.076.486.203.719.375.231.174.455.377.67.61.217.231.424.479.619.746.197.266.377.526.539.782zm-10.185-13.8v4.619h1.62c.803 0 1.448-.231 1.932-.694.494-.471.742-1.053.742-1.749 0-1.45-.87-2.177-2.605-2.177h-1.689z"/>
+					</g>
+					<path d="m15.386.338-3.106 11.038v.104 11.039l3.106 11.143 3.194-11.143v-11.039-.104z"
+						  fill="#bd483b"/>
+					<path d="m15.386.338-15.386 5.542 2.186 20.492 13.2 7.29" fill="#e64e3d"/>
+					<path d="m15.386 33.662 13.268-7.365 2.483-20.49-15.751-5.469" fill="#bd483b"/>
+					<path
+						d="m12.594 25.088c-1.514-.473-2.864-1.317-3.94-2.431l-.003-.002c-.131-.137-.257-.274-.381-.418-.838-.979-1.478-2.13-1.857-3.396.251.233.518.447.796.647.003.008.008.016.011.027-.003-.012-.008-.02-.011-.027.398.279.822.526 1.269.737.141.064.282.125.427.186.177.07.36.135.542.195.011.006.024.006.035.01.032.012.065.023.097.033.074.756.649 1.372 1.39 1.504.287 1.157.833 2.146 1.625 2.935z"
+						fill="#fec82f"/>
+					<path
+						d="m13.174 11.794c0 .324.088.627.243.883-1.25 1.753-2.108 3.656-2.479 5.539-.041.209-.077.416-.105.619-.429.113-.79.393-1.016.762-.013 0-.024-.004-.035-.01-.023-.006-.04-.014-.061-.021-.142-.045-.281-.098-.417-.152-.204-.08-.403-.174-.598-.272-.663-.338-1.26-.772-1.781-1.291-.11-.111-.213-.219-.311-.332l-.041-.049c-.038-.045-.078-.092-.115-.137-.017-.021-.032-.039-.047-.059-.014-.018-.024-.031-.037-.045-.005-.01-.013-.016-.017-.023-.02-.022-.037-.047-.053-.068-.008-.012-.017-.022-.023-.029-.001-.004-.002-.004-.004-.008-.013-.014-.024-.033-.037-.049-.055-.072-.107-.149-.157-.225-.009-.012-.019-.024-.025-.039-.006-.006-.015-.018-.02-.027-.014-.203-.02-.408-.02-.617 0-1.882.557-3.636 1.512-5.105.113-.176.235-.348.361-.514.12-.16.245-.319.374-.467 1.126-1.317 2.61-2.315 4.299-2.847.026.182.059.367.095.553.192.967.513 1.942.949 2.898-.271.3-.434.698-.434 1.132z"
+						fill="#fec82f"/>
+					<path
+						d="m12.176 20.479c0 .221-.079.424-.212.58-.029.037-.061.068-.096.1-.161.141-.368.225-.596.225-.173 0-.335-.049-.472-.135-.147-.09-.265-.219-.342-.375-.058-.121-.089-.252-.089-.395 0-.26.11-.494.286-.658.029-.027.06-.051.091-.074.148-.107.331-.17.526-.17.206 0 .395.068.546.186.085.063.155.139.213.229.094.137.145.307.145.487z"
+						fill="#fec82f"/>
+					<path
+						d="m15.777 11.794c0 .147-.032.281-.094.403-.148.299-.456.502-.808.502-.044 0-.087-.002-.128-.006-.008-.004-.016-.004-.025-.006-.383-.066-.684-.369-.741-.756-.007-.043-.01-.09-.01-.137 0-.102.017-.201.05-.295.123-.354.46-.606.854-.606h.002.036c.392.018.72.285.827.645.025.082.037.168.037.256z"
+						fill="#fec82f"/>
+					<path
+						d="m24.752 16.143c0 .907-.129 1.782-.368 2.61-.799-.211-1.606-.52-2.4-.914.022-.109.033-.221.033-.336 0-.225-.044-.442-.125-.639.031-.029.064-.061.095-.094.957-.977 1.763-2.055 2.404-3.212.234.821.361 1.69.361 2.585z"
+						fill="#df9c26"/>
+					<path
+						d="m23.881 12.196c-.063.139-.131.277-.201.416-.627 1.235-1.455 2.382-2.459 3.407-.009.01-.02.02-.028.027-.255-.156-.557-.244-.879-.244-.375 0-.722.123-1.004.328-.514-.404-1.011-.848-1.49-1.327-.608-.604-1.157-1.247-1.647-1.909.252-.297.405-.68.405-1.102 0-.313-.087-.61-.237-.862 1.21-1.163 2.547-2.106 3.917-2.788 1.572.961 2.841 2.372 3.623 4.054z"
+						fill="#df9c26"/>
+					<path
+						d="m21.217 17.503c0 .379-.23.701-.556.836-.108.045-.225.07-.348.07-.063 0-.125-.008-.185-.02-.385-.082-.681-.408-.715-.805.011-.01.021-.016.028-.022-.01-.008-.021-.014-.03-.023-.001-.012-.001-.022-.001-.037 0-.389.25-.723.601-.85.095-.033.196-.053.302-.053.09 0 .179.014.262.039.346.105.606.412.64.785.002.027.002.055.002.08z"
+						fill="#df9c26"/>
+					<path
+						d="m21.452 18.767c-.301.274-.7.44-1.139.44-.351 0-.677-.107-.949-.289-.039.025-.078.051-.115.072-1.233.781-2.538 1.352-3.864 1.698v4.824c3.887 0 7.222-2.37 8.64-5.744-.859-.237-1.723-.573-2.573-1.001z"
+						fill="#df9c26"/>
+					<path
+						d="m15.386 20.688c-.793.205-1.591.33-2.385.367-.042.002-.086.006-.128.008-.151.41-.454.744-.839.94.245.909.688 1.698 1.319 2.327.524.524 1.162.92 1.891 1.18.046 0 .093.002.142.002z"
+						fill="#fec82f"/>
+					<path
+						d="m18.612 17.503c0-.172.026-.34.074-.498-.562-.44-1.106-.92-1.625-1.442-.614-.614-1.172-1.262-1.675-1.934v5.946c1.124-.324 2.235-.823 3.291-1.489.009-.006.02-.014.03-.022-.061-.174-.095-.364-.095-.561z"
+						fill="#df9c26"/>
+					<path
+						d="m15.386 13.629c-.045-.059-.091-.113-.132-.174-.123.029-.249.043-.378.043-.227 0-.441-.045-.637-.123-1.134 1.606-1.912 3.341-2.25 5.049-.032.162-.059.32-.083.475.477.195.848.596.996 1.092.016-.004.029-.004.046-.004.809-.039 1.627-.18 2.438-.412z"
+						fill="#fec82f"/>
+					<path
+						d="m15.386 6.778v3.394c.048.016.098.033.145.055 1.106-1.073 2.316-1.979 3.573-2.681-1.14-.496-2.399-.768-3.718-.768z"
+						fill="#df9c26"/>
+					<path
+						d="m15.386 6.778c-.608 0-1.201.055-1.773.168.025.197.06.404.101.606.168.86.449 1.725.829 2.575.106-.02.219-.033.333-.033.178 0 .347.027.51.078z"
+						fill="#fec82f"/>
+				</svg>
+
+				<p class="copyright">&copy; jsdelivr.com, 2012 - 2023</p>
+			</div>
+
+			<div class="footer-right">
+				<a href="https://github.com/jsdelivr/jsdelivr">
+					<span class="gh-icon">
+						<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="12" height="12" viewBox="0 0 16 16" xml:space="preserve">
+						<path id="XMLID_1_" fill="#ff5627" d="M8,0.2c-4.4,0-8,3.6-8,8c0,3.5,2.3,6.5,5.5,7.6C5.9,15.9,6,15.6,6,15.4c0-0.2,0-0.7,0-1.4
+							C3.8,14.5,3.3,13,3.3,13c-0.4-0.9-0.9-1.2-0.9-1.2c-0.7-0.5,0.1-0.5,0.1-0.5c0.8,0.1,1.2,0.8,1.2,0.8C4.4,13.4,5.6,13,6,12.8
+							c0.1-0.5,0.3-0.9,0.5-1.1c-1.8-0.2-3.6-0.9-3.6-4c0-0.9,0.3-1.6,0.8-2.1c-0.1-0.2-0.4-1,0.1-2.1c0,0,0.7-0.2,2.2,0.8
+							c0.6-0.2,1.3-0.3,2-0.3c0.7,0,1.4,0.1,2,0.3c1.5-1,2.2-0.8,2.2-0.8c0.4,1.1,0.2,1.9,0.1,2.1c0.5,0.6,0.8,1.3,0.8,2.1
+							c0,3.1-1.9,3.7-3.7,3.9C9.7,12,10,12.5,10,13.2c0,1.1,0,1.9,0,2.2c0,0.2,0.1,0.5,0.6,0.4c3.2-1.1,5.5-4.1,5.5-7.6
+							C16,3.8,12.4,0.2,8,0.2z"/>
+						</svg>
+					</span>
+					Documentation
+				</a>
+
+				<a href="https://www.jsdelivr.com/features">Learn more about jsDelivr</a>
+			</div>
+		</footer>
+
+		<script>
+			var versions = document.querySelector('.versions');
+
+			[].slice.call(versions.querySelectorAll('option')).forEach(function(option) {
+				if (option.value === 'lipis/flag-icons@6.6.6') {
+					option.selected = true;
+				}
+			});
+
+			versions.addEventListener('change', function() {
+				location.pathname = '/gh/' + this.value + '/flags/4x3/';
+			});
+		</script>
+	</body>
+</html>
