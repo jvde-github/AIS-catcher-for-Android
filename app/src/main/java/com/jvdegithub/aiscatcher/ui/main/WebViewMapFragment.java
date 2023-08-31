@@ -69,7 +69,7 @@ public class WebViewMapFragment extends Fragment {
                 if (url.startsWith("https://cdn.jsdelivr.net/") || url.startsWith("https://unpkg.com/")) {
                     String prefix = url.startsWith("https://cdn.jsdelivr.net/") ? "https://cdn.jsdelivr.net/" : "https://unpkg.com/";
 
-                    String remainingPath = url.substring(prefix.length());
+                    String remainingPath = "webassets/cdn/"+url.substring(prefix.length());
 
                     try {
                         InputStream inputStream = getContext().getAssets().open(remainingPath);
@@ -81,9 +81,9 @@ public class WebViewMapFragment extends Fragment {
                             contentType = "image/svg+xml";
                         } else if (remainingPath.endsWith(".png")) {
                             contentType = "image/png";
-                        } else {
-                            contentType = "text/plain"; // Default to plain text
-                        }
+                        } else  if (remainingPath.endsWith(".js"))  {
+                            contentType = "text/plain";
+                        } else return null;
 
                         WebResourceResponse response = new WebResourceResponse(contentType, "UTF-8", inputStream);
 

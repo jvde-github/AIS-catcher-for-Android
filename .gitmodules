@@ -13,3 +13,6 @@
 [submodule "app/src/main/jni/airspyhf"]
 	path = app/src/main/jni/airspyhf
 	url = https://github.com/jvde-github/airspyhf.git
+[submodule "app/src/main/assets/webassets"]
+	path = app/src/main/assets/webassets
+	url = https://github.com/jvde-github/webassets.git
