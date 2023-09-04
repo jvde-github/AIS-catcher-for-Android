@@ -260,6 +260,7 @@ Java_com_jvdegithub_aiscatcher_AisCatcherJava_InitNative(JNIEnv *env, jclass ins
     server.Set("PORT",std::to_string(port));
     server.Set("STATION","Android");
     server.Set("SHARE_LOC","ON");
+    server.Set("REALTIME","ON");
     server.start();
 
     return 0;
