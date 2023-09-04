@@ -26,6 +26,12 @@ an Android device with USB connector and an OTG cable to connect the dongle with
 AIS-catcher only receives and processes signals and then forwards the messages over UDP or visualizes them on the build-in map (internet connection required).
 And one more thing, you need to be in a region where there are ships broadcasting AIS signals, e.g. near the water.
 
+### What's New?
+
+- Support for RTL-SDR Blog V4
+- Tab with realtime NMEA lines as it is received
+
+
 <p align="center">
 <img src="https://raw.githubusercontent.com/jvde-github/AIS-catcher/media/media/equipment.jpg" width=80% height=80%></p>
 
