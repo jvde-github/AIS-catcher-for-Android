@@ -9,7 +9,7 @@ An impression of AIS-catcher on the beach on a Galaxy Note 20 in July 2023 (than
 </p>
 
 
-Below you can find a link to the APK file or visit the [Google Play Store](https://play.google.com/store/apps/details?id=com.jvdegithub.aiscatcher&gl=NL). The engine and visualizations are based on [AIS-catcher](https://github.com/jvde-github/AIS-catcher). 
+Here you can find a [link](https://github.com/jvde-github/AIS-catcher-for-Android/releases/download/Edge/app-release-signed.apk) to the APK file for latest Edge version or visit the [Google Play Store](https://play.google.com/store/apps/details?id=com.jvdegithub.aiscatcher&gl=NL). The engine and visualizations are based on [AIS-catcher](https://github.com/jvde-github/AIS-catcher). 
 
 AIS-catcher had a recent overhaul. The instructions below still are relevant but the visualization of the results is now based on the same code as the AIS-catcher web interface. The instructions will be updated in due course.
 <p align="center">
@@ -28,6 +28,8 @@ And one more thing, you need to be in a region where there are ships broadcastin
 
 ### What's New?
 
+- Improved functionality if offline (map tiles only to the extent cached by previous usage)
+- Edge version to store latest APK
 - Support for RTL-SDR Blog V4
 - Tab with realtime NMEA lines as it is received
 
