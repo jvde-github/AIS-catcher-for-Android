@@ -53,3 +53,10 @@ jobs:
       with:
         name: release-apk
         path: ${{steps.sign_app.outputs.signedFile}}
+
+    - name: Upload to Edge relaese
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        gh release upload Edge app/build/outputs/apk/debug/app-debug.apk
+        gh release upload Edge ${{steps.sign_app.outputs.signedFile}}
