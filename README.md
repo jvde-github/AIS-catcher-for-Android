@@ -29,7 +29,8 @@ And one more thing, you need to be in a region where there are ships broadcastin
 ### What's New?
 
 - Improved functionality if offline (map tiles only to the extent cached by previous usage)
-- Edge version to store latest APK
+- Fireworks mode for map, [have a look](https://www.youtube.com/watch?v=jhVfnCd5tX4)!
+- APK for latest version always available for download, see below
 - Support for RTL-SDR Blog V4
 - Tab with realtime NMEA lines as it is received
 
