@@ -72,7 +72,13 @@ public class WebViewMapFragment extends Fragment {
                     String remainingPath = "webassets/cdn/"+url.substring(prefix.length());
 
                     try {
-                        InputStream inputStream = getContext().getAssets().open(remainingPath);
+                        Context context = getContext();
+
+                        if(context == null) {
+                            return null;
+                        }
+
+                        InputStream inputStream = context.getAssets().open(remainingPath);
 
                         String contentType;
                         if (remainingPath.endsWith(".css")) {
