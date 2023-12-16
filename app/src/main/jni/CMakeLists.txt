@@ -52,7 +52,7 @@ add_library( # Sets the name of the library.
         ./AIS-catcher/Device/ZMQ.cpp ./AIS-catcher/Device/SoapySDR.cpp ./AIS-catcher/Device/SpyServer.cpp ./AIS-catcher/Library/Message.cpp ./AIS-catcher/Library/NMEA.cpp
         ./AIS-catcher/Library/Utilities.cpp ./AIS-catcher/Library/TCP.cpp ./AIS-catcher/JSON/JSON.cpp ./AIS-catcher/IO/Network.cpp ./AIS-catcher/IO/HTTPServer.cpp
         ./AIS-catcher/JSON/StringBuilder.cpp ./AIS-catcher/JSON/Parser.cpp ./AIS-catcher/Device/AIRSPY.cpp ./AIS-catcher/Device/Serial.cpp
-        ./AIS-catcher/DSP/DSP.cpp  ./AIS-catcher/IO/IO.cpp
+        ./AIS-catcher/DSP/DSP.cpp ./AIS-catcher/IO/IO.cpp ./AIS-catcher/Application/WebViewer.cpp
 
         JNI/AIScatcherNDK.cpp)
 

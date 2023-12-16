@@ -39,6 +39,7 @@ const int TIME_CONSTRAINT = 120;
 #include "Model.h"
 #include "IO.h"
 #include "Network.h"
+#include "WebViewer.h"
 
 #include "Device/RTLSDR.h"
 #include "Device/AIRSPYHF.h"
@@ -63,7 +64,7 @@ struct Statistics {
 
 } statistics;
 
-WebClient server;
+WebViewer server;
 
 std::string nmea_msg;
 std::string json_queue;
