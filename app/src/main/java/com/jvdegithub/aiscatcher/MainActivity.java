@@ -196,7 +196,7 @@ public class MainActivity<binding> extends AppCompatActivity implements AisCatch
 
         private void onWeb () {
 
-            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://localhost:" + port));
+            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://aiscatcher.org"));
             startActivity(browserIntent);
         }
 

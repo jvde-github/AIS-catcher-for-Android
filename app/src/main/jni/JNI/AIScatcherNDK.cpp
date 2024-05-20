@@ -229,8 +229,11 @@ struct Drivers {
 
 //Device::Type type = Device::Type::NONE;
 std::vector<IO::UDPStreamer > UDP_connections;
+std::vector<IO::TCPClientStreamer > TCP_connections;
 std::vector<std::string> UDPhost;
 std::vector<std::string> UDPport;
+bool sharing = false;
+std::string sharingKey = "";
 
 NMEAcounter NMEAcounter;
 RAWcounter rawcounter;
@@ -309,8 +312,8 @@ Java_com_jvdegithub_aiscatcher_AisCatcherJava_applySetting(JNIEnv *env, jclass, 
 
         }
 
-    } catch (const char *msg) {
-        callbackError(env, msg);
+    } catch (std::exception& e) {
+        callbackError(env, e.what());
         device = nullptr;
         return -1;
     }
@@ -328,12 +331,22 @@ Java_com_jvdegithub_aiscatcher_AisCatcherJava_Run(JNIEnv *env, jclass) {
     tag.mode = 7;
 
     try {
-        callbackConsole(env, "Creating output channels\n");
+        callbackConsole(env, "Creating UDP output channels\n");
         UDP_connections.resize(UDPhost.size());
         for (int i = 0; i < UDPhost.size(); i++) {
             UDP_connections[i].Set("host",UDPhost[i]).Set("port",UDPport[i]);
             UDP_connections[i].Start();
             model->Output() >> UDP_connections[i];
+        }
+
+        if(sharing) {
+            callbackConsole(env, "Creating TCP output channels\n");
+            TCP_connections.resize(1);
+
+            TCP_connections[0].Set("HOST", "aiscatcher.org").Set("PORT", "4242").Set("JSON", "on").Set("FILTER", "on").Set("GPS", "off");
+            TCP_connections[0].Set("UUID", sharingKey);
+            TCP_connections[0].Start();
+            model->Output() >> TCP_connections[0];
         }
         callbackConsole(env, "Starting device\n");
 
@@ -357,8 +370,8 @@ Java_com_jvdegithub_aiscatcher_AisCatcherJava_Run(JNIEnv *env, jclass) {
         }
 
     }
-    catch (const char *msg) {
-        callbackError(env, msg);
+    catch (std::exception& e) {
+        callbackError(env, e.what());
     }
     catch (const std::exception &e) {
         callbackError(env, e.what());
@@ -370,13 +383,14 @@ Java_com_jvdegithub_aiscatcher_AisCatcherJava_Run(JNIEnv *env, jclass) {
         model->Output().out.clear();
 
         for (auto &u: UDP_connections) u.Stop();
+        for (auto &t: TCP_connections) t.Stop();
         UDP_connections.clear();
+        TCP_connections.clear();
+
         UDPport.clear();
         UDPhost.clear();
-
-
-    } catch (const char *msg) {
-        callbackError(env, msg);
+    } catch (std::exception& e) {
+        callbackError(env, e.what());
     }
 
     if (!stop) {
@@ -400,8 +414,8 @@ Java_com_jvdegithub_aiscatcher_AisCatcherJava_Close(JNIEnv *env, jclass) {
             model = nullptr;
         }
     }
-    catch (const char *msg) {
-        callbackError(env, msg);
+    catch (std::exception& e) {
+        callbackError(env, e.what());
         return -1;
     }
     return 0;
@@ -454,14 +468,9 @@ Java_com_jvdegithub_aiscatcher_AisCatcherJava_createReceiver(JNIEnv *env, jclass
         device->OpenWithFileDescriptor(fd);
         device->setFrequency(162000000);
     }
-    catch (const char *msg) {
-        callbackError(env, msg);
-        device = nullptr;
-        return -1;
-    }
-    catch (const std::exception& e)
-    {
+    catch (std::exception& e) {
         callbackError(env, e.what());
+        device = nullptr;
         return -1;
     }
 
@@ -504,8 +513,8 @@ Java_com_jvdegithub_aiscatcher_AisCatcherJava_createReceiver(JNIEnv *env, jclass
             model->buildModel('A','B',device->getSampleRate(), false, device);
         }
 
-    } catch (const char *msg) {
-        callbackError(env, msg);
+    } catch (std::exception& e) {
+        callbackError(env, e.what());
         device = nullptr;
         return -1;
     }
@@ -536,13 +545,33 @@ Java_com_jvdegithub_aiscatcher_AisCatcherJava_createUDP(JNIEnv *env, jclass claz
 
         callbackConsoleFormat(env, "UDP: %s %s\n", host.c_str(), port.c_str());
 
-    } catch (const char *msg) {
-        callbackError(env, msg);
+    } catch (std::exception& e) {
+        callbackError(env, e.what());
         device = nullptr;
         return -1;
     }
     return 0;
 }
+
+extern "C"
+JNIEXPORT jint JNICALL
+Java_com_jvdegithub_aiscatcher_AisCatcherJava_createSharing(JNIEnv *env, jclass clazz, jboolean b,
+                                                            jstring k) {
+    if(b) {
+        jboolean isCopy;
+        std::string key = (env)->GetStringUTFChars(k, &isCopy);
+
+        sharing = communityFeed = true;
+        sharingKey = key;
+        callbackConsoleFormat(env, "Community Sharing: %s\n", key.c_str());
+    }
+    else {
+        sharing = communityFeed = false;
+        sharingKey = "";
+    }
+    return 0;
+}
+
 extern "C"
 JNIEXPORT jint JNICALL
 Java_com_jvdegithub_aiscatcher_AisCatcherJava_getSampleRate(JNIEnv *env, jclass clazz) {

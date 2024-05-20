@@ -57,6 +57,9 @@ public class Settings extends AppCompatActivity {
     static void setDefault(Context context) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
 
+        preferences.edit().putString("sSHARINGKEY", "").commit();
+        preferences.edit().putBoolean("sSHARING", false).commit();
+
         preferences.edit().putString("oCGF_WIDE", "Default").commit();
         preferences.edit().putString("oMODEL_TYPE", "Default").commit();
         preferences.edit().putBoolean("oFP_DS", false).commit();
@@ -86,6 +89,15 @@ public class Settings extends AppCompatActivity {
         preferences.edit().putBoolean("u2SWITCH", false).commit();
         preferences.edit().putString("u2HOST", "127.0.0.1").commit();
         preferences.edit().putString("u2PORT", "10111").commit();
+
+        preferences.edit().putBoolean("u3SWITCH", false).commit();
+        preferences.edit().putString("u3HOST", "127.0.0.1").commit();
+        preferences.edit().putString("u3PORT", "10111").commit();
+
+        preferences.edit().putBoolean("u4SWITCH", false).commit();
+        preferences.edit().putString("u4HOST", "127.0.0.1").commit();
+        preferences.edit().putString("u4PORT", "10111").commit();
+
 
         preferences.edit().putInt("mLINEARITY", 17).commit();
         preferences.edit().putString("mRATE", "2500K").commit();
@@ -117,8 +129,12 @@ public class Settings extends AppCompatActivity {
             ((EditTextPreference) getPreferenceManager().findPreference("tHOST")).setOnBindEditTextListener(validateIP);
             ((EditTextPreference) getPreferenceManager().findPreference("u1HOST")).setOnBindEditTextListener(validateIP);
             ((EditTextPreference) getPreferenceManager().findPreference("u2HOST")).setOnBindEditTextListener(validateIP);
+            ((EditTextPreference) getPreferenceManager().findPreference("u3HOST")).setOnBindEditTextListener(validateIP);
+            ((EditTextPreference) getPreferenceManager().findPreference("u4HOST")).setOnBindEditTextListener(validateIP);
             ((EditTextPreference) getPreferenceManager().findPreference("u1PORT")).setOnBindEditTextListener(validatePort);
             ((EditTextPreference) getPreferenceManager().findPreference("u2PORT")).setOnBindEditTextListener(validatePort);
+            ((EditTextPreference) getPreferenceManager().findPreference("u3PORT")).setOnBindEditTextListener(validatePort);
+            ((EditTextPreference) getPreferenceManager().findPreference("u4PORT")).setOnBindEditTextListener(validatePort);
             ((SeekBarPreference) getPreferenceManager().findPreference("mLINEARITY")).setUpdatesContinuously(true);
 
             setSummaries();
@@ -131,7 +147,7 @@ public class Settings extends AppCompatActivity {
         }
 
         private void setSummaries() {
-            setSummaryText(new String[]{"tPORT","tHOST","sPORT","sHOST","u1HOST","u1PORT","u2HOST","u2PORT", "rFREQOFFSET"});
+            setSummaryText(new String[]{"tPORT","tHOST","sPORT","sHOST","u1HOST","u1PORT","u2HOST","u2PORT", "u3HOST","u3PORT", "u4HOST","u4PORT", "rFREQOFFSET", "sSHARINGKEY"});
             setSummaryList(new String[]{"rTUNER","rRATE","sRATE","tRATE","tPROTOCOL","tTUNER","mRATE","hRATE","oMODEL_TYPE","oCGF_WIDE"});
             setSummarySeekbar(new String[]{"mLINEARITY", "sGAIN"});
         }
@@ -250,6 +266,11 @@ public class Settings extends AppCompatActivity {
 
         if (!SetUDPoutput("u1", context)) return false;
         if (!SetUDPoutput("u2", context)) return false;
+        if (!SetUDPoutput("u3", context)) return false;
+        if (!SetUDPoutput("u4", context)) return false;
+
+        if(!SetSharing(context))  return false;
+
         return true;
     }
 
@@ -339,4 +360,21 @@ public class Settings extends AppCompatActivity {
         }
         return true;
     }
+    static private boolean SetSharing(Context context) {
+        String defaultKey = "a6392e08-c57e-4e7a-a4fb-d73bfc7619ae";
+
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+
+        boolean b = preferences.getBoolean("sSHARING", false);
+        if (b) {
+            String key = preferences.getString("sSHARINGKEY", defaultKey);
+            if (key.equals("")) key = defaultKey;
+            return AisCatcherJava.createSharing(b, key) == 0;
+
+        }
+        else
+            AisCatcherJava.createSharing(b, defaultKey);
+        return true;
+    }
+
 }

@@ -7,6 +7,19 @@
         android:title="System">
 
         <SwitchPreferenceCompat
+            android:key="sSHARING"
+            android:summary="Share AIS with aiscatcher.org"
+            android:defaultValue="False"
+            android:title="Community Share"/>
+
+        <EditTextPreference
+            android:key="sSHARINGKEY"
+            android:defaultValue=""
+            android:summary="Unique sharing key"
+            android:singleLine="true"
+            android:title="Sharing Key"/>
+
+        <SwitchPreferenceCompat
             android:key="sFORCEDARK"
             android:summary="Force app theme to Dark Mode"
             android:defaultValue="False"
@@ -211,8 +224,7 @@
         <EditTextPreference
             android:key="u2HOST"
             android:dependency="u2SWITCH"
-            android:defaultValue="localhost"
-
+            android:defaultValue="127.0.0.1"
             android:title="IP"/>
 
         <EditTextPreference
@@ -220,6 +232,43 @@
             android:dependency="u2SWITCH"
             android:defaultValue="4002"
             android:title="Port"/>
+
+        <SwitchPreferenceCompat
+            android:key="u3SWITCH"
+            android:dependency="sSHARING"
+            android:defaultValue="False"
+            android:title="UDP Server 3"/>
+
+        <EditTextPreference
+            android:key="u3HOST"
+            android:dependency="u3SWITCH"
+            android:defaultValue="127.0.0.1"
+            android:title="IP"/>
+
+        <EditTextPreference
+            android:key="u3PORT"
+            android:dependency="u3SWITCH"
+            android:defaultValue="4002"
+            android:title="Port"/>
+
+        <SwitchPreferenceCompat
+            android:key="u4SWITCH"
+            android:dependency="sSHARING"
+            android:defaultValue="False"
+            android:title="UDP Server 4"/>
+
+        <EditTextPreference
+            android:key="u4HOST"
+            android:dependency="u4SWITCH"
+            android:defaultValue="127.0.0.1"
+            android:title="IP"/>
+
+        <EditTextPreference
+            android:key="u4PORT"
+            android:dependency="u4SWITCH"
+            android:defaultValue="4002"
+            android:title="Port"/>
+
 
     </PreferenceCategory>
 

@@ -18,5 +18,5 @@
         android:id="@+id/action_web"
         android:icon="@drawable/ic_baseline_web_asset_24"
         android:orderInCategory="4"
-        android:title="Web Client" />
+        android:title="Community" />
 </menu>

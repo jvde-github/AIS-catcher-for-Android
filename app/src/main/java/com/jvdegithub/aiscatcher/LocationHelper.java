@@ -35,10 +35,10 @@ public class LocationHelper implements LocationListener {
                     PERMISSION_REQUEST_CODE);
         } else {
             if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5 * 60 * 1000, 0, this);
+                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 30 * 1000, 0, this);
                 isUpdatingLocation = true;
             } else if (locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
-                locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 5 * 60 * 1000, 0, this);
+                locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 30 * 1000, 0, this);
                 isUpdatingLocation = true;
 
                 Toast.makeText(context, "GPS not available. Using network for location updates.", Toast.LENGTH_LONG).show();

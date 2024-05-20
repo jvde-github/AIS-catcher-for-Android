@@ -55,6 +55,9 @@ public class AisCatcherJava {
 
     static native int createUDP(String h, String p);
 
+    static native int createSharing(boolean b, String key);
+
+
     static native int getSampleRate();
 
     static native String getRateDescription();

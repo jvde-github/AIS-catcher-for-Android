@@ -45,14 +45,14 @@ add_library( # Sets the name of the library.
         ./airspyhf/libairspyhf/src/airspyhf.c
         ./airspyhf/libairspyhf/src/iqbalancer.c
 
-        ./AIS-catcher/Application/Receiver.cpp ./AIS-catcher/Application/Config.cpp ./AIS-catcher/Ships/DB.cpp ./AIS-catcher/DBMS/PostgreSQL.cpp
+        ./AIS-catcher/Application/Receiver.cpp ./AIS-catcher/Application/Config.cpp ./AIS-catcher/Ships/DB.cpp ./AIS-catcher/Ships/Ships.cpp  ./AIS-catcher/DBMS/PostgreSQL.cpp
         ./AIS-catcher/Device/AIRSPYHF.cpp ./AIS-catcher/Device/FileWAV.cpp ./AIS-catcher/Device/RTLSDR.cpp ./AIS-catcher/Device/SDRPLAY.cpp ./AIS-catcher/DSP/Demod.cpp ./AIS-catcher/DSP/Model.cpp
         ./AIS-catcher/Library/AIS.cpp ./AIS-catcher/Library/JSONAIS.cpp ./AIS-catcher/Library/Keys.cpp ./AIS-catcher/IO/HTTPClient.cpp
         ./AIS-catcher/Device/FileRAW.cpp ./AIS-catcher/Device/HACKRF.cpp ./AIS-catcher/Device/UDP.cpp ./AIS-catcher/Device/RTLTCP.cpp
         ./AIS-catcher/Device/ZMQ.cpp ./AIS-catcher/Device/SoapySDR.cpp ./AIS-catcher/Device/SpyServer.cpp ./AIS-catcher/Library/Message.cpp ./AIS-catcher/Library/NMEA.cpp
         ./AIS-catcher/Library/Utilities.cpp ./AIS-catcher/Library/TCP.cpp ./AIS-catcher/JSON/JSON.cpp ./AIS-catcher/IO/Network.cpp ./AIS-catcher/IO/HTTPServer.cpp
         ./AIS-catcher/JSON/StringBuilder.cpp ./AIS-catcher/JSON/Parser.cpp ./AIS-catcher/Device/AIRSPY.cpp ./AIS-catcher/Device/Serial.cpp
-        ./AIS-catcher/DSP/DSP.cpp ./AIS-catcher/IO/IO.cpp ./AIS-catcher/Application/WebViewer.cpp
+        ./AIS-catcher/DSP/DSP.cpp ./AIS-catcher/IO/IO.cpp ./AIS-catcher/Application/WebViewer.cpp ./AIS-catcher/Application/Prometheus.cpp
 
         JNI/AIScatcherNDK.cpp)
 
