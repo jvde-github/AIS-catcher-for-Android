@@ -10,6 +10,7 @@ An impression of AIS-catcher on the beach on a Galaxy Note 20 in July 2023 (than
 
 
 Here you can find a [link](https://github.com/jvde-github/AIS-catcher-for-Android/releases/download/Edge/app-release-signed.apk) to the APK file for latest Edge version or visit the [Google Play Store](https://play.google.com/store/apps/details?id=com.jvdegithub.aiscatcher&gl=NL). The engine and visualizations are based on [AIS-catcher](https://github.com/jvde-github/AIS-catcher). 
+*** NOTE: The Google Play Store introduced new requirements for developers around publishing personal details  which we cannot implement. Hence the app will be no longer available in the Play Store from mid August. The APK can still be downloaded here. ***
 
 AIS-catcher had a recent overhaul. The instructions below still are relevant but the visualization of the results is now based on the same code as the AIS-catcher web interface. The instructions will be updated in due course.
 <p align="center">
