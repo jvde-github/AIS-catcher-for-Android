@@ -1,6 +1,5 @@
 package com.jvdegithub.aiscatcher.ui.main;
 
-import android.app.UiModeManager;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
@@ -13,7 +12,6 @@ import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
 import androidx.preference.PreferenceManager;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,13 +22,11 @@ import android.webkit.WebResourceResponse;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.RelativeLayout;
 
 import com.jvdegithub.aiscatcher.MainActivity;
 import com.jvdegithub.aiscatcher.R;
 import com.jvdegithub.aiscatcher.tools.LogBook;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -38,6 +34,7 @@ public class WebViewMapFragment extends Fragment {
 
     private WebView webView;
     private LogBook logbook;
+    private SharedPreferences sharedPreferences;
 
     public static WebViewMapFragment newInstance() {
         return new WebViewMapFragment();
@@ -49,9 +46,16 @@ public class WebViewMapFragment extends Fragment {
         return networkCapabilities != null && networkCapabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET);
     }
 
+    // Method to get SharedPreferences instance
+    private SharedPreferences getSharedPreferences() {
+        if (sharedPreferences == null) {
+            sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        }
+        return sharedPreferences;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
         logbook = LogBook.getInstance();
 
         View rootView = inflater.inflate(R.layout.fragment_map, container, false);
@@ -61,7 +65,6 @@ public class WebViewMapFragment extends Fragment {
         webSettings.setDomStorageEnabled(true);
 
         webView.setWebViewClient(new WebViewClient() {
-
             @Override
             public WebResourceResponse shouldInterceptRequest(WebView view, WebResourceRequest request) {
                 String url = request.getUrl().toString();
@@ -69,12 +72,12 @@ public class WebViewMapFragment extends Fragment {
                 if (url.startsWith("https://cdn.jsdelivr.net/") || url.startsWith("https://unpkg.com/")) {
                     String prefix = url.startsWith("https://cdn.jsdelivr.net/") ? "https://cdn.jsdelivr.net/" : "https://unpkg.com/";
 
-                    String remainingPath = "webassets/cdn/"+url.substring(prefix.length());
+                    String remainingPath = "webassets/cdn/" + url.substring(prefix.length());
 
                     try {
                         Context context = getContext();
 
-                        if(context == null) {
+                        if (context == null) {
                             return null;
                         }
 
@@ -87,7 +90,7 @@ public class WebViewMapFragment extends Fragment {
                             contentType = "image/svg+xml";
                         } else if (remainingPath.endsWith(".png")) {
                             contentType = "image/png";
-                        } else  if (remainingPath.endsWith(".js"))  {
+                        } else if (remainingPath.endsWith(".js")) {
                             contentType = "text/plain";
                         } else return null;
 
@@ -101,9 +104,16 @@ public class WebViewMapFragment extends Fragment {
 
                 return null;
             }
+
             @Override
             public void onPageStarted(WebView view, String url, Bitmap favicon) {
                 webView.setVisibility(View.INVISIBLE);
+
+                // Restore localStorage content as early as possible
+                String localStorageContent = getSharedPreferences().getString("localStorageContent", null);
+                if (localStorageContent != null) {
+                    webView.evaluateJavascript("localStorage.setItem('settings', " + localStorageContent + ");", null);
+                }
             }
 
             @Override
@@ -116,7 +126,7 @@ public class WebViewMapFragment extends Fragment {
             @Override
             public boolean onConsoleMessage(ConsoleMessage consoleMessage) {
                 logbook.addLog(String.format("W(%d): %s",
-                        consoleMessage.lineNumber(), consoleMessage.message() ));
+                        consoleMessage.lineNumber(), consoleMessage.message()));
 
                 return true;
             }
@@ -136,8 +146,19 @@ public class WebViewMapFragment extends Fragment {
     }
 
     @Override
+    public void onPause() {
+        super.onPause();
+        webView.evaluateJavascript("localStorage.getItem('settings');", value -> {
+            if (value != null && !value.equals("null")) {
+                getSharedPreferences().edit().putString("localStorageContent", value).apply();
+            }
+        });
+    }
+
+    @Override
     public void onDestroyView() {
         super.onDestroyView();
         webView.stopLoading();
-        logbook.addLog("View is destroyed.");    }
+        logbook.addLog("View is destroyed.");
+    }
 }
