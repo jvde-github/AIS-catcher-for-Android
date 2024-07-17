@@ -10,8 +10,8 @@ android {
         applicationId "com.jvdegithub.aiscatcher"
         minSdk 23
         targetSdk 34
-        versionCode 97
-        versionName '0.97'
+        versionCode 103
+        versionName '1.03'
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         externalNativeBuild {

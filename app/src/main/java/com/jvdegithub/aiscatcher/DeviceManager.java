@@ -304,15 +304,18 @@ public class DeviceManager {
     }
 
     public static void registerUSBBroadCast() {
-
         IntentFilter filter = new IntentFilter();
-
         filter.addAction(UsbManager.ACTION_USB_DEVICE_DETACHED);
         filter.addAction(UsbManager.ACTION_USB_DEVICE_ATTACHED);
         filter.addAction(ACTION_USB_PERMISSION);
 
-        context.registerReceiver(mUsbReceiver, filter);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            context.registerReceiver(mUsbReceiver, filter, Context.RECEIVER_NOT_EXPORTED);
+        } else {
+            context.registerReceiver(mUsbReceiver, filter);
+        }
     }
+
 
     public static void unregisterUSBBroadCast() {
         context.unregisterReceiver(mUsbReceiver);

@@ -35,6 +35,7 @@ public class WebViewMapFragment extends Fragment {
     private WebView webView;
     private LogBook logbook;
     private SharedPreferences sharedPreferences;
+    private Context context;
 
     public static WebViewMapFragment newInstance() {
         return new WebViewMapFragment();
@@ -46,12 +47,23 @@ public class WebViewMapFragment extends Fragment {
         return networkCapabilities != null && networkCapabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET);
     }
 
-    // Method to get SharedPreferences instance
     private SharedPreferences getSharedPreferences() {
-        if (sharedPreferences == null) {
-            sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        if (sharedPreferences == null && context != null) {
+            sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         }
         return sharedPreferences;
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        this.context = context;
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        context = null;
     }
 
     @Override
@@ -75,8 +87,6 @@ public class WebViewMapFragment extends Fragment {
                     String remainingPath = "webassets/cdn/" + url.substring(prefix.length());
 
                     try {
-                        Context context = getContext();
-
                         if (context == null) {
                             return null;
                         }
