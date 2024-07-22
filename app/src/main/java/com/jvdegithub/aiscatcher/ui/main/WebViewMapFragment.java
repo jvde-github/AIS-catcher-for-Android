@@ -120,9 +120,11 @@ public class WebViewMapFragment extends Fragment {
                 webView.setVisibility(View.INVISIBLE);
 
                 // Restore localStorage content as early as possible
-                String localStorageContent = getSharedPreferences().getString("localStorageContent", null);
-                if (localStorageContent != null) {
-                    webView.evaluateJavascript("localStorage.setItem('settings', " + localStorageContent + ");", null);
+                if(getSharedPreferences()!= null) {
+                    String localStorageContent = getSharedPreferences().getString("localStorageContent", null);
+                    if (localStorageContent != null) {
+                        webView.evaluateJavascript("localStorage.setItem('settings', " + localStorageContent + ");", null);
+                    }
                 }
             }
 
