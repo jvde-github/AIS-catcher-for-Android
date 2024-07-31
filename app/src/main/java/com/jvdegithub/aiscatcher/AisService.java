@@ -88,18 +88,22 @@ public class AisService extends Service {
     }
 
 
-    public void acquireLocks()
-    {
+    public void acquireLocks() {
         PowerManager powerManager = (PowerManager) getSystemService(POWER_SERVICE);
-        wakeLock = powerManager.newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK | PowerManager.ON_AFTER_RELEASE,
-                "AIS-catcher:WakeLock");
-        wakeLock.acquire();
+        if (powerManager != null) {
+            wakeLock = powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "AIS-catcher:WakeLock");
+            if (wakeLock != null && !wakeLock.isHeld()) {
+                wakeLock.acquire();
+            }
+        }
     }
 
-    public void releaseLocks()
-    {
-        wakeLock.release();
+    public void releaseLocks() {
+        if (wakeLock != null && wakeLock.isHeld()) {
+            wakeLock.release();
+        }
     }
+
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
@@ -118,19 +122,20 @@ public class AisService extends Service {
                 String msg = "Receiver running - " + DeviceManager.getDeviceTypeDescription() + " @ " + AisCatcherJava.getRateDescription();
                 startForeground(1001, buildNotification(msg));
 
-                new Thread(
-                        () -> {
-                            acquireLocks();
+                new Thread(() -> {
+                    try {
+                        acquireLocks();
+                        AisCatcherJava.Run();
+                        AisCatcherJava.Close();
+                        sendBroadcast();
 
-                            AisCatcherJava.Run();
-                            AisCatcherJava.Close();
+                    } finally {
+                        releaseLocks();
 
-                            stopForeground(true);
-                            stopSelf();
-                            sendBroadcast();
-
-                            releaseLocks();
-                        }).start();
+                        stopForeground(true);
+                        stopSelf();
+                    }
+                }).start();
             } else {
                 String msg = "Receiver creation failed";
                 startForeground(1001, buildNotification(msg));
