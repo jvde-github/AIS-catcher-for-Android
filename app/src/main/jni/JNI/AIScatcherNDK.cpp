@@ -32,12 +32,12 @@ const int TIME_CONSTRAINT = 120;
   G_ERROR, LOG_TAG, __VA_ARGS__)
 
 #include "AIS-catcher.h"
+#include "Application/version.h"
 #include "Receiver.h"
 #include "JSONAIS.h"
 #include "Signals.h"
 #include "Common.h"
 #include "Model.h"
-#include "IO.h"
 #include "Network.h"
 #include "WebViewer.h"
 
@@ -65,6 +65,8 @@ struct Statistics {
 } statistics;
 
 WebViewer server;
+static std::unique_ptr<WebViewer> webviewer = nullptr;
+int webviewer_port = -1;
 
 std::string nmea_msg;
 std::string json_queue;
@@ -87,6 +89,20 @@ void DetachThread()
 */
 
 // JAVA interaction and callbacks
+
+std::string toString(JNIEnv* env, jstring jStr) {
+
+    if (!jStr) {
+        return std::string();
+    }
+
+    const char* chars = env->GetStringUTFChars(jStr, nullptr);
+    if (!chars) return std::string();
+
+    std::string result(chars);
+    env->ReleaseStringUTFChars(jStr, chars);
+    return result;
+}
 
 void pushStatistics(JNIEnv *env) {
 
@@ -224,10 +240,8 @@ struct Drivers {
     Device::SpyServer SPYSERVER;
     Device::AIRSPY AIRSPY;
     Device::AIRSPYHF AIRSPYHF;
-    //Device::SerialPort Serial;
 } drivers;
 
-//Device::Type type = Device::Type::NONE;
 std::vector<IO::UDPStreamer > UDP_connections;
 std::vector<IO::TCPClientStreamer > TCP_connections;
 std::vector<std::string> UDPhost;
@@ -239,7 +253,7 @@ NMEAcounter NMEAcounter;
 RAWcounter rawcounter;
 
 Device::Device *device = nullptr;
-AIS::Model *model = nullptr;
+static std::unique_ptr<AIS::Model> model = nullptr;
 AIS::JSONAIS json2ais;
 
 bool stop = false;
@@ -283,10 +297,9 @@ JNIEXPORT jint JNICALL
 Java_com_jvdegithub_aiscatcher_AisCatcherJava_applySetting(JNIEnv *env, jclass, jstring dev, jstring setting, jstring param) {
 
     try {
-        jboolean isCopy;
-        std::string d = (env)->GetStringUTFChars(dev, &isCopy);
-        std::string s = (env)->GetStringUTFChars(setting, &isCopy);
-        std::string p = (env)->GetStringUTFChars(param, &isCopy);
+        std::string d = toString(env,dev);
+        std::string s = toString(env, setting);
+        std::string p = toString(env, param);
 
         switch (d[0]) {
             case 't':
@@ -333,6 +346,7 @@ Java_com_jvdegithub_aiscatcher_AisCatcherJava_Run(JNIEnv *env, jclass) {
     try {
         callbackConsole(env, "Creating UDP output channels\n");
         UDP_connections.resize(UDPhost.size());
+
         for (int i = 0; i < UDPhost.size(); i++) {
             UDP_connections[i].Set("host",UDPhost[i]).Set("port",UDPport[i]);
             UDP_connections[i].Start();
@@ -348,6 +362,12 @@ Java_com_jvdegithub_aiscatcher_AisCatcherJava_Run(JNIEnv *env, jclass) {
             TCP_connections[0].Start();
             model->Output() >> TCP_connections[0];
         }
+
+        if(webviewer) {
+            callbackConsole(env, "Starting Web Viewer\n");
+            webviewer->start();
+        }
+
         callbackConsole(env, "Starting device\n");
 
         device->setTag(tag);
@@ -389,6 +409,13 @@ Java_com_jvdegithub_aiscatcher_AisCatcherJava_Run(JNIEnv *env, jclass) {
 
         UDPport.clear();
         UDPhost.clear();
+
+        if(webviewer) {
+            webviewer->close();
+            webviewer.reset();
+        }
+        webviewer_port = -1;
+
     } catch (std::exception& e) {
         callbackError(env, e.what());
     }
@@ -408,11 +435,7 @@ Java_com_jvdegithub_aiscatcher_AisCatcherJava_Close(JNIEnv *env, jclass) {
     try {
         if (device) device->Close();
         device = nullptr;
-
-        if(model) {
-            delete model;
-            model = nullptr;
-        }
+        model.reset();
     }
     catch (std::exception& e) {
         callbackError(env, e.what());
@@ -480,22 +503,19 @@ Java_com_jvdegithub_aiscatcher_AisCatcherJava_createReceiver(JNIEnv *env, jclass
         callbackConsoleFormat(env, "Building model with sampling rate: %dK\n",
                               device->getSampleRate() / 1000);
 
-        if(model != nullptr) {
-            delete model;
-            model = nullptr;
-        }
+        model.reset();
 
         if(device && device->getFormat() == Format::TXT) {
             callbackConsole(env, "Model: NMEA\n");
 
-            model = new AIS::ModelNMEA();
+            model = std::make_unique<AIS::ModelNMEA>();
             model->buildModel('A','B',device->getSampleRate(), false, device);
         }
         else {
             if(model_type == 0) {
 
                 callbackConsole(env, "Model: default\n");
-                model = new AIS::ModelDefault();
+                model = std::make_unique<AIS::ModelDefault>();
 
                 std::string s = (CGF_wide == 0)?"OFF":"ON";
                 model->Set("AFC_WIDE",s);
@@ -503,7 +523,7 @@ Java_com_jvdegithub_aiscatcher_AisCatcherJava_createReceiver(JNIEnv *env, jclass
             }
             else {
                 callbackConsole(env, "Model: base (FM)\n");
-                model = new AIS::ModelBase();
+                model = std::make_unique<AIS::ModelBase>();
             }
 
             std::string s = (FPDS == 0)?"OFF":"ON";
@@ -525,6 +545,27 @@ Java_com_jvdegithub_aiscatcher_AisCatcherJava_createReceiver(JNIEnv *env, jclass
     model->Output() >> json2ais;
     server.connect(*model, json2ais.out, *device);
 
+    callbackConsole(env, "Creating additional Web Viewer\n");
+
+    if(webviewer) webviewer.reset();
+
+    if(webviewer_port != -1) {
+        webviewer = std::make_unique<WebViewer>();
+
+        if(!webviewer)
+            throw std::runtime_error("Cannot create Web Viewer)");
+
+        webviewer->Set("PORT", std::to_string(webviewer_port));
+        webviewer->Set("STATION", "Android");
+        webviewer->Set("SHARE_LOC","ON");
+        webviewer->Set("REALTIME","ON");
+        //webviewer->Set("LAT","42");
+        //webviewer->Set("LON","4");
+    }
+
+    if(webviewer && webviewer_port != -1)
+        webviewer->connect(*model, json2ais.out, *device);
+
     return 0;
 }
 
@@ -537,8 +578,8 @@ Java_com_jvdegithub_aiscatcher_AisCatcherJava_createUDP(JNIEnv *env, jclass claz
         UDPhost.resize(UDPhost.size() + 1);
 
         jboolean b;
-        std::string host = (env)->GetStringUTFChars(h, &b);
-        std::string port = (env)->GetStringUTFChars(p, &b);
+        std::string host = toString(env,h); //(env)->GetStringUTFChars(h, &b);
+        std::string port = toString(env, p); //(env)->GetStringUTFChars(p, &b);
 
         UDPport[UDPport.size() - 1] = port;
         UDPhost[UDPhost.size() - 1] = host;
@@ -555,11 +596,29 @@ Java_com_jvdegithub_aiscatcher_AisCatcherJava_createUDP(JNIEnv *env, jclass claz
 
 extern "C"
 JNIEXPORT jint JNICALL
+Java_com_jvdegithub_aiscatcher_AisCatcherJava_createWebViewer(JNIEnv *env, jclass clazz,
+                                                              jstring p) {
+    try {
+        jboolean b;
+        std::string port = toString(env,p); //(env)->GetStringUTFChars(p, &b);
+        webviewer_port = std::stoi(port);
+
+        callbackConsoleFormat(env, "WebViewer active on Port: %s\n",  port.c_str());
+
+    } catch (std::exception& e) {
+        callbackError(env, e.what());
+        device = nullptr;
+        return -1;
+    }
+    return 0;}
+
+extern "C"
+JNIEXPORT jint JNICALL
 Java_com_jvdegithub_aiscatcher_AisCatcherJava_createSharing(JNIEnv *env, jclass clazz, jboolean b,
                                                             jstring k) {
     if(b) {
         jboolean isCopy;
-        std::string key = (env)->GetStringUTFChars(k, &isCopy);
+        std::string key = toString(env,k); //(env)->GetStringUTFChars(k, &isCopy);
 
         sharing = communityFeed = true;
         sharingKey = key;
@@ -607,6 +666,11 @@ Java_com_jvdegithub_aiscatcher_AisCatcherJava_setLatLon(JNIEnv *env, jclass claz
                                                         jfloat lon) {
     server.Set("LAT",std::to_string(lat));
     server.Set("LON",std::to_string(lon));
+
+    if(webviewer) {
+        webviewer->Set("LAT",std::to_string(lat));
+        webviewer->Set("LON",std::to_string(lon));
+    }
 }
 
 extern "C"
@@ -621,28 +685,12 @@ JNIEXPORT void JNICALL
 Java_com_jvdegithub_aiscatcher_AisCatcherJava_setDeviceDescription(JNIEnv *env, jclass clazz,
                                                                    jstring p, jstring v,
                                                                    jstring s) {
-    const char* pChar = env->GetStringUTFChars(p, NULL);
-    std::string pStr;
-    if (pChar != NULL) {
-        pStr = pChar;
-        env->ReleaseStringUTFChars(p, pChar);
-    }
 
-    const char* vChar = env->GetStringUTFChars(v, NULL);
-    std::string vStr;
-    if (vChar != NULL) {
-        vStr = vChar;
-        env->ReleaseStringUTFChars(v, vChar);
-    }
+    std::string product = toString(env,p);
+    std::string vendor = toString(env,v);
+    std::string serial = toString(env, s);
 
-    const char* sChar = env->GetStringUTFChars(s, NULL);
-    std::string sStr;
-    if (sChar != NULL) {
-        sStr = sChar;
-        env->ReleaseStringUTFChars(s, sChar);
-    }
-
-    server.setDeviceDescription(pStr, vStr, sStr);
+    server.setDeviceDescription(product.c_str(), vendor.c_str(), serial.c_str());
 }
 
 extern "C"
@@ -650,3 +698,4 @@ JNIEXPORT jstring JNICALL
 Java_com_jvdegithub_aiscatcher_AisCatcherJava_getRateDescription(JNIEnv *env, jclass clazz) {
     return env->NewStringUTF(device->getRateDescription().c_str());
 }
+

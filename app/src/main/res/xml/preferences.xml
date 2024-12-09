@@ -28,6 +28,25 @@
     </PreferenceCategory>
 
     <PreferenceCategory
+        android:key="webviewer_category"
+        android:title="Web Viewer">
+
+        <SwitchPreferenceCompat
+            android:key="w1SWITCH"
+            android:defaultValue="False"
+            android:title="Web Viewer"/>
+
+        <EditTextPreference
+            android:key="w1PORT"
+            android:defaultValue="8100"
+            android:dependency="w1SWITCH"
+            android:summary="Port of Web Viewer"
+            android:singleLine="true"
+            android:title="Web Viewer Port"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
         android:key="rtlsdr_category"
         android:title="RTL-SDR">
 

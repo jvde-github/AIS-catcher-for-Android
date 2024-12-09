@@ -60,6 +60,10 @@ public class Settings extends AppCompatActivity {
         preferences.edit().putString("sSHARINGKEY", "").commit();
         preferences.edit().putBoolean("sSHARING", false).commit();
 
+        preferences.edit().putBoolean("w1SWITCH", false).commit();
+        preferences.edit().putInt("w1PORT", 8100).commit();
+
+
         preferences.edit().putString("oCGF_WIDE", "Default").commit();
         preferences.edit().putString("oMODEL_TYPE", "Default").commit();
         preferences.edit().putBoolean("oFP_DS", false).commit();
@@ -123,6 +127,7 @@ public class Settings extends AppCompatActivity {
 
             ((EditTextPreference) getPreferenceManager().findPreference("sHOST")).setOnBindEditTextListener(validateIP);
             ((EditTextPreference) getPreferenceManager().findPreference("sPORT")).setOnBindEditTextListener(validatePort);
+            ((EditTextPreference) getPreferenceManager().findPreference("w1PORT")).setOnBindEditTextListener(validatePort);;
             ((SeekBarPreference) getPreferenceManager().findPreference("sGAIN")).setUpdatesContinuously(true);
             ((EditTextPreference) getPreferenceManager().findPreference("tPORT")).setOnBindEditTextListener(validatePort);
             ((EditTextPreference) getPreferenceManager().findPreference("rFREQOFFSET")).setOnBindEditTextListener(validatePPM);
@@ -147,7 +152,7 @@ public class Settings extends AppCompatActivity {
         }
 
         private void setSummaries() {
-            setSummaryText(new String[]{"tPORT","tHOST","sPORT","sHOST","u1HOST","u1PORT","u2HOST","u2PORT", "u3HOST","u3PORT", "u4HOST","u4PORT", "rFREQOFFSET", "sSHARINGKEY"});
+            setSummaryText(new String[]{"w1PORT","tPORT","tHOST","sPORT","sHOST","u1HOST","u1PORT","u2HOST","u2PORT", "u3HOST","u3PORT", "u4HOST","u4PORT", "rFREQOFFSET", "sSHARINGKEY"});
             setSummaryList(new String[]{"rTUNER","rRATE","sRATE","tRATE","tPROTOCOL","tTUNER","mRATE","hRATE","oMODEL_TYPE","oCGF_WIDE"});
             setSummarySeekbar(new String[]{"mLINEARITY", "sGAIN"});
         }
@@ -269,6 +274,8 @@ public class Settings extends AppCompatActivity {
         if (!SetUDPoutput("u3", context)) return false;
         if (!SetUDPoutput("u4", context)) return false;
 
+        if (!SetWebViewerOutput( context)) return false;
+
         if(!SetSharing(context))  return false;
 
         return true;
@@ -360,6 +367,19 @@ public class Settings extends AppCompatActivity {
         }
         return true;
     }
+
+    static private boolean SetWebViewerOutput(Context context) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+
+        boolean b = preferences.getBoolean("w1SWITCH", false);
+        if (b) {
+            String port = preferences.getString("w1PORT", "");
+            return AisCatcherJava.createWebViewer(port) == 0;
+
+        }
+        return true;
+    }
+
     static private boolean SetSharing(Context context) {
         String defaultKey = "a6392e08-c57e-4e7a-a4fb-d73bfc7619ae";
 

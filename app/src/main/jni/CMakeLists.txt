@@ -7,8 +7,8 @@ cmake_minimum_required(VERSION 3.10.2)
 
 project("AIScatcherNDK")
 
-set(OPTIMIZATION_FLAGS "-Ofast")
-#set(OPTIMIZATION_FLAGS "-g")
+#set(OPTIMIZATION_FLAGS "-Ofast")
+set(OPTIMIZATION_FLAGS "-g")
 
 set(CMAKE_CXX_FLAGS "${OPTIMIZATION_FLAGS}")
 set(CMAKE_C_FLAGS "${OPTIMIZATION_FLAGS}")
@@ -52,7 +52,7 @@ add_library( # Sets the name of the library.
         ./AIS-catcher/Device/ZMQ.cpp ./AIS-catcher/Device/SoapySDR.cpp ./AIS-catcher/Device/SpyServer.cpp ./AIS-catcher/Library/Message.cpp ./AIS-catcher/Library/NMEA.cpp
         ./AIS-catcher/Library/Utilities.cpp ./AIS-catcher/Library/TCP.cpp ./AIS-catcher/JSON/JSON.cpp ./AIS-catcher/IO/Network.cpp ./AIS-catcher/IO/HTTPServer.cpp
         ./AIS-catcher/JSON/StringBuilder.cpp ./AIS-catcher/JSON/Parser.cpp ./AIS-catcher/Device/AIRSPY.cpp ./AIS-catcher/Device/Serial.cpp
-        ./AIS-catcher/DSP/DSP.cpp ./AIS-catcher/IO/IO.cpp ./AIS-catcher/Application/WebViewer.cpp ./AIS-catcher/Application/Prometheus.cpp
+        ./AIS-catcher/DSP/DSP.cpp ./AIS-catcher/Application/WebViewer.cpp ./AIS-catcher/Application/Prometheus.cpp ./AIS-catcher/Protocol/Protocol.cpp ./AIS-catcher/Library/Logger.cpp
 
         JNI/AIScatcherNDK.cpp)
 
@@ -61,7 +61,7 @@ include_directories(
         ./rtl-sdr/include
         ./airspyone_host/libairspy/src
         ./airspyhf/libairspyhf/src
-        ./AIS-catcher ./AIS-catcher/Application ./AIS-catcher/IO ./AIS-catcher/Library ./AIS-catcher/Ships ./AIS-catcher/DBMS ./AIS-catcher/DSP ./AIS-catcher/Device)
+        ./AIS-catcher ./AIS-catcher/Application ./AIS-catcher/IO ./AIS-catcher/Library ./AIS-catcher/Ships ./AIS-catcher/DBMS ./AIS-catcher/DSP ./AIS-catcher/Device ./AIS-catcher/Protocol)
 
 add_definitions(-DHASRTLSDR -DHASRTLSDR_BIASTEE -DHASRTL_ANDROID -DHASAIRSPY -DHASAIRSPY_ANDROID -D HASAIRSPYHF -DHASAIRSPYHF_ANDROID -DHASRTLSDR_TUNERBW)
 
