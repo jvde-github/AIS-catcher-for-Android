@@ -61,7 +61,7 @@ public class Settings extends AppCompatActivity {
         preferences.edit().putBoolean("sSHARING", false).commit();
 
         preferences.edit().putBoolean("w1SWITCH", false).commit();
-        preferences.edit().putInt("w1PORT", 8100).commit();
+        preferences.edit().putString("w1PORT", "8100").commit();
 
 
         preferences.edit().putString("oCGF_WIDE", "Default").commit();
