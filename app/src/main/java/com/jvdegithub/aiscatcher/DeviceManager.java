@@ -30,7 +30,7 @@ import android.hardware.usb.UsbManager;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.util.Xml;
-
+import androidx.core.content.ContextCompat;
 import androidx.core.util.Pair;
 
 import org.xmlpull.v1.XmlPullParser;
@@ -302,7 +302,7 @@ public class DeviceManager {
 
         return devs;
     }
-
+    /*
     public static void registerUSBBroadCast() {
         IntentFilter filter = new IntentFilter();
         filter.addAction(UsbManager.ACTION_USB_DEVICE_DETACHED);
@@ -315,7 +315,21 @@ public class DeviceManager {
             context.registerReceiver(mUsbReceiver, filter);
         }
     }
+    */
+    public static void registerUSBBroadCast() {
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(UsbManager.ACTION_USB_DEVICE_DETACHED);
+        filter.addAction(UsbManager.ACTION_USB_DEVICE_ATTACHED);
+        filter.addAction(ACTION_USB_PERMISSION);
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            // Use ContextCompat.registerReceiver with RECEIVER_NOT_EXPORTED
+            ContextCompat.registerReceiver(context, mUsbReceiver, filter, ContextCompat.RECEIVER_NOT_EXPORTED);
+        } else {
+            // Older Android versions do not require these flags
+            context.registerReceiver(mUsbReceiver, filter);
+        }
+    }
 
     public static void unregisterUSBBroadCast() {
         context.unregisterReceiver(mUsbReceiver);
