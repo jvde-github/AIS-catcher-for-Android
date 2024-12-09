@@ -393,9 +393,6 @@ Java_com_jvdegithub_aiscatcher_AisCatcherJava_Run(JNIEnv *env, jclass) {
     catch (std::exception& e) {
         callbackError(env, e.what());
     }
-    catch (const std::exception &e) {
-        callbackError(env, e.what());
-    }
 
     try {
         device->Stop();

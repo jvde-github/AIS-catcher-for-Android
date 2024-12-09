@@ -322,13 +322,7 @@ public class DeviceManager {
         filter.addAction(UsbManager.ACTION_USB_DEVICE_ATTACHED);
         filter.addAction(ACTION_USB_PERMISSION);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            // Use ContextCompat.registerReceiver with RECEIVER_NOT_EXPORTED
-            ContextCompat.registerReceiver(context, mUsbReceiver, filter, ContextCompat.RECEIVER_NOT_EXPORTED);
-        } else {
-            // Older Android versions do not require these flags
-            context.registerReceiver(mUsbReceiver, filter);
-        }
+        ContextCompat.registerReceiver(context, mUsbReceiver, filter, ContextCompat.RECEIVER_NOT_EXPORTED);
     }
 
     public static void unregisterUSBBroadCast() {
