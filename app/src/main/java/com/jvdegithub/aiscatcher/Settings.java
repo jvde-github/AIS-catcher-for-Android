@@ -59,10 +59,10 @@ public class Settings extends AppCompatActivity {
 
         preferences.edit().putString("sSHARINGKEY", "").commit();
         preferences.edit().putBoolean("sSHARING", false).commit();
+        preferences.edit().putBoolean("sAUTOSTART", false).commit();
 
         preferences.edit().putBoolean("w1SWITCH", false).commit();
         preferences.edit().putString("w1PORT", "8100").commit();
-
 
         preferences.edit().putString("oCGF_WIDE", "Default").commit();
         preferences.edit().putString("oMODEL_TYPE", "Default").commit();
@@ -297,6 +297,12 @@ public class Settings extends AppCompatActivity {
         if(set.equals("Default")) return 1;
         if(set.equals("Narrow")) return 0;
         return 1;
+    }
+
+    static public boolean getAutoStart(Context context)
+    {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        return preferences.getBoolean("sAUTOSTART",false);
     }
 
     static public boolean getFixedPointDownsampling(Context context)

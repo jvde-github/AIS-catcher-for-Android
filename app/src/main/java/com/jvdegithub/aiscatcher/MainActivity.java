@@ -67,6 +67,7 @@ import java.net.ServerSocket;
 public class MainActivity<binding> extends AppCompatActivity implements AisCatcherJava.AisCallback, DeviceManager.DeviceCallback {
 
     private SharedPreferences.OnSharedPreferenceChangeListener preferenceChangeListener;
+    private boolean firstRun = true;
 
     private LogBook logbook;
     private LocationHelper locationHelper;
@@ -200,6 +201,17 @@ public class MainActivity<binding> extends AppCompatActivity implements AisCatch
             startActivity(browserIntent);
         }
 
+        protected void AutoStart() {
+            if(!Settings.getAutoStart(this)) return;
+            if(DeviceManager.getDeviceType() != DeviceManager.DeviceType.RTLSDR &&
+                    DeviceManager.getDeviceType() != DeviceManager.DeviceType.AIRSPY &&
+                    DeviceManager.getDeviceType() != DeviceManager.DeviceType.AIRSPYHF)
+                return;
+
+            if (!AisService.isRunning(getApplicationContext())) {
+                onPlayStop();
+            }
+        }
         protected void onResume () {
 
             super.onResume();
@@ -209,6 +221,11 @@ public class MainActivity<binding> extends AppCompatActivity implements AisCatch
                 updateUIwithStart();
             } else {
                 updateUIwithStop();
+            }
+
+            if(firstRun) {
+                firstRun = false;
+                AutoStart();
             }
         }
 

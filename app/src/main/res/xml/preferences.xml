@@ -25,6 +25,12 @@
             android:defaultValue="False"
             android:title="Force Dark Mode"/>
 
+        <SwitchPreferenceCompat
+            android:key="sAUTOSTART"
+            android:summary="Auto Start when USB device is available"
+            android:defaultValue="False"
+            android:title="Auto Start"/>
+
     </PreferenceCategory>
 
     <PreferenceCategory
