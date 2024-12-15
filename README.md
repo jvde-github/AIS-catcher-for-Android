@@ -29,12 +29,9 @@ And one more thing, you need to be in a region where there are ships broadcastin
 
 ### What's New?
 
-- Improved functionality if offline (map tiles only to the extent cached by previous usage)
-- Fireworks mode for map, [have a look](https://www.youtube.com/watch?v=jhVfnCd5tX4)!
-- APK for latest version always available for download, see below
-- Support for RTL-SDR Blog V4
-- Tab with realtime NMEA lines as it is received
-
+- GUI has now been aligned with latest AIS-catcher versions
+- Auto Start option
+- Option to provide a web viewer at a defined port
 
 <p align="center">
 <img src="https://raw.githubusercontent.com/jvde-github/AIS-catcher/media/media/equipment.jpg" width=80% height=80%></p>
