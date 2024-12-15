@@ -26,7 +26,12 @@ jobs:
 
     - name: Set permissions for gradlew
       run: chmod +x gradlew
-      
+
+    - name: Check Ninja location
+      run: |
+        which ninja
+        ninja --version
+    
     - name: Build 
       run: ./gradlew build    
       
