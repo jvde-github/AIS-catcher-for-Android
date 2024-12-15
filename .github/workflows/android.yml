@@ -31,13 +31,6 @@ jobs:
       run: |
         sudo apt-get update
         sudo apt-get install -y ninja-build
-        echo "Ninja location and version:"
-        which ninja
-        ninja --version
-        echo "Android SDK location:"
-        echo $ANDROID_SDK_ROOT
-        echo "NDK location:"
-        ls -l /usr/local/lib/android/sdk/ndk/
 
     - name: Set permissions for gradlew
       run: chmod +x gradlew
@@ -69,13 +62,13 @@ jobs:
         buildToolsVersion: 34.0.0
         
     - name: Upload Debug APK
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: debug-apk
         path: app/build/outputs/apk/debug/app-debug.apk
 
     - name: Upload Release APK
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: release-apk
         path: ${{steps.sign_app.outputs.signedFile}}
