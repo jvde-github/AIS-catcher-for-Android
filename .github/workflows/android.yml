@@ -27,6 +27,18 @@ jobs:
     - name: Setup Android SDK
       uses: android-actions/setup-android@v3
 
+    - name: Install Ninja and check Android SDK
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y ninja-build
+        echo "Ninja location and version:"
+        which ninja
+        ninja --version
+        echo "Android SDK location:"
+        echo $ANDROID_SDK_ROOT
+        echo "NDK location:"
+        ls -l /usr/local/lib/android/sdk/ndk/
+
     - name: Set permissions for gradlew
       run: chmod +x gradlew
 
@@ -54,7 +66,7 @@ jobs:
         keyAlias: ${{ secrets.ALIAS }}
         keyStorePassword: ${{ secrets.KEY_STORE_PASSWORD }}
         keyPassword: ${{ secrets.KEY_PASSWORD }}
-        buildToolsVersion: 33.0.0
+        buildToolsVersion: 34.0.0
         
     - name: Upload Debug APK
       uses: actions/upload-artifact@v3
