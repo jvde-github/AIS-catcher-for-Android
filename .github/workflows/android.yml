@@ -29,24 +29,18 @@ jobs:
 
     - name: Set permissions for gradlew
       run: chmod +x gradlew
-    
-    - name: Install Ninja and check Android SDK
+
+    - name: Check Android SDK Details
       run: |
-        sudo apt-get update
-        sudo apt-get install -y ninja-build
-        echo "Ninja location and version:"
-        which ninja
-        ninja --version
-        echo "Android SDK location:"
+        echo "SDK Location:"
         echo $ANDROID_SDK_ROOT
-        echo "NDK location:"
-        ls -l /usr/local/lib/android/sdk/ndk/
-        
-    - name: Check Ninja location
-      run: |
-        which ninja
-        ninja --version
-    
+        echo "Build Tools:"
+        ls -la $ANDROID_SDK_ROOT/build-tools/
+        echo "Platform Tools:"
+        ls -la $ANDROID_SDK_ROOT/platform-tools/
+        echo "NDK versions:"
+        ls -la $ANDROID_SDK_ROOT/ndk/
+                
     - name: Build 
       run: ./gradlew build    
       
