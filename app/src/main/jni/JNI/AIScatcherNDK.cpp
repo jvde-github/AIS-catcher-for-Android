@@ -40,6 +40,7 @@ const int TIME_CONSTRAINT = 120;
 #include "Model.h"
 #include "Network.h"
 #include "WebViewer.h"
+#include "Logger.h"
 
 #include "Device/RTLSDR.h"
 #include "Device/AIRSPYHF.h"
@@ -186,6 +187,7 @@ static void callbackUpdate(JNIEnv *env) {
 static void callbackError(JNIEnv *env, const std::string &str) {
 
     callbackConsole(env, str+"\r\n");
+    Error() << str;
 
     jstring jstr = env->NewStringUTF(str.c_str());
     jmethodID method = env->GetStaticMethodID(javaClass, "onError", "(Ljava/lang/String;)V");
@@ -265,13 +267,14 @@ void StopRequest() {
 extern "C"
 JNIEXPORT jint JNICALL
 Java_com_jvdegithub_aiscatcher_AisCatcherJava_InitNative(JNIEnv *env, jclass instance, jint port) {
+    Logger::getInstance().setMaxBufferSize(50);
 
     env->GetJavaVM(&javaVm);
     javaVersion = env->GetVersion();
     javaClass = (jclass) env->NewGlobalRef(instance);
 
-    callbackConsole(env, "AIS-Catcher " VERSION "-35\n");
-    callbackConsoleFormat(env, "Internal webserver running at port %d.\n",port);
+    Info() << "AIS-Catcher " VERSION;
+    Info() << "Internal webserver running at port " << port;
 
     memset(&statistics, 0, sizeof(statistics));
 
@@ -279,6 +282,7 @@ Java_com_jvdegithub_aiscatcher_AisCatcherJava_InitNative(JNIEnv *env, jclass ins
     server.Set("STATION","Android");
     server.Set("SHARE_LOC","ON");
     server.Set("REALTIME","ON");
+    server.Set("LOG","ON");
     server.start();
 
     return 0;
@@ -303,23 +307,23 @@ Java_com_jvdegithub_aiscatcher_AisCatcherJava_applySetting(JNIEnv *env, jclass, 
 
         switch (d[0]) {
             case 't':
-                callbackConsoleFormat(env, "Set RTLTCP: [%s] %s\n", s.c_str(), p.c_str());
+                Info() << "RTLTCP: " << s << " = " << p;
                 drivers.RTLTCP.Set(s, p);
                 break;
             case 'r':
-                callbackConsoleFormat(env, "Set RTLSDR: [%s] %s\n", s.c_str(), p.c_str());
+                Info() << "RTLSDR: " << s << " = " << p;
                 drivers.RTLSDR.Set(s, p);
                 break;
             case 'm':
-                callbackConsoleFormat(env, "Set AIRSPY: [%s] %s\n", s.c_str(), p.c_str());
+                Info() << "AIRSPY: " << s << " = " << p;
                 drivers.AIRSPY.Set(s, p);
                 break;
             case 'h':
-                callbackConsoleFormat(env, "Set AIRSPYHF: [%s] %s\n", s.c_str(), p.c_str());
+                Info() << "AIRSPYHF: " << s << " = " << p;
                 drivers.AIRSPYHF.Set(s, p);
                 break;
             case 's':
-                callbackConsoleFormat(env, "Set SpyServer: [%s] %s\n", s.c_str(), p.c_str());
+                Info() << "SPYSERVER: " << s << " = " << p;
                 drivers.SPYSERVER.Set(s, p);
                 break;
 
@@ -344,7 +348,7 @@ Java_com_jvdegithub_aiscatcher_AisCatcherJava_Run(JNIEnv *env, jclass) {
     tag.mode = 7;
 
     try {
-        callbackConsole(env, "Creating UDP output channels\n");
+        Info() << "Creating UDP output channels";
         UDP_connections.resize(UDPhost.size());
 
         for (int i = 0; i < UDPhost.size(); i++) {
@@ -354,7 +358,7 @@ Java_com_jvdegithub_aiscatcher_AisCatcherJava_Run(JNIEnv *env, jclass) {
         }
 
         if(sharing) {
-            callbackConsole(env, "Creating TCP output channels\n");
+            Info() << "Creating TCP output channels";
             TCP_connections.resize(1);
 
             TCP_connections[0].Set("HOST", "aiscatcher.org").Set("PORT", "4242").Set("JSON", "on").Set("FILTER", "on").Set("GPS", "off");
@@ -364,18 +368,17 @@ Java_com_jvdegithub_aiscatcher_AisCatcherJava_Run(JNIEnv *env, jclass) {
         }
 
         if(webviewer) {
-            callbackConsole(env, "Starting Web Viewer\n");
+            Info() << "Starting Web Viewer";
             webviewer->start();
         }
 
-        callbackConsole(env, "Starting device\n");
-
+        Info() << "Start Device";
         device->setTag(tag);
         device->Play();
 
         stop = false;
 
-        callbackConsole(env, "Run started\n");
+        Info() << "Run Started";
 
         int time_idx = 0;
 
@@ -387,6 +390,8 @@ Java_com_jvdegithub_aiscatcher_AisCatcherJava_Run(JNIEnv *env, jclass) {
                 callbackNMEA(env, nmea_msg);
                 nmea_msg = "";
             }
+            if(++time_idx % 30 == 0)
+            Info() << "Msg Count: " << statistics.Total;
         }
 
     }
@@ -427,7 +432,7 @@ Java_com_jvdegithub_aiscatcher_AisCatcherJava_Run(JNIEnv *env, jclass) {
 extern "C"
 JNIEXPORT jint JNICALL
 Java_com_jvdegithub_aiscatcher_AisCatcherJava_Close(JNIEnv *env, jclass) {
-    callbackConsole(env, "Device closing\n");
+    Info() << "Device closing";
 
     try {
         if (device) device->Close();
@@ -444,7 +449,7 @@ Java_com_jvdegithub_aiscatcher_AisCatcherJava_Close(JNIEnv *env, jclass) {
 extern "C"
 JNIEXPORT jint JNICALL
 Java_com_jvdegithub_aiscatcher_AisCatcherJava_forceStop(JNIEnv *env, jclass) {
-    callbackConsole(env, "Stop requested\n");
+    Info() << "Stop requested";
     stop = true;
     return 0;
 }
@@ -454,8 +459,11 @@ JNIEXPORT jint JNICALL
 Java_com_jvdegithub_aiscatcher_AisCatcherJava_createReceiver(JNIEnv *env, jclass, jint source,
                                                              jint fd,  jint CGF_wide, jint model_type, jint FPDS) {
 
-    callbackConsoleFormat(env, "Creating Receiver (source = %d, fd = %d, CGF wide = %d, model = %d, FPDS = %d)\n",
-                          (int)source, (int)fd,(int)CGF_wide,(int)model_type,(int)FPDS);
+    Info() << "Creating Receiver (source = " << static_cast<int>(source)
+              << ", fd = " << static_cast<int>(fd)
+              << ", CGF wide = " << static_cast<int>(CGF_wide)
+              << ", model = " << static_cast<int>(model_type)
+              << ", FPDS = " << static_cast<int>(FPDS) << ")" << std::endl;
 /*
     if (device != nullptr) {
         callbackConsole(env, "Error: device already assigned.");
@@ -464,22 +472,22 @@ Java_com_jvdegithub_aiscatcher_AisCatcherJava_createReceiver(JNIEnv *env, jclass
 */
 
     if (source == 0) {
-        callbackConsole(env, "Device : RTLTCP\n");
+        Info() << "Device: RTLTCP";
         device = &drivers.RTLTCP;
     } else if (source == 1) {
-        callbackConsole(env, "Device : RTLSDR\n");
+        Info() << "Device: RTLSDR";
         device = &drivers.RTLSDR;
     } else if (source == 2) {
-        callbackConsole(env, "Device : AIRSPY\n");
+        Info() << "Device: AIRSPY";
         device = &drivers.AIRSPY;
     } else if (source == 3) {
-        callbackConsole(env, "Device : AIRSPYHF\n");
+        Info() << "Device: AIRSPYHF";
         device = &drivers.AIRSPYHF;
     } else if (source == 4) {
-        callbackConsole(env, "Device : SPYSERVER\n");
+        Info() << "Device: SPYSERVER";
         device = &drivers.SPYSERVER;
     } else {
-        callbackConsole(env, "Support for this device not included.");
+        Info() << "Support for this device not included.";
         return -1;
     }
 
@@ -494,16 +502,15 @@ Java_com_jvdegithub_aiscatcher_AisCatcherJava_createReceiver(JNIEnv *env, jclass
         return -1;
     }
 
-    callbackConsole(env, "Creating Model\n");
+    Info() << "Creating Model";
     try {
 
-        callbackConsoleFormat(env, "Building model with sampling rate: %dK\n",
-                              device->getSampleRate() / 1000);
+        Info() << "Building model with sampling rate: " << device->getSampleRate() / 1000;
 
         model.reset();
 
         if(device && device->getFormat() == Format::TXT) {
-            callbackConsole(env, "Model: NMEA\n");
+            Info() << "Model: NMEA";
 
             model = std::make_unique<AIS::ModelNMEA>();
             model->buildModel('A','B',device->getSampleRate(), false, device);
@@ -511,21 +518,21 @@ Java_com_jvdegithub_aiscatcher_AisCatcherJava_createReceiver(JNIEnv *env, jclass
         else {
             if(model_type == 0) {
 
-                callbackConsole(env, "Model: default\n");
+                Info() << "Model: default";
                 model = std::make_unique<AIS::ModelDefault>();
 
                 std::string s = (CGF_wide == 0)?"OFF":"ON";
                 model->Set("AFC_WIDE",s);
-                callbackConsoleFormat(env, "AFC wide: %s\n", s.c_str());
+                Info() << "AFC Wide " << s;
             }
             else {
-                callbackConsole(env, "Model: base (FM)\n");
+                Info() << "Model: Base (FM)";
                 model = std::make_unique<AIS::ModelBase>();
             }
 
             std::string s = (FPDS == 0)?"OFF":"ON";
             model->Set("FP_DS",s);
-            callbackConsoleFormat(env, "Fixed Point Downsampler: %s\n", s.c_str());
+            Info() <<  "Fixed Point Downsampler: " << s;
 
             model->buildModel('A','B',device->getSampleRate(), false, device);
         }
@@ -542,22 +549,22 @@ Java_com_jvdegithub_aiscatcher_AisCatcherJava_createReceiver(JNIEnv *env, jclass
     model->Output() >> json2ais;
     server.connect(*model, json2ais.out, *device);
 
-    callbackConsole(env, "Creating additional Web Viewer\n");
+    Info() << "Creating additional Web Viewer";
 
     if(webviewer) webviewer.reset();
 
     if(webviewer_port != -1) {
         webviewer = std::make_unique<WebViewer>();
 
-        if(!webviewer)
+        if(!webviewer) {
+            Critical() << "Cannot create Web Viewer";
             throw std::runtime_error("Cannot create Web Viewer)");
+        }
 
         webviewer->Set("PORT", std::to_string(webviewer_port));
         webviewer->Set("STATION", "Android");
         webviewer->Set("SHARE_LOC","ON");
         webviewer->Set("REALTIME","ON");
-        //webviewer->Set("LAT","42");
-        //webviewer->Set("LON","4");
     }
 
     if(webviewer && webviewer_port != -1)
@@ -581,8 +588,7 @@ Java_com_jvdegithub_aiscatcher_AisCatcherJava_createUDP(JNIEnv *env, jclass claz
         UDPport[UDPport.size() - 1] = port;
         UDPhost[UDPhost.size() - 1] = host;
 
-        callbackConsoleFormat(env, "UDP: %s %s\n", host.c_str(), port.c_str());
-
+        Info() << "UDP: " << host << ":" << port;
     } catch (std::exception& e) {
         callbackError(env, e.what());
         device = nullptr;
@@ -600,7 +606,7 @@ Java_com_jvdegithub_aiscatcher_AisCatcherJava_createWebViewer(JNIEnv *env, jclas
         std::string port = toString(env,p); //(env)->GetStringUTFChars(p, &b);
         webviewer_port = std::stoi(port);
 
-        callbackConsoleFormat(env, "WebViewer active on Port: %s\n",  port.c_str());
+        Info() << "Web Viewer active on port " << port;
 
     } catch (std::exception& e) {
         callbackError(env, e.what());
@@ -619,7 +625,7 @@ Java_com_jvdegithub_aiscatcher_AisCatcherJava_createSharing(JNIEnv *env, jclass 
 
         sharing = communityFeed = true;
         sharingKey = key;
-        callbackConsoleFormat(env, "Community Sharing: %s\n", key.c_str());
+        Info() << "Community Sharing: " << key;
     }
     else {
         sharing = communityFeed = false;
@@ -653,7 +659,6 @@ Java_com_jvdegithub_aiscatcher_AisCatcherJava_00024Statistics_Reset(JNIEnv *env,
     server.Reset();
 
     callbackUpdate(env);
-    callbackConsole(env, "");
     callbackNMEA(env, "");
 }
 
