@@ -53,7 +53,7 @@ public class AisCatcherJava {
 
     static native int applySetting(String dev, String Setting, String Param);
 
-    static native int createUDP(String h, String p);
+    static native int createUDP(String h, String p, boolean JSON);
 
     static native int createWebViewer(String p);
 

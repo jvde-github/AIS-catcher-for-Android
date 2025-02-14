@@ -248,6 +248,8 @@ std::vector<IO::UDPStreamer > UDP_connections;
 std::vector<IO::TCPClientStreamer > TCP_connections;
 std::vector<std::string> UDPhost;
 std::vector<std::string> UDPport;
+std::vector<bool> UDPJSON;
+
 bool sharing = false;
 std::string sharingKey = "";
 
@@ -352,7 +354,7 @@ Java_com_jvdegithub_aiscatcher_AisCatcherJava_Run(JNIEnv *env, jclass) {
         UDP_connections.resize(UDPhost.size());
 
         for (int i = 0; i < UDPhost.size(); i++) {
-            UDP_connections[i].Set("host",UDPhost[i]).Set("port",UDPport[i]);
+            UDP_connections[i].Set("host",UDPhost[i]).Set("port",UDPport[i]).Set("JSON",UDPJSON[i]?"on":"off");
             UDP_connections[i].Start();
             model->Output() >> UDP_connections[i];
         }
@@ -411,6 +413,7 @@ Java_com_jvdegithub_aiscatcher_AisCatcherJava_Run(JNIEnv *env, jclass) {
 
         UDPport.clear();
         UDPhost.clear();
+        UDPJSON.clear();
 
         if(webviewer) {
             webviewer->close();
@@ -576,19 +579,22 @@ Java_com_jvdegithub_aiscatcher_AisCatcherJava_createReceiver(JNIEnv *env, jclass
 extern "C"
 JNIEXPORT jint JNICALL
 Java_com_jvdegithub_aiscatcher_AisCatcherJava_createUDP(JNIEnv *env, jclass clazz, jstring h,
-                                                        jstring p) {
+                                                        jstring p, jboolean J) {
     try {
         UDPport.resize(UDPport.size() + 1);
         UDPhost.resize(UDPhost.size() + 1);
+        UDPJSON.resize(UDPJSON.size() + 1);
 
         jboolean b;
         std::string host = toString(env,h); //(env)->GetStringUTFChars(h, &b);
         std::string port = toString(env, p); //(env)->GetStringUTFChars(p, &b);
+        bool JSON = J;
 
         UDPport[UDPport.size() - 1] = port;
         UDPhost[UDPhost.size() - 1] = host;
+        UDPJSON[UDPJSON.size()-1] = JSON;
 
-        Info() << "UDP: " << host << ":" << port;
+        Info() << "UDP: " << host << ":" << port << (J ? std::string(" (JSON)") : std::string(" (NMEA)"));
     } catch (std::exception& e) {
         callbackError(env, e.what());
         device = nullptr;

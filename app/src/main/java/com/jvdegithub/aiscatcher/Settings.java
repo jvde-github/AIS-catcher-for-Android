@@ -89,19 +89,22 @@ public class Settings extends AppCompatActivity {
         preferences.edit().putBoolean("u1SWITCH", true).commit();
         preferences.edit().putString("u1HOST", "127.0.0.1").commit();
         preferences.edit().putString("u1PORT", "10110").commit();
+        preferences.edit().putBoolean("u1JSON", false).commit();
 
         preferences.edit().putBoolean("u2SWITCH", false).commit();
         preferences.edit().putString("u2HOST", "127.0.0.1").commit();
         preferences.edit().putString("u2PORT", "10111").commit();
+        preferences.edit().putBoolean("u2JSON", false).commit();
 
         preferences.edit().putBoolean("u3SWITCH", false).commit();
         preferences.edit().putString("u3HOST", "127.0.0.1").commit();
         preferences.edit().putString("u3PORT", "10111").commit();
+        preferences.edit().putBoolean("u3JSON", false).commit();
 
         preferences.edit().putBoolean("u4SWITCH", false).commit();
         preferences.edit().putString("u4HOST", "127.0.0.1").commit();
         preferences.edit().putString("u4PORT", "10111").commit();
-
+        preferences.edit().putBoolean("u4JSON", false).commit();
 
         preferences.edit().putInt("mLINEARITY", 17).commit();
         preferences.edit().putString("mRATE", "2500K").commit();
@@ -368,7 +371,9 @@ public class Settings extends AppCompatActivity {
         if (b) {
             String host = preferences.getString(s + "HOST", "");
             String port = preferences.getString(s + "PORT", "");
-            return AisCatcherJava.createUDP(host, port) == 0;
+            boolean JSON = preferences.getBoolean(s + "JSON", false);
+
+            return AisCatcherJava.createUDP(host, port, JSON) == 0;
 
         }
         return true;

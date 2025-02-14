@@ -242,6 +242,12 @@
             android:title="Port"/>
 
         <SwitchPreferenceCompat
+            android:key="u1JSON"
+            android:defaultValue="False"
+            android:dependency="u1SWITCH"
+            android:title="JSON"/>
+
+        <SwitchPreferenceCompat
             android:key="u2SWITCH"
             android:defaultValue="False"
             android:title="UDP Server 2"/>
@@ -257,6 +263,12 @@
             android:dependency="u2SWITCH"
             android:defaultValue="4002"
             android:title="Port"/>
+
+        <SwitchPreferenceCompat
+            android:key="u2JSON"
+            android:defaultValue="False"
+            android:dependency="u2SWITCH"
+            android:title="JSON"/>
 
         <SwitchPreferenceCompat
             android:key="u3SWITCH"
@@ -277,6 +289,12 @@
             android:title="Port"/>
 
         <SwitchPreferenceCompat
+            android:key="31JSON"
+            android:defaultValue="False"
+            android:dependency="u3SWITCH"
+            android:title="JSON"/>
+
+        <SwitchPreferenceCompat
             android:key="u4SWITCH"
             android:dependency="sSHARING"
             android:defaultValue="False"
@@ -294,6 +312,11 @@
             android:defaultValue="4002"
             android:title="Port"/>
 
+        <SwitchPreferenceCompat
+            android:key="u4JSON"
+            android:defaultValue="False"
+            android:dependency="u4SWITCH"
+            android:title="JSON"/>
 
     </PreferenceCategory>
 
