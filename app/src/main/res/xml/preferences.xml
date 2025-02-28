@@ -31,6 +31,12 @@
             android:defaultValue="False"
             android:title="Auto Start"/>
 
+        <SwitchPreferenceCompat
+            android:key="sKEEPSCREENON"
+            android:summary="Keep screen on"
+            android:defaultValue="False"
+            android:title="Keep Screen On"/>
+
     </PreferenceCategory>
 
     <PreferenceCategory

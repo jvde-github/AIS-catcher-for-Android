@@ -158,6 +158,8 @@ public class MainActivity<binding> extends AppCompatActivity implements AisCatch
             public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
                 if (key.equals("sFORCEDARK"))
                     setDarkMode(false);
+                else if (key.equals("sKEEPSCREENON"))
+                    applyKeepScreenOnSetting();
             }
         };
 
@@ -216,6 +218,7 @@ public class MainActivity<binding> extends AppCompatActivity implements AisCatch
 
             super.onResume();
 
+            applyKeepScreenOnSetting();
             updateUIonSource();
             if (AisService.isRunning(getApplicationContext())) {
                 updateUIwithStart();
@@ -226,6 +229,15 @@ public class MainActivity<binding> extends AppCompatActivity implements AisCatch
             if(firstRun) {
                 firstRun = false;
                 AutoStart();
+            }
+        }
+
+        private void applyKeepScreenOnSetting() {
+            boolean keepScreenOn = Settings.getKeepScreenOn(this);
+            if (keepScreenOn) {
+                getWindow().addFlags(android.view.WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+            } else {
+                getWindow().clearFlags(android.view.WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
             }
         }
 

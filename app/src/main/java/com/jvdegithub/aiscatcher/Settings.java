@@ -60,6 +60,7 @@ public class Settings extends AppCompatActivity {
         preferences.edit().putString("sSHARINGKEY", "").commit();
         preferences.edit().putBoolean("sSHARING", false).commit();
         preferences.edit().putBoolean("sAUTOSTART", false).commit();
+        preferences.edit().putBoolean("sKEEPSCREENON", false).commit();
 
         preferences.edit().putBoolean("w1SWITCH", false).commit();
         preferences.edit().putString("w1PORT", "8100").commit();
@@ -306,6 +307,12 @@ public class Settings extends AppCompatActivity {
     {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
         return preferences.getBoolean("sAUTOSTART",false);
+    }
+
+    static public boolean getKeepScreenOn(Context context)
+    {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        return preferences.getBoolean("sKEEPSCREENON",false);
     }
 
     static public boolean getFixedPointDownsampling(Context context)
