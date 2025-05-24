@@ -24,6 +24,7 @@
 #include <sstream>
 
 const int TIME_CONSTRAINT = 120;
+bool communityFeed = false;
 
 #define LOG_TAG "AIS-catcher JNI"
 

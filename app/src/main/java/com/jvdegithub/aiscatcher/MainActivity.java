@@ -26,6 +26,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 
 import android.content.res.Configuration;
@@ -54,6 +55,7 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.preference.PreferenceManager;
+import androidx.webkit.WebViewCompat;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.jvdegithub.aiscatcher.databinding.ActivityMainBinding;
@@ -113,7 +115,7 @@ public class MainActivity<binding> extends AppCompatActivity implements AisCatch
         FrameLayout fragmentContainer = findViewById(R.id.fragment_container);
 
         int currentApiVersion = android.os.Build.VERSION.SDK_INT;
-        legacyVersion = currentApiVersion < android.os.Build.VERSION_CODES.N;
+        legacyVersion = shouldUseLegacyMode();
 
         Fragment fragment;
 
@@ -441,4 +443,30 @@ public class MainActivity<binding> extends AppCompatActivity implements AisCatch
         public void onSourceChange () {
             updateUIonSource();
         }
+
+    private boolean shouldUseLegacyMode() {
+        // Original API level check
+        int currentApiVersion = android.os.Build.VERSION.SDK_INT;
+        if (currentApiVersion < android.os.Build.VERSION_CODES.N) {
+            return true;
+        }
+
+        // Check WebView version for ES2022+ support
+        try {
+            PackageInfo webViewPackage = WebViewCompat.getCurrentWebViewPackage(this);
+            if (webViewPackage != null) {
+                String version = webViewPackage.versionName;
+                // Chrome 66 and below don't support ES2022
+                // Extract major version number and check
+                if (version != null && version.startsWith("66.")) {
+                    return true;  // Force legacy for old WebView
+                }
+            }
+        } catch (Exception e) {
+            // If we can't determine WebView version, play it safe
+            return true;
+        }
+
+        return false;
+    }
     }
