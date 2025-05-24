@@ -444,29 +444,14 @@ public class MainActivity<binding> extends AppCompatActivity implements AisCatch
             updateUIonSource();
         }
 
+
     private boolean shouldUseLegacyMode() {
-        // Original API level check
-        int currentApiVersion = android.os.Build.VERSION.SDK_INT;
-        if (currentApiVersion < android.os.Build.VERSION_CODES.N) {
-            return true;
-        }
-
-        // Check WebView version for ES2022+ support
-        try {
-            PackageInfo webViewPackage = WebViewCompat.getCurrentWebViewPackage(this);
-            if (webViewPackage != null) {
-                String version = webViewPackage.versionName;
-                // Chrome 66 and below don't support ES2022
-                // Extract major version number and check
-                if (version != null && version.startsWith("66.")) {
-                    return true;  // Force legacy for old WebView
-                }
+            // Original API level check
+            int currentApiVersion = android.os.Build.VERSION.SDK_INT;
+            if (currentApiVersion < Build.VERSION_CODES.Q) {
+                return true;
             }
-        } catch (Exception e) {
-            // If we can't determine WebView version, play it safe
-            return true;
-        }
 
-        return false;
-    }
+            return false;
+        }
     }
