@@ -228,7 +228,7 @@
 
     <PreferenceCategory
         android:key="output_category"
-        android:title="Output">
+        android:title="Output UDP">
 
         <SwitchPreferenceCompat
             android:key="u1SWITCH"
@@ -323,6 +323,23 @@
             android:defaultValue="False"
             android:dependency="u4SWITCH"
             android:title="JSON"/>
+
+    </PreferenceCategory>
+
+<PreferenceCategory>
+    android:key="output_tcp_server_category"
+    android:title="Output TCP NMEA Server">
+
+    <SwitchPreferenceCompat
+        android:key="s1SWITCH"
+        android:defaultValue="False"
+        android:title="TCP NMEA Server"/>
+
+    <EditTextPreference
+        android:key="s1PORT"
+        android:dependency="s1SWITCH"
+        android:defaultValue="5012"
+        android:title="Port"/>
 
     </PreferenceCategory>
 

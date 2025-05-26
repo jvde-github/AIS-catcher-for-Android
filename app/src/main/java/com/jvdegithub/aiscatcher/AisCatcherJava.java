@@ -55,6 +55,7 @@ public class AisCatcherJava {
 
     static native int createUDP(String h, String p, boolean JSON);
 
+    static native int createTCPlistener(String p);
     static native int createWebViewer(String p);
 
     static native int createSharing(boolean b, String key);

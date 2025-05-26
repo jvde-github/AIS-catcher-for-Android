@@ -68,6 +68,7 @@ struct Statistics {
 
 WebViewer server;
 static std::unique_ptr<WebViewer> webviewer = nullptr;
+static std::unique_ptr<IO::TCPlistenerStreamer> TCP_listener = nullptr;
 int webviewer_port = -1;
 
 std::string nmea_msg;
@@ -250,6 +251,7 @@ std::vector<IO::TCPClientStreamer > TCP_connections;
 std::vector<std::string> UDPhost;
 std::vector<std::string> UDPport;
 std::vector<bool> UDPJSON;
+std::string TCP_listener_port;
 
 bool sharing = false;
 std::string sharingKey = "";
@@ -360,14 +362,24 @@ Java_com_jvdegithub_aiscatcher_AisCatcherJava_Run(JNIEnv *env, jclass) {
             model->Output() >> UDP_connections[i];
         }
 
-        if(sharing) {
-            Info() << "Creating TCP output channels";
-            TCP_connections.resize(1);
+        if(!TCP_listener_port.empty()) {
+            TCP_listener = std::make_unique<IO::TCPlistenerStreamer>();
+            Info() << "Creating TCP listener at port " << TCP_listener_port;
+            TCP_listener->Set("PORT", TCP_listener_port);
+            TCP_listener->Set("TIMEOUT","0");
+            TCP_listener->Set("JSON","false");
+            model->Output() >> (*TCP_listener);
+        }
 
-            TCP_connections[0].Set("HOST", "aiscatcher.org").Set("PORT", "4242").Set("JSON", "on").Set("FILTER", "on").Set("GPS", "off");
-            TCP_connections[0].Set("UUID", sharingKey);
-            TCP_connections[0].Start();
-            model->Output() >> TCP_connections[0];
+        if(sharing) {
+            Info() << "Creating Sharing output channel";
+            int sharing_index = TCP_connections.size();
+            TCP_connections.resize(sharing_index + 1);
+
+            TCP_connections[sharing_index].Set("HOST", "aiscatcher.org").Set("PORT", "4242").Set("JSON", "on").Set("FILTER", "on").Set("GPS", "off");
+            TCP_connections[sharing_index].Set("UUID", sharingKey);
+            TCP_connections[sharing_index].Start();
+            model->Output() >> TCP_connections[sharing_index];
         }
 
         if(webviewer) {
@@ -375,6 +387,10 @@ Java_com_jvdegithub_aiscatcher_AisCatcherJava_Run(JNIEnv *env, jclass) {
             webviewer->start();
         }
 
+        if(TCP_listener) {
+            Info() << "Starting TCP listener";
+            TCP_listener->Start();
+        }
         Info() << "Start Device";
         device->setTag(tag);
         device->Play();
@@ -409,12 +425,16 @@ Java_com_jvdegithub_aiscatcher_AisCatcherJava_Run(JNIEnv *env, jclass) {
 
         for (auto &u: UDP_connections) u.Stop();
         for (auto &t: TCP_connections) t.Stop();
+
+        if(TCP_listener) TCP_listener->Stop();
+
         UDP_connections.clear();
         TCP_connections.clear();
 
         UDPport.clear();
         UDPhost.clear();
         UDPJSON.clear();
+        TCP_listener = nullptr;
 
         if(webviewer) {
             webviewer->close();
@@ -708,3 +728,13 @@ Java_com_jvdegithub_aiscatcher_AisCatcherJava_getRateDescription(JNIEnv *env, jc
     return env->NewStringUTF(device->getRateDescription().c_str());
 }
 
+
+extern "C"
+JNIEXPORT jint JNICALL
+Java_com_jvdegithub_aiscatcher_AisCatcherJava_createTCPlistener(JNIEnv *env, jclass clazz,
+                                                                jstring p) {
+    std::string port = toString(env, p);
+    TCP_listener_port = port;
+    Info() << "TCP Listener: "  << port ;
+    return 0;
+}

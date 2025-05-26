@@ -107,6 +107,9 @@ public class Settings extends AppCompatActivity {
         preferences.edit().putString("u4PORT", "10111").commit();
         preferences.edit().putBoolean("u4JSON", false).commit();
 
+        preferences.edit().putBoolean("s1SWITCH", false).commit();
+        preferences.edit().putString("s1PORT", "5012").commit();
+
         preferences.edit().putInt("mLINEARITY", 17).commit();
         preferences.edit().putString("mRATE", "2500K").commit();
         preferences.edit().putBoolean("mBIASTEE", false).commit();
@@ -144,6 +147,7 @@ public class Settings extends AppCompatActivity {
             ((EditTextPreference) getPreferenceManager().findPreference("u2PORT")).setOnBindEditTextListener(validatePort);
             ((EditTextPreference) getPreferenceManager().findPreference("u3PORT")).setOnBindEditTextListener(validatePort);
             ((EditTextPreference) getPreferenceManager().findPreference("u4PORT")).setOnBindEditTextListener(validatePort);
+            ((EditTextPreference) getPreferenceManager().findPreference("s1PORT")).setOnBindEditTextListener(validatePort);
             ((SeekBarPreference) getPreferenceManager().findPreference("mLINEARITY")).setUpdatesContinuously(true);
 
             setSummaries();
@@ -156,7 +160,7 @@ public class Settings extends AppCompatActivity {
         }
 
         private void setSummaries() {
-            setSummaryText(new String[]{"w1PORT","tPORT","tHOST","sPORT","sHOST","u1HOST","u1PORT","u2HOST","u2PORT", "u3HOST","u3PORT", "u4HOST","u4PORT", "rFREQOFFSET", "sSHARINGKEY"});
+            setSummaryText(new String[]{"w1PORT","tPORT","tHOST","sPORT","sHOST","u1HOST","u1PORT","u2HOST","u2PORT", "u3HOST","u3PORT", "u4HOST","u4PORT", "s1PORT", "rFREQOFFSET", "sSHARINGKEY"});
             setSummaryList(new String[]{"rTUNER","rRATE","sRATE","tRATE","tPROTOCOL","tTUNER","mRATE","hRATE","oMODEL_TYPE","oCGF_WIDE"});
             setSummarySeekbar(new String[]{"mLINEARITY", "sGAIN"});
         }
@@ -278,6 +282,8 @@ public class Settings extends AppCompatActivity {
         if (!SetUDPoutput("u3", context)) return false;
         if (!SetUDPoutput("u4", context)) return false;
 
+        if (!SetTCPListener(context)) return false;
+
         if (!SetWebViewerOutput( context)) return false;
 
         if(!SetSharing(context))  return false;
@@ -381,6 +387,19 @@ public class Settings extends AppCompatActivity {
             boolean JSON = preferences.getBoolean(s + "JSON", false);
 
             return AisCatcherJava.createUDP(host, port, JSON) == 0;
+
+        }
+        return true;
+    }
+
+    static private boolean SetTCPListener(Context context) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+
+        boolean b = preferences.getBoolean("s1SWITCH", true);
+        if (b) {
+            String port = preferences.getString("s1PORT", "");
+
+            return AisCatcherJava.createTCPlistener( port) == 0;
 
         }
         return true;
