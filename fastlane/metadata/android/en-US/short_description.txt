@@ -1,0 +1,1 @@
+Turns your android phone with a chep DVB-T dongle into a portable AIS receiver
