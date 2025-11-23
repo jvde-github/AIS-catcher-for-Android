@@ -59,8 +59,8 @@ add_library( # Sets the name of the library.
         ./AIS-catcher/Source/JSON/StringBuilder.cpp ./AIS-catcher/Source/JSON/Parser.cpp ./AIS-catcher/Source/Device/AIRSPY.cpp ./AIS-catcher/Source/Device/Serial.cpp
         ./AIS-catcher/Source/Aviation/ADSB.cpp
         ./AIS-catcher/Source/DSP/DSP.cpp ./AIS-catcher/Source/Application/WebViewer.cpp ./AIS-catcher/Source/Application/Prometheus.cpp ./AIS-catcher/Source/IO/Protocol.cpp
-        ./AIS-catcher/Source/Library/Logger.cpp ./AIS-catcher/Source/Application/DeviceManager.cpp ./AIS-catcher/Source/utilities/StreamHelpers.cpp
-        ./AIS-catcher/Source/Aviation/Basestation.cpp ./AIS-catcher/Source/Aviation/Beast.cpp  ./AIS-catcher/Source/utilities/TemplateString.cpp ./AIS-catcher/Source/Application/MapTiles.cpp
+        ./AIS-catcher/Source/Library/Logger.cpp ./AIS-catcher/Source/Application/DeviceManager.cpp ./AIS-catcher/Source/Utilities/StreamHelpers.cpp
+        ./AIS-catcher/Source/Aviation/Basestation.cpp ./AIS-catcher/Source/Aviation/Beast.cpp  ./AIS-catcher/Source/Utilities/TemplateString.cpp ./AIS-catcher/Source/Application/MapTiles.cpp
 
         JNI/AIScatcherNDK.cpp)
 
