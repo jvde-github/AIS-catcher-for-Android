@@ -33,7 +33,6 @@ bool communityFeed = false;
   G_ERROR, LOG_TAG, __VA_ARGS__)
 
 #include "AIS-catcher.h"
-#include "Application/version.h"
 #include "Receiver.h"
 #include "JSONAIS.h"
 #include "Signals.h"
@@ -43,12 +42,12 @@ bool communityFeed = false;
 #include "WebViewer.h"
 #include "Logger.h"
 
-#include "Device/RTLSDR.h"
-#include "Device/AIRSPYHF.h"
-#include "Device/HACKRF.h"
-#include "Device/RTLTCP.h"
-#include "Device/SpyServer.h"
-#include "Device/AIRSPY.h"
+#include "RTLSDR.h"
+#include "AIRSPYHF.h"
+#include "HACKRF.h"
+#include "RTLTCP.h"
+#include "SpyServer.h"
+#include "AIRSPY.h"
 
 static int javaVersion;
 
