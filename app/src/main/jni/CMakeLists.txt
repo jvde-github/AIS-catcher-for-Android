@@ -8,10 +8,30 @@ cmake_minimum_required(VERSION 3.10.2)
 project("AIScatcherNDK")
 
 #set(OPTIMIZATION_FLAGS "-Ofast")
-set(OPTIMIZATION_FLAGS "-g")
+set(OPTIMIZATION_FLAGS "-O3")
 
 set(CMAKE_CXX_FLAGS "${OPTIMIZATION_FLAGS}")
 set(CMAKE_C_FLAGS "${OPTIMIZATION_FLAGS}")
+
+add_link_options("-Wl,--build-id=none" "-Wl,--strip-debug" "-Wl,--hash-style=gnu")
+# -O3 -ffast-math last so they win over AGP's RelWithDebInfo -O2.
+add_compile_options(-O3 -ffast-math -Wno-builtin-macro-redefined)
+
+# build_date set to the HEAD commit date (stable across builders), or NA.
+set(BUILD_DATE "NA")
+find_package(Git QUIET)
+if(GIT_FOUND)
+    execute_process(
+        COMMAND ${GIT_EXECUTABLE} log -1 --format=%cd "--date=format:%b %e %Y"
+        WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+        OUTPUT_VARIABLE GIT_BUILD_DATE
+        OUTPUT_STRIP_TRAILING_WHITESPACE
+        ERROR_QUIET)
+    if(GIT_BUILD_DATE)
+        set(BUILD_DATE "${GIT_BUILD_DATE}")
+    endif()
+endif()
+add_compile_definitions(__DATE__="${BUILD_DATE}")
 
 # Creates and names a library, sets it as either STATIC
 # or SHARED, and provides the relative paths to its source code.
