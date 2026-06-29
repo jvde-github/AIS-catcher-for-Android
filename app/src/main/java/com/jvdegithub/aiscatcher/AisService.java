@@ -41,7 +41,7 @@ public class AisService extends Service {
     }
 
     private void sendBroadcast (){
-        Intent intent = new Intent ("message"); //put the same message as in the filter you used in the activity when registering the receiver
+        Intent intent = new Intent ("message");
         LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
     }
 

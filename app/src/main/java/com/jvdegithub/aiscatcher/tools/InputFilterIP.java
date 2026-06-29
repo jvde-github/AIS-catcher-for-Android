@@ -21,7 +21,6 @@ package com.jvdegithub.aiscatcher.tools;
 import android.text.InputFilter;
 import android.text.Spanned;
 
-// See: https://stackoverflow.com/questions/31529651/edittext-android-filter-for-ip-address
 public class InputFilterIP implements InputFilter {
 
     @Override

@@ -371,4 +371,62 @@
 
     </PreferenceCategory>
 
+    <PreferenceCategory
+        android:key="cHTTP"
+        android:title="HTTP Output">
+
+        <SwitchPreferenceCompat
+            android:key="httpSWITCH"
+            android:defaultValue="false"
+            android:summary="Send AIS data to an HTTP endpoint"
+            android:title="Enable HTTP Output"/>
+
+        <EditTextPreference
+            android:key="httpURL"
+            android:defaultValue="https://example.com"
+            android:dependency="httpSWITCH"
+            android:title="URL"/>
+
+        <EditTextPreference
+            android:key="httpUSER"
+            android:defaultValue=""
+            android:dependency="httpSWITCH"
+            android:title="Username"/>
+
+        <EditTextPreference
+            android:key="httpPASS"
+            android:defaultValue=""
+            android:dependency="httpSWITCH"
+            android:title="Password"/>
+
+        <EditTextPreference
+            android:key="httpID"
+            android:defaultValue=""
+            android:dependency="httpSWITCH"
+            android:title="Station ID"/>
+
+        <EditTextPreference
+            android:key="httpINTERVAL"
+            android:defaultValue="60"
+            android:dependency="httpSWITCH"
+            android:title="Interval (seconds)"/>
+
+        <ListPreference
+            android:defaultValue="AISCATCHER"
+            android:dialogTitle="Protocol"
+            android:entries="@array/http_protocol_array"
+            android:entryValues="@array/http_protocol_array"
+            android:key="httpPROTOCOL"
+            android:dependency="httpSWITCH"
+            android:title="Protocol" />
+
+        <SwitchPreferenceCompat
+            android:key="httpGZIP"
+            android:defaultValue="false"
+            android:dependency="httpSWITCH"
+            android:summary="Compress posts with GZIP"
+            android:title="GZIP"/>
+
+    </PreferenceCategory>
+
 </PreferenceScreen>

@@ -97,7 +97,6 @@ public class MainActivity<binding> extends AppCompatActivity implements AisCatch
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        /* ask for permission to post notifications if needed ..... */
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             if (ContextCompat.checkSelfPermission(this, POST_NOTIFICATIONS) == PackageManager.PERMISSION_DENIED) {
                 ActivityCompat.requestPermissions(this, new String[]{POST_NOTIFICATIONS}, 101);
@@ -169,7 +168,6 @@ public class MainActivity<binding> extends AppCompatActivity implements AisCatch
             sharedPreferences.registerOnSharedPreferenceChangeListener(preferenceChangeListener);
         }
 
-        // ugly to have the callback in mainactivity, to be cleaned up
         @Override
         public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
             super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -362,7 +360,7 @@ public class MainActivity<binding> extends AppCompatActivity implements AisCatch
             builder.setPositiveButton("OK", null);
             AlertDialog alertDialog = builder.create();
             alertDialog.show();
-            alertDialog.getWindow().setLayout(width, height); //Controlling width and height.
+            alertDialog.getWindow().setLayout(width, height);
         }
         private void onClear () {
             AisCatcherJava.Reset();
@@ -415,12 +413,10 @@ public class MainActivity<binding> extends AppCompatActivity implements AisCatch
 
         @Override
         public void onNMEA ( final String line){
-            //nmea_fragment.Update(line);
         }
 
         @Override
         public void onMessage ( final String line){
-            //map_fragment.Update(line);
         }
 
         @Override
@@ -445,13 +441,34 @@ public class MainActivity<binding> extends AppCompatActivity implements AisCatch
         }
 
 
+    private static final int MIN_WEBVIEW_MAJOR = 93;
+
     private boolean shouldUseLegacyMode() {
-            // Original API level check
             int currentApiVersion = android.os.Build.VERSION.SDK_INT;
             if (currentApiVersion < Build.VERSION_CODES.Q) {
                 return true;
             }
 
+            if (isWebViewTooOld()) {
+                return true;
+            }
+
             return false;
         }
+
+    private boolean isWebViewTooOld() {
+        try {
+            PackageInfo info = WebViewCompat.getCurrentWebViewPackage(this);
+            if (info == null || info.versionName == null) {
+                return true;
+            }
+
+            int major = Integer.parseInt(info.versionName.split("\\.")[0]);
+            Log.i("AIS-catcher", "WebView " + info.packageName + " " + info.versionName);
+            return major < MIN_WEBVIEW_MAJOR;
+        } catch (Exception e) {
+            Log.w("AIS-catcher", "Could not determine WebView version", e);
+            return false;
+        }
+    }
     }

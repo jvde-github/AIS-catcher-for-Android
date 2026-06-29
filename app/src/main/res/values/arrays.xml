@@ -36,4 +36,13 @@
         <item>RTLTCP</item><item>TXT</item>
     </string-array>
 
+    <string-array name="http_protocol_array">
+        <item>AISCATCHER</item>
+        <item>MINIMAL</item>
+        <item>AIRFRAMES</item>
+        <item>APRS</item>
+        <item>LIST</item>
+        <item>NMEA</item>
+    </string-array>
+
 </resources>

@@ -79,7 +79,6 @@ public class LocationHelper implements LocationListener {
 
                 requestLocationUpdates();
             } else {
-                // no permission
             }
         }
     }

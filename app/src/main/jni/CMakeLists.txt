@@ -1,23 +1,16 @@
 
-# Sets the minimum version of CMake required to build the native library.
-
 cmake_minimum_required(VERSION 3.10.2)
-
-# Declares and names the project.
 
 project("AIScatcherNDK")
 
-#set(OPTIMIZATION_FLAGS "-Ofast")
 set(OPTIMIZATION_FLAGS "-O3")
 
 set(CMAKE_CXX_FLAGS "${OPTIMIZATION_FLAGS}")
 set(CMAKE_C_FLAGS "${OPTIMIZATION_FLAGS}")
 
 add_link_options("-Wl,--build-id=none" "-Wl,--strip-debug" "-Wl,--hash-style=gnu")
-# -O3 -ffast-math last so they win over AGP's RelWithDebInfo -O2.
 add_compile_options(-O3 -ffast-math -Wno-builtin-macro-redefined)
 
-# build_date set to the HEAD commit date (stable across builders), or NA.
 set(BUILD_DATE "NA")
 find_package(Git QUIET)
 if(GIT_FOUND)
@@ -33,18 +26,11 @@ if(GIT_FOUND)
 endif()
 add_compile_definitions(__DATE__="${BUILD_DATE}")
 
-# Creates and names a library, sets it as either STATIC
-# or SHARED, and provides the relative paths to its source code.
-# You can define multiple libraries, and CMake builds them for you.
-# Gradle automatically packages shared libraries with your APK.
-
-add_library( # Sets the name of the library.
+add_library(
         AIScatcherNDK
 
-        # Sets the library as a shared library.
         SHARED
 
-        # Provides a relative path to your source file(s).
         ./libusb/libusb/core.c
         ./libusb/libusb/descriptor.c
         ./libusb/libusb/hotplug.c
@@ -73,10 +59,11 @@ add_library( # Sets the name of the library.
         ./AIS-catcher/Source/Device/FileRAW.cpp ./AIS-catcher/Source/Device/HACKRF.cpp ./AIS-catcher/Source/Device/UDP.cpp ./AIS-catcher/Source/Device/RTLTCP.cpp
         ./AIS-catcher/Source/Device/ZMQ.cpp ./AIS-catcher/Source/Device/SoapySDR.cpp ./AIS-catcher/Source/Device/SpyServer.cpp ./AIS-catcher/Source/Marine/Message.cpp
         ./AIS-catcher/Source/Marine/NMEA.cpp
-        ./AIS-catcher/Source/Utilities/Convert.cpp ./AIS-catcher/Source/Utilities/Serialize.cpp  ./AIS-catcher/Source/Utilities/Parse.cpp ./AIS-catcher/Source/Utilities/Helper.cpp
-        ./AIS-catcher/Source/Library/TCP.cpp ./AIS-catcher/Source/JSON/JSON.cpp ./AIS-catcher/Source/IO/Network.cpp
-        ./AIS-catcher/Source/IO/HTTPServer.cpp
-        ./AIS-catcher/Source/JSON/StringBuilder.cpp ./AIS-catcher/Source/JSON/Parser.cpp ./AIS-catcher/Source/Device/AIRSPY.cpp ./AIS-catcher/Source/Device/Serial.cpp
+        ./AIS-catcher/Source/Utilities/Convert.cpp ./AIS-catcher/Source/Utilities/Parse.cpp ./AIS-catcher/Source/Utilities/Helper.cpp
+        ./AIS-catcher/Source/JSON/JSON.cpp ./AIS-catcher/Source/IO/Network.cpp
+        ./AIS-catcher/Source/IO/HTTPServer.cpp ./AIS-catcher/Source/IO/TCPServer.cpp
+        ./AIS-catcher/Source/JSON/Parser.cpp ./AIS-catcher/Source/Device/AIRSPY.cpp ./AIS-catcher/Source/Device/Serial.cpp
+        ./AIS-catcher/Source/Device/HYDRASDR.cpp
         ./AIS-catcher/Source/Aviation/ADSB.cpp
         ./AIS-catcher/Source/DSP/DSP.cpp ./AIS-catcher/Source/Application/WebViewer.cpp ./AIS-catcher/Source/Application/Prometheus.cpp ./AIS-catcher/Source/IO/Protocol.cpp
         ./AIS-catcher/Source/Library/Logger.cpp ./AIS-catcher/Source/Application/DeviceManager.cpp ./AIS-catcher/Source/Utilities/StreamHelpers.cpp
@@ -94,26 +81,22 @@ include_directories(
 
 add_definitions(-DHASRTLSDR -DHASRTLSDR_BIASTEE -DHASRTL_ANDROID -DHASAIRSPY -DHASAIRSPY_ANDROID -D HASAIRSPYHF -DHASAIRSPYHF_ANDROID -DHASRTLSDR_TUNERBW)
 
-# Searches for a specified prebuilt library and stores the path as a
-# variable. Because CMake includes system libraries in the search path by
-# default, you only need to specify the name of the public NDK library
-# you want to add. CMake verifies that the library exists before
-# completing its build.
+find_package(openssl REQUIRED CONFIG)
+add_definitions(-DHASOPENSSL)
 
-find_library( # Sets the name of the path variable.
+add_definitions(-DHASZLIB)
+
+find_library(
         log-lib
 
-        # Specifies the name of the NDK library that
-        # you want CMake to locate.
         log)
 
-# Specifies libraries CMake should link to your target library. You
-# can link multiple libraries, such as libraries you define in this
-# build script, prebuilt third-party libraries, or system libraries.
-
-target_link_libraries( # Specifies the target library.
+target_link_libraries(
         AIScatcherNDK
 
-        # Links the target library to the log library
-        # included in the NDK.
-        ${log-lib})
+        ${log-lib}
+
+        openssl::ssl
+        openssl::crypto
+
+        z)

@@ -17,8 +17,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.ConsoleMessage;
 import android.webkit.WebChromeClient;
-import android.webkit.WebResourceRequest;
-import android.webkit.WebResourceResponse;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -26,9 +24,6 @@ import android.webkit.WebViewClient;
 import com.jvdegithub.aiscatcher.MainActivity;
 import com.jvdegithub.aiscatcher.R;
 import com.jvdegithub.aiscatcher.tools.LogBook;
-
-import java.io.IOException;
-import java.io.InputStream;
 
 public class WebViewMapFragment extends Fragment {
 
@@ -78,48 +73,9 @@ public class WebViewMapFragment extends Fragment {
 
         webView.setWebViewClient(new WebViewClient() {
             @Override
-            public WebResourceResponse shouldInterceptRequest(WebView view, WebResourceRequest request) {
-                String url = request.getUrl().toString();
-
-                if (url.startsWith("https://cdn.jsdelivr.net/") || url.startsWith("https://unpkg.com/")) {
-                    String prefix = url.startsWith("https://cdn.jsdelivr.net/") ? "https://cdn.jsdelivr.net/" : "https://unpkg.com/";
-
-                    String remainingPath = "webassets/cdn/" + url.substring(prefix.length());
-
-                    try {
-                        if (context == null) {
-                            return null;
-                        }
-
-                        InputStream inputStream = context.getAssets().open(remainingPath);
-
-                        String contentType;
-                        if (remainingPath.endsWith(".css")) {
-                            contentType = "text/css";
-                        } else if (remainingPath.endsWith(".svg")) {
-                            contentType = "image/svg+xml";
-                        } else if (remainingPath.endsWith(".png")) {
-                            contentType = "image/png";
-                        } else if (remainingPath.endsWith(".js")) {
-                            contentType = "text/plain";
-                        } else return null;
-
-                        WebResourceResponse response = new WebResourceResponse(contentType, "UTF-8", inputStream);
-
-                        return response;
-                    } catch (IOException e) {
-                        logbook.addLog("Cannot load " + remainingPath);
-                    }
-                }
-
-                return null;
-            }
-
-            @Override
             public void onPageStarted(WebView view, String url, Bitmap favicon) {
                 webView.setVisibility(View.INVISIBLE);
 
-                // Restore localStorage content as early as possible
                 if(getSharedPreferences()!= null) {
                     String localStorageContent = getSharedPreferences().getString("localStorageContent", null);
                     if (localStorageContent != null) {

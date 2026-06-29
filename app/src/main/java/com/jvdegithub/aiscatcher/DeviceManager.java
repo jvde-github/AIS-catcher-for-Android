@@ -261,7 +261,6 @@ public class DeviceManager {
         boolean changed = true;
 
         if (!add && (deviceType != DeviceType.RTLTCP && deviceType != DeviceType.SPYSERVER))
-        //if (!(add && deviceType == DeviceType.RTLTCP && deviceType == DeviceType.SPYSERVER))
             for (int i = 0; i < devices.size(); i++)
                 if (devices.get(i).getType() == deviceType && devices.get(i).getUID() == deviceUID) {
                     select = i;
@@ -302,20 +301,6 @@ public class DeviceManager {
 
         return devs;
     }
-    /*
-    public static void registerUSBBroadCast() {
-        IntentFilter filter = new IntentFilter();
-        filter.addAction(UsbManager.ACTION_USB_DEVICE_DETACHED);
-        filter.addAction(UsbManager.ACTION_USB_DEVICE_ATTACHED);
-        filter.addAction(ACTION_USB_PERMISSION);
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            context.registerReceiver(mUsbReceiver, filter, Context.RECEIVER_NOT_EXPORTED);
-        } else {
-            context.registerReceiver(mUsbReceiver, filter);
-        }
-    }
-    */
     public static void registerUSBBroadCast() {
         IntentFilter filter = new IntentFilter();
         filter.addAction(UsbManager.ACTION_USB_DEVICE_DETACHED);

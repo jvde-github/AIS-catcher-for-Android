@@ -129,7 +129,6 @@ public class Settings extends AppCompatActivity {
             SharedPreferences.OnSharedPreferenceChangeListener {
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
-            // Load the preferences from an XML resource
             setPreferencesFromResource(R.xml.preferences, rootKey);
 
             ((EditTextPreference) getPreferenceManager().findPreference("sHOST")).setOnBindEditTextListener(validateIP);
@@ -150,6 +149,11 @@ public class Settings extends AppCompatActivity {
             ((EditTextPreference) getPreferenceManager().findPreference("s1PORT")).setOnBindEditTextListener(validatePort);
             ((SeekBarPreference) getPreferenceManager().findPreference("mLINEARITY")).setUpdatesContinuously(true);
 
+            ((EditTextPreference) getPreferenceManager().findPreference("httpPASS")).setOnBindEditTextListener(editText ->
+                    editText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD));
+            ((EditTextPreference) getPreferenceManager().findPreference("httpINTERVAL")).setOnBindEditTextListener(editText ->
+                    editText.setInputType(InputType.TYPE_CLASS_NUMBER));
+
             setSummaries();
         }
 
@@ -160,8 +164,8 @@ public class Settings extends AppCompatActivity {
         }
 
         private void setSummaries() {
-            setSummaryText(new String[]{"w1PORT","tPORT","tHOST","sPORT","sHOST","u1HOST","u1PORT","u2HOST","u2PORT", "u3HOST","u3PORT", "u4HOST","u4PORT", "s1PORT", "rFREQOFFSET", "sSHARINGKEY"});
-            setSummaryList(new String[]{"rTUNER","rRATE","sRATE","tRATE","tPROTOCOL","tTUNER","mRATE","hRATE","oMODEL_TYPE","oCGF_WIDE"});
+            setSummaryText(new String[]{"w1PORT","tPORT","tHOST","sPORT","sHOST","u1HOST","u1PORT","u2HOST","u2PORT", "u3HOST","u3PORT", "u4HOST","u4PORT", "s1PORT", "rFREQOFFSET", "sSHARINGKEY", "httpURL","httpUSER","httpID","httpINTERVAL"});
+            setSummaryList(new String[]{"rTUNER","rRATE","sRATE","tRATE","tPROTOCOL","tTUNER","mRATE","hRATE","oMODEL_TYPE","oCGF_WIDE","httpPROTOCOL"});
             setSummarySeekbar(new String[]{"mLINEARITY", "sGAIN"});
         }
 
@@ -234,7 +238,7 @@ public class Settings extends AppCompatActivity {
 
             Preference tPROTOCOL = findPreference("tPROTOCOL");
             if (tPROTOCOL != null) {
-                tPROTOCOL.setOnPreferenceChangeListener(null); // Remove the listener
+                tPROTOCOL.setOnPreferenceChangeListener(null);
             }
         }
 
@@ -288,6 +292,30 @@ public class Settings extends AppCompatActivity {
 
         if(!SetSharing(context))  return false;
 
+        if(!SetHTTPoutput(context)) return false;
+
+        return true;
+    }
+
+    static private boolean SetHTTPoutput(Context context) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+
+        boolean b = preferences.getBoolean("httpSWITCH", false);
+        if (b) {
+            String url = preferences.getString("httpURL", "");
+            String user = preferences.getString("httpUSER", "");
+            String pass = preferences.getString("httpPASS", "");
+            String id = preferences.getString("httpID", "");
+            String interval = preferences.getString("httpINTERVAL", "60");
+            String protocol = preferences.getString("httpPROTOCOL", "AISCATCHER");
+            boolean gzip = preferences.getBoolean("httpGZIP", false);
+
+            String userpwd = (user.isEmpty() && pass.isEmpty()) ? "" : user + ":" + pass;
+
+            return AisCatcherJava.createHTTP(true, url, userpwd, id, interval, protocol, gzip) == 0;
+        }
+        else
+            AisCatcherJava.createHTTP(false, "", "", "", "", "", false);
         return true;
     }
 
