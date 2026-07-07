@@ -36,6 +36,20 @@
         <item>RTLTCP</item><item>TXT</item>
     </string-array>
 
+    <string-array name="own_mode_entries">
+        <item>Send all</item>
+        <item>Max 1 per 10 sec</item>
+        <item>Max 1 per 30 sec</item>
+        <item>Max 1 per minute</item>
+        <item>Max 1 per 5 minutes</item>
+        <item>Max 1 per 10 minutes</item>
+        <item>Block</item>
+    </string-array>
+
+    <string-array name="own_mode_values">
+        <item>ALL</item><item>10</item><item>30</item><item>60</item><item>300</item><item>600</item><item>BLOCK</item>
+    </string-array>
+
     <string-array name="http_protocol_array">
         <item>AISCATCHER</item>
         <item>MINIMAL</item>

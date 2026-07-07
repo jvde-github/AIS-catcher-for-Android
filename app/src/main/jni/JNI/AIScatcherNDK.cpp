@@ -238,6 +238,10 @@ std::string TCP_listener_port;
 bool sharing = false;
 std::string sharingKey = "";
 
+int own_mmsi = 0;
+int own_mode = 0;
+int own_interval = 0;
+
 bool http_enabled = false;
 bool http_gzip = false;
 std::string http_url, http_userpwd, http_id, http_interval, http_protocol;
@@ -345,6 +349,16 @@ Java_com_jvdegithub_aiscatcher_AisCatcherJava_Run(JNIEnv *env, jclass) {
     TAG tag;
     tag.mode = 7;
 
+    auto setOwnShipKeys = [](Setting &s) {
+        if (own_mmsi <= 0) return;
+        if (own_mode == 1)
+            s.SetKey(AIS::KEY_SETTING_OWN_INTERVAL, std::to_string(own_interval));
+        else if (own_mode == 2) {
+            s.SetKey(AIS::KEY_SETTING_FILTER, "on");
+            s.SetKey(AIS::KEY_SETTING_BLOCK_MMSI, std::to_string(own_mmsi));
+        }
+    };
+
     try {
         Info() << "Creating UDP output channels";
 
@@ -352,6 +366,7 @@ Java_com_jvdegithub_aiscatcher_AisCatcherJava_Run(JNIEnv *env, jclass) {
             UDP_connections.emplace_back();
             auto &conn = UDP_connections.back();
             conn.SetKey(AIS::KEY_SETTING_HOST,UDPhost[i]).SetKey(AIS::KEY_SETTING_PORT,UDPport[i]).SetKey(AIS::KEY_SETTING_JSON,UDPJSON[i]?"on":"off");
+            setOwnShipKeys(conn);
             conn.Start();
             model->Output() >> conn;
         }
@@ -362,6 +377,7 @@ Java_com_jvdegithub_aiscatcher_AisCatcherJava_Run(JNIEnv *env, jclass) {
             TCP_listener->SetKey(AIS::KEY_SETTING_PORT, TCP_listener_port);
             TCP_listener->SetKey(AIS::KEY_SETTING_TIMEOUT,"0");
             TCP_listener->SetKey(AIS::KEY_SETTING_JSON,"false");
+            setOwnShipKeys(*TCP_listener);
             model->Output() >> (*TCP_listener);
         }
 
@@ -372,6 +388,7 @@ Java_com_jvdegithub_aiscatcher_AisCatcherJava_Run(JNIEnv *env, jclass) {
 
             conn.SetKey(AIS::KEY_SETTING_HOST, "aiscatcher.org").SetKey(AIS::KEY_SETTING_PORT, "4242").SetKey(AIS::KEY_SETTING_JSON, "on").SetKey(AIS::KEY_SETTING_FILTER, "on").SetKey(AIS::KEY_SETTING_GPS, "off");
             conn.SetKey(AIS::KEY_SETTING_UUID, sharingKey);
+            setOwnShipKeys(conn);
             conn.Start();
             model->Output() >> conn;
         }
@@ -385,6 +402,7 @@ Java_com_jvdegithub_aiscatcher_AisCatcherJava_Run(JNIEnv *env, jclass) {
             if(!http_interval.empty())HTTP_output->SetKey(AIS::KEY_SETTING_INTERVAL, http_interval);
             HTTP_output->SetKey(AIS::KEY_SETTING_PROTOCOL, http_protocol);
             HTTP_output->SetKey(AIS::KEY_SETTING_GZIP, http_gzip ? "on" : "off");
+            setOwnShipKeys(*HTTP_output);
             json2ais.out >> (*HTTP_output);
             HTTP_output->Start();
         }
@@ -537,6 +555,10 @@ Java_com_jvdegithub_aiscatcher_AisCatcherJava_createReceiver(JNIEnv *env, jclass
             Info() << "Model: NMEA";
 
             model = std::make_unique<AIS::ModelNMEA>();
+            if (own_mmsi > 0) {
+                model->setOwnMMSI(own_mmsi);
+                model->SetKey(AIS::KEY_SETTING_NMEA_REFRESH, "ON");
+            }
             model->buildModel('A','B',device->getSampleRate(), false, device);
         }
         else {
@@ -558,6 +580,8 @@ Java_com_jvdegithub_aiscatcher_AisCatcherJava_createReceiver(JNIEnv *env, jclass
             model->SetKey(AIS::KEY_SETTING_FP_DS,s);
             Info() <<  "Fixed Point Downsampler: " << s;
 
+            if (own_mmsi > 0)
+                model->setOwnMMSI(own_mmsi);
             model->buildModel('A','B',device->getSampleRate(), false, device);
         }
 
@@ -589,6 +613,9 @@ Java_com_jvdegithub_aiscatcher_AisCatcherJava_createReceiver(JNIEnv *env, jclass
         webviewer->SetKey(AIS::KEY_SETTING_STATION, "Android");
         webviewer->SetKey(AIS::KEY_SETTING_SHARE_LOC,"ON");
         webviewer->SetKey(AIS::KEY_SETTING_REALTIME,"ON");
+
+        if (own_mmsi > 0)
+            webviewer->SetKey(AIS::KEY_SETTING_OWN_MMSI, std::to_string(own_mmsi));
     }
 
     if(webviewer && webviewer_port != -1)
@@ -657,6 +684,26 @@ Java_com_jvdegithub_aiscatcher_AisCatcherJava_createSharing(JNIEnv *env, jclass 
     else {
         sharing = communityFeed = false;
         sharingKey = "";
+    }
+    return 0;
+}
+
+extern "C"
+JNIEXPORT jint JNICALL
+Java_com_jvdegithub_aiscatcher_AisCatcherJava_setOwnMMSI(JNIEnv *env, jclass clazz, jint mmsi,
+                                                         jint mode, jint interval) {
+    own_mmsi = mmsi;
+    own_mode = mode;
+    own_interval = interval;
+
+    server.SetKey(AIS::KEY_SETTING_OWN_MMSI, std::to_string(own_mmsi));
+
+    if (own_mmsi > 0) {
+        Info() << "Own MMSI: " << own_mmsi;
+        if (own_mode == 1)
+            Info() << "Own vessel: max 1 message per " << own_interval << "s on output feeds";
+        else if (own_mode == 2)
+            Info() << "Own vessel: blocked on output feeds";
     }
     return 0;
 }

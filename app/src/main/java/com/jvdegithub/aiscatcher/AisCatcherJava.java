@@ -60,6 +60,8 @@ public class AisCatcherJava {
 
     static native int createSharing(boolean b, String key);
 
+    static native int setOwnMMSI(int mmsi, int mode, int interval);
+
     static native int createHTTP(boolean b, String url, String userpwd, String id, String interval, String protocol, boolean gzip);
 
 

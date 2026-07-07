@@ -69,6 +69,9 @@ public class Settings extends AppCompatActivity {
         preferences.edit().putString("oMODEL_TYPE", "Default").commit();
         preferences.edit().putBoolean("oFP_DS", false).commit();
 
+        preferences.edit().putString("oOWNMMSI", "").commit();
+        preferences.edit().putString("oOWNMODE", "ALL").commit();
+
         preferences.edit().putString("rRATE", "288K").commit();
         preferences.edit().putBoolean("rRTLAGC", false).commit();
         preferences.edit().putString("rTUNER", "Auto").commit();
@@ -153,6 +156,7 @@ public class Settings extends AppCompatActivity {
                     editText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD));
             ((EditTextPreference) getPreferenceManager().findPreference("httpINTERVAL")).setOnBindEditTextListener(editText ->
                     editText.setInputType(InputType.TYPE_CLASS_NUMBER));
+            ((EditTextPreference) getPreferenceManager().findPreference("oOWNMMSI")).setOnBindEditTextListener(validateMMSI);
 
             setSummaries();
         }
@@ -165,7 +169,11 @@ public class Settings extends AppCompatActivity {
 
         private void setSummaries() {
             setSummaryText(new String[]{"w1PORT","tPORT","tHOST","sPORT","sHOST","u1HOST","u1PORT","u2HOST","u2PORT", "u3HOST","u3PORT", "u4HOST","u4PORT", "s1PORT", "rFREQOFFSET", "sSHARINGKEY", "httpURL","httpUSER","httpID","httpINTERVAL"});
-            setSummaryList(new String[]{"rTUNER","rRATE","sRATE","tRATE","tPROTOCOL","tTUNER","mRATE","hRATE","oMODEL_TYPE","oCGF_WIDE","httpPROTOCOL"});
+            setSummaryList(new String[]{"rTUNER","rRATE","sRATE","tRATE","tPROTOCOL","tTUNER","mRATE","hRATE","oMODEL_TYPE","oCGF_WIDE","httpPROTOCOL","oOWNMODE"});
+
+            EditTextPreference own = findPreference("oOWNMMSI");
+            String mmsi = own.getText();
+            own.setSummary(mmsi == null || mmsi.isEmpty() ? "MMSI of own vessel, empty to disable" : mmsi);
             setSummarySeekbar(new String[]{"mLINEARITY", "sGAIN"});
         }
 
@@ -264,6 +272,12 @@ public class Settings extends AppCompatActivity {
             editText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(5)});
         };
 
+        EditTextPreference.OnBindEditTextListener validateMMSI = editText -> {
+            editText.selectAll();
+            editText.setInputType(InputType.TYPE_CLASS_NUMBER);
+            editText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(9)});
+        };
+
         EditTextPreference.OnBindEditTextListener validateIP = editText -> {
             editText.setKeyListener(DigitsKeyListener.getInstance("0123456789."));
             editText.selectAll();
@@ -280,6 +294,8 @@ public class Settings extends AppCompatActivity {
         if (!SetDeviceInteger(new String[]{"mLINEARITY", "sGAIN"}, context)) return false;
 
         if(!SetRTLbandwidth(context)) return false;
+
+        if (!SetOwnMMSI(context)) return false;
 
         if (!SetUDPoutput("u1", context)) return false;
         if (!SetUDPoutput("u2", context)) return false;
@@ -403,6 +419,25 @@ public class Settings extends AppCompatActivity {
                 return false;
         }
         return true;
+    }
+
+    static private boolean SetOwnMMSI(Context context) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+
+        String mmsi = preferences.getString("oOWNMMSI", "");
+        String mode = preferences.getString("oOWNMODE", "ALL");
+
+        if (mmsi.length() != 9)
+            return AisCatcherJava.setOwnMMSI(0, 0, 0) == 0;
+
+        int m = 0, interval = 0;
+        if (mode.equals("BLOCK"))
+            m = 2;
+        else if (!mode.equals("ALL")) {
+            m = 1;
+            interval = Integer.parseInt(mode);
+        }
+        return AisCatcherJava.setOwnMMSI(Integer.parseInt(mmsi), m, interval) == 0;
     }
 
     static private boolean SetUDPoutput(String s, Context context) {

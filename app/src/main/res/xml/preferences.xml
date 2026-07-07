@@ -40,6 +40,28 @@
     </PreferenceCategory>
 
     <PreferenceCategory
+        android:key="ownship_category"
+        android:title="Own Vessel">
+
+        <EditTextPreference
+            android:key="oOWNMMSI"
+            android:defaultValue=""
+            android:summary="MMSI of own vessel, empty to disable"
+            android:singleLine="true"
+            android:title="Own MMSI"/>
+
+        <ListPreference
+            android:defaultValue="ALL"
+            android:dialogTitle="Own vessel messages on output feeds"
+            android:entries="@array/own_mode_entries"
+            android:entryValues="@array/own_mode_values"
+            android:key="oOWNMODE"
+            android:dependency="oOWNMMSI"
+            android:title="Output feed handling" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
         android:key="webviewer_category"
         android:title="Web Viewer">
 
