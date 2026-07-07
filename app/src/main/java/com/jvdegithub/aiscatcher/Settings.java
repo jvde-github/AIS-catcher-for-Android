@@ -427,7 +427,14 @@ public class Settings extends AppCompatActivity {
         String mmsi = preferences.getString("oOWNMMSI", "");
         String mode = preferences.getString("oOWNMODE", "ALL");
 
-        if (mmsi.length() != 9)
+        int value = 0;
+        try {
+            if (!mmsi.isEmpty()) value = Integer.parseInt(mmsi);
+        } catch (NumberFormatException e) {
+            value = 0;
+        }
+
+        if (value == 0)
             return AisCatcherJava.setOwnMMSI(0, 0, 0) == 0;
 
         int m = 0, interval = 0;
@@ -437,7 +444,7 @@ public class Settings extends AppCompatActivity {
             m = 1;
             interval = Integer.parseInt(mode);
         }
-        return AisCatcherJava.setOwnMMSI(Integer.parseInt(mmsi), m, interval) == 0;
+        return AisCatcherJava.setOwnMMSI(value, m, interval) == 0;
     }
 
     static private boolean SetUDPoutput(String s, Context context) {
