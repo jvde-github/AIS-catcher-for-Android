@@ -274,12 +274,13 @@ Java_com_jvdegithub_aiscatcher_AisCatcherJava_InitNative(JNIEnv *env, jclass ins
 
     memset(&statistics, 0, sizeof(statistics));
 
+    server.setActive(true);
     server.SetKey(AIS::KEY_SETTING_PORT,std::to_string(port));
     server.SetKey(AIS::KEY_SETTING_STATION,"Android");
     server.SetKey(AIS::KEY_SETTING_SHARE_LOC,"ON");
     server.SetKey(AIS::KEY_SETTING_REALTIME,"ON");
     server.SetKey(AIS::KEY_SETTING_LOG,"ON");
-    server.start();
+    server.startServing();
 
     return 0;
 }
@@ -409,7 +410,7 @@ Java_com_jvdegithub_aiscatcher_AisCatcherJava_Run(JNIEnv *env, jclass) {
 
         if(webviewer) {
             Info() << "Starting Web Viewer";
-            webviewer->start();
+            webviewer->startServing();
         }
 
         if(TCP_listener) {
@@ -460,8 +461,11 @@ Java_com_jvdegithub_aiscatcher_AisCatcherJava_Run(JNIEnv *env, jclass) {
         UDPJSON.clear();
         TCP_listener = nullptr;
 
+        server.detachEngine();
+
         if(webviewer) {
-            webviewer->close();
+            webviewer->detachEngine();
+            webviewer->shutdown();
             webviewer.reset();
         }
         webviewer_port = -1;
@@ -595,7 +599,7 @@ Java_com_jvdegithub_aiscatcher_AisCatcherJava_createReceiver(JNIEnv *env, jclass
     model->Output() >> NMEAcounter;
     json2ais.out.clear();
     model->Output() >> json2ais;
-    server.connect(*model, json2ais.out, *device);
+    server.attachEngine(*model, json2ais.out, *device);
 
     Info() << "Creating additional Web Viewer";
 
@@ -609,6 +613,7 @@ Java_com_jvdegithub_aiscatcher_AisCatcherJava_createReceiver(JNIEnv *env, jclass
             throw std::runtime_error("Cannot create Web Viewer)");
         }
 
+        webviewer->setActive(true);
         webviewer->SetKey(AIS::KEY_SETTING_PORT, std::to_string(webviewer_port));
         webviewer->SetKey(AIS::KEY_SETTING_STATION, "Android");
         webviewer->SetKey(AIS::KEY_SETTING_SHARE_LOC,"ON");
@@ -619,7 +624,7 @@ Java_com_jvdegithub_aiscatcher_AisCatcherJava_createReceiver(JNIEnv *env, jclass
     }
 
     if(webviewer && webviewer_port != -1)
-        webviewer->connect(*model, json2ais.out, *device);
+        webviewer->attachEngine(*model, json2ais.out, *device);
 
     return 0;
 }
@@ -753,7 +758,7 @@ Java_com_jvdegithub_aiscatcher_AisCatcherJava_00024Statistics_Reset(JNIEnv *env,
 
     memset(&statistics, 0, sizeof(statistics));
 
-    server.Reset();
+    server.resetStatistics();
 
     callbackUpdate(env);
 }

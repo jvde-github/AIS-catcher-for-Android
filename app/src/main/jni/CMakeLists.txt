@@ -68,10 +68,16 @@ add_library(
         ./AIS-catcher/Source/DSP/DSP.cpp ./AIS-catcher/Source/Application/WebViewer.cpp ./AIS-catcher/Source/Application/Prometheus.cpp ./AIS-catcher/Source/IO/Protocol.cpp
         ./AIS-catcher/Source/Library/Logger.cpp ./AIS-catcher/Source/Application/DeviceManager.cpp ./AIS-catcher/Source/Utilities/StreamHelpers.cpp
         ./AIS-catcher/Source/Aviation/Basestation.cpp ./AIS-catcher/Source/Aviation/Beast.cpp  ./AIS-catcher/Source/Utilities/TemplateString.cpp ./AIS-catcher/Source/Application/MapTiles.cpp
+        ./AIS-catcher/Source/Application/BackupManager.cpp ./AIS-catcher/Source/Application/FrontendConfig.cpp
+        ./AIS-catcher/Source/Tracking/ReceiverTracker.cpp ./AIS-catcher/Source/DSP/Decoder/V2/V2Engine.cpp
 
         JNI/AIScatcherNDK.cpp)
 
 include_directories(
+        # Case-insensitive filesystems: Source/DSP before libairspy so V2Engine.cpp gets
+        # Filters.h, but libairspy/libairspyhf/libusb before Source/Device and
+        # Source/Application, which shadow airspy.h, airspyhf.h and config.h.
+        ./AIS-catcher/Source/DSP
         ./libusb/android ./libusb/libusb ./libusb/libusb/os
         ./rtl-sdr/include
         ./airspyone_host/libairspy/src
