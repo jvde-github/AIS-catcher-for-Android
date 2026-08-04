@@ -74,9 +74,7 @@ add_library(
         JNI/AIScatcherNDK.cpp)
 
 include_directories(
-        # Case-insensitive filesystems: Source/DSP before libairspy so V2Engine.cpp gets
-        # Filters.h, but libairspy/libairspyhf/libusb before Source/Device and
-        # Source/Application, which shadow airspy.h, airspyhf.h and config.h.
+        # Order matters: Filters.h, airspy.h, airspyhf.h and config.h collide case-insensitively
         ./AIS-catcher/Source/DSP
         ./libusb/android ./libusb/libusb ./libusb/libusb/os
         ./rtl-sdr/include
