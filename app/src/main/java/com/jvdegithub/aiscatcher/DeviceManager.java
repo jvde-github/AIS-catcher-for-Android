@@ -120,9 +120,16 @@ public class DeviceManager {
                 UsbManager mUsbManager = (UsbManager) context.getSystemService(Context.USB_SERVICE);
 
                 if(mUsbManager.hasPermission(devices.get(deviceIndex).getDevice())) {
-                    UsbDeviceConnection conn = mUsbManager.openDevice(devices.get(deviceIndex).getDevice());
-                    fd = conn.getFileDescriptor();
-                    AisCatcherJava.onStatus("Device SN: " + conn.getSerial() + ", FD: " + fd + "\n");
+                    closeDevice();
+
+                    usbDeviceConnection = mUsbManager.openDevice(devices.get(deviceIndex).getDevice());
+                    if (usbDeviceConnection == null) {
+                        AisCatcherJava.onStatus("Cannot open USB device\n");
+                        return -1;
+                    }
+
+                    fd = usbDeviceConnection.getFileDescriptor();
+                    AisCatcherJava.onStatus("Device SN: " + usbDeviceConnection.getSerial() + ", FD: " + fd + "\n");
                 }
                 else
                 {
@@ -183,12 +190,11 @@ public class DeviceManager {
 
     public static void closeDevice() {
 
-        AisCatcherJava.onStatus("Closing connection\n");
-
-        if (devices.get(deviceIndex).getType() != DeviceType.RTLTCP && devices.get(deviceIndex).getType() != DeviceType.SPYSERVER && usbDeviceConnection != null) {
+        if (usbDeviceConnection != null) {
+            AisCatcherJava.onStatus("Closing connection\n");
             usbDeviceConnection.close();
+            usbDeviceConnection = null;
         }
-        usbDeviceConnection = null;
     }
 
     public static void Init(Context m) {

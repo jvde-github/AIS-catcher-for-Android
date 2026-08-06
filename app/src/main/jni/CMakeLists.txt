@@ -51,7 +51,7 @@ add_library(
         ./airspyhf/libairspyhf/src/airspyhf.c
         ./airspyhf/libairspyhf/src/iqbalancer.c
 
-        ./AIS-catcher/Source/Application/Receiver.cpp ./AIS-catcher/Source/Application/WebDB.cpp ./AIS-catcher/Source/Application/Config.cpp ./AIS-catcher/Source/Tracking/DB.cpp
+        ./AIS-catcher/Source/Application/Receiver.cpp ./AIS-catcher/Source/Web/WebDB.cpp ./AIS-catcher/Source/Application/Config.cpp ./AIS-catcher/Source/Tracking/DB.cpp
         ./AIS-catcher/Source/Tracking/Ships.cpp  ./AIS-catcher/Source/DBMS/PostgreSQL.cpp
         ./AIS-catcher/Source/Device/AIRSPYHF.cpp ./AIS-catcher/Source/Device/FileWAV.cpp ./AIS-catcher/Source/Device/RTLSDR.cpp ./AIS-catcher/Source/Device/SDRPLAY.cpp
         ./AIS-catcher/Source/DSP/Demod.cpp ./AIS-catcher/Source/DSP/Model.cpp  ./AIS-catcher/Source/Marine/AIS.cpp ./AIS-catcher/Source/JSON/JSONAIS.cpp
@@ -65,10 +65,10 @@ add_library(
         ./AIS-catcher/Source/JSON/Parser.cpp ./AIS-catcher/Source/Device/AIRSPY.cpp ./AIS-catcher/Source/Device/Serial.cpp
         ./AIS-catcher/Source/Device/HYDRASDR.cpp
         ./AIS-catcher/Source/Aviation/ADSB.cpp
-        ./AIS-catcher/Source/DSP/DSP.cpp ./AIS-catcher/Source/Application/WebViewer.cpp ./AIS-catcher/Source/Application/Prometheus.cpp ./AIS-catcher/Source/IO/Protocol.cpp
+        ./AIS-catcher/Source/DSP/DSP.cpp ./AIS-catcher/Source/Web/WebViewer.cpp ./AIS-catcher/Source/Web/Prometheus.cpp ./AIS-catcher/Source/IO/Protocol.cpp
         ./AIS-catcher/Source/Library/Logger.cpp ./AIS-catcher/Source/Application/DeviceManager.cpp ./AIS-catcher/Source/Utilities/StreamHelpers.cpp
-        ./AIS-catcher/Source/Aviation/Basestation.cpp ./AIS-catcher/Source/Aviation/Beast.cpp  ./AIS-catcher/Source/Utilities/TemplateString.cpp ./AIS-catcher/Source/Application/MapTiles.cpp
-        ./AIS-catcher/Source/Application/BackupManager.cpp ./AIS-catcher/Source/Application/FrontendConfig.cpp
+        ./AIS-catcher/Source/Aviation/Basestation.cpp ./AIS-catcher/Source/Aviation/Beast.cpp  ./AIS-catcher/Source/Utilities/TemplateString.cpp ./AIS-catcher/Source/Web/MapTiles.cpp
+        ./AIS-catcher/Source/Web/BackupManager.cpp ./AIS-catcher/Source/Web/FrontendConfig.cpp
         ./AIS-catcher/Source/Tracking/ReceiverTracker.cpp ./AIS-catcher/Source/DSP/Decoder/V2/V2Engine.cpp
 
         JNI/AIScatcherNDK.cpp)
@@ -80,7 +80,7 @@ include_directories(
         ./rtl-sdr/include
         ./airspyone_host/libairspy/src
         ./airspyhf/libairspyhf/src
-        ./AIS-catcher/Source ./AIS-catcher/Source/Application ./AIS-catcher/Source/IO ./AIS-catcher/Source/Library ./AIS-catcher/Source/Tracking ./AIS-catcher/Source/JSON
+        ./AIS-catcher/Source ./AIS-catcher/Source/Application ./AIS-catcher/Source/Web ./AIS-catcher/Source/IO ./AIS-catcher/Source/Library ./AIS-catcher/Source/Tracking ./AIS-catcher/Source/JSON
         ./AIS-catcher/Source/DBMS ./AIS-catcher/Source/DSP ./AIS-catcher/Source/Device ./AIS-catcher/Source/Utilities ./AIS-catcher/Source/Aviation ./AIS-catcher/Source/Marine)
 
 add_definitions(-DHASRTLSDR -DHASRTLSDR_BIASTEE -DHASRTL_ANDROID -DHASAIRSPY -DHASAIRSPY_ANDROID -D HASAIRSPYHF -DHASAIRSPYHF_ANDROID -DHASRTLSDR_TUNERBW)
