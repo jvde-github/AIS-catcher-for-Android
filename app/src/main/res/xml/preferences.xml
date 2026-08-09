@@ -6,10 +6,11 @@
         android:key="system_category"
         android:title="System">
 
-        <SwitchPreferenceCompat
-            android:key="sSHARING"
-            android:summary="Share AIS with aiscatcher.org"
-            android:defaultValue="False"
+        <ListPreference
+            android:key="sSHARINGMODE"
+            android:entries="@array/sharing_mode_entries"
+            android:entryValues="@array/sharing_mode_values"
+            android:defaultValue="ANONYMOUS"
             android:title="Community Share"/>
 
         <EditTextPreference
@@ -300,7 +301,6 @@
 
         <SwitchPreferenceCompat
             android:key="u3SWITCH"
-            android:dependency="sSHARING"
             android:defaultValue="False"
             android:title="UDP Server 3"/>
 
@@ -324,7 +324,6 @@
 
         <SwitchPreferenceCompat
             android:key="u4SWITCH"
-            android:dependency="sSHARING"
             android:defaultValue="False"
             android:title="UDP Server 4"/>
 

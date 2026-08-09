@@ -156,6 +156,14 @@ public class DeviceManager {
         return deviceType;
     }
 
+    // Sources we receive ourselves. RTLTCP relays someone else's stream, so it is
+    // excluded from the community feed.
+    public static boolean isSharableSource() {
+        return deviceType == DeviceType.RTLSDR || deviceType == DeviceType.AIRSPY ||
+                deviceType == DeviceType.AIRSPYHF || deviceType == DeviceType.HACKRF ||
+                deviceType == DeviceType.SPYSERVER;
+    }
+
     public static String getDeviceTypeDescription() {
 
         switch (deviceType) {

@@ -58,7 +58,7 @@ public class AisCatcherJava {
     static native int createTCPlistener(String p);
     static native int createWebViewer(String p);
 
-    static native int createSharing(boolean b, String key);
+    static native int createSharing(boolean b, String key, boolean anonymous);
 
     static native int setOwnMMSI(int mmsi, int mode, int interval);
 

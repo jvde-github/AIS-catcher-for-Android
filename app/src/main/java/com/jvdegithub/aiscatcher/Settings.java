@@ -58,7 +58,7 @@ public class Settings extends AppCompatActivity {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
 
         preferences.edit().putString("sSHARINGKEY", "").commit();
-        preferences.edit().putBoolean("sSHARING", false).commit();
+        preferences.edit().putString("sSHARINGMODE", "ANONYMOUS").commit();
         preferences.edit().putBoolean("sAUTOSTART", false).commit();
         preferences.edit().putBoolean("sKEEPSCREENON", false).commit();
 
@@ -125,6 +125,7 @@ public class Settings extends AppCompatActivity {
         boolean pref_set = preferences.getBoolean("pref_set", false);
         if (!pref_set) setDefault(context);
         preferences.edit().putBoolean("pref_set", true).commit();
+        migrateSharing(context);
         return !pref_set;
     }
 
@@ -169,7 +170,12 @@ public class Settings extends AppCompatActivity {
 
         private void setSummaries() {
             setSummaryText(new String[]{"w1PORT","tPORT","tHOST","sPORT","sHOST","u1HOST","u1PORT","u2HOST","u2PORT", "u3HOST","u3PORT", "u4HOST","u4PORT", "s1PORT", "rFREQOFFSET", "sSHARINGKEY", "httpURL","httpUSER","httpID","httpINTERVAL"});
-            setSummaryList(new String[]{"rTUNER","rRATE","sRATE","tRATE","tPROTOCOL","tTUNER","mRATE","hRATE","oMODEL_TYPE","oCGF_WIDE","httpPROTOCOL","oOWNMODE"});
+            setSummaryList(new String[]{"rTUNER","rRATE","sRATE","tRATE","tPROTOCOL","tTUNER","mRATE","hRATE","oMODEL_TYPE","oCGF_WIDE","httpPROTOCOL","oOWNMODE","sSHARINGMODE"});
+
+            // a sharing key is only used in KEY mode, ListPreference cannot drive
+            // android:dependency so the field is gated here
+            findPreference("sSHARINGKEY").setEnabled(
+                    "KEY".equals(((ListPreference) findPreference("sSHARINGMODE")).getValue()));
 
             EditTextPreference own = findPreference("oOWNMMSI");
             String mmsi = own.getText();
@@ -487,21 +493,44 @@ public class Settings extends AppCompatActivity {
         return true;
     }
 
-    static private boolean SetSharing(Context context) {
-        String defaultKey = "a6392e08-c57e-4e7a-a4fb-d73bfc7619ae";
+    static final String ANONYMOUS_KEY = "a6392e08-c57e-4e7a-a4fb-d73bfc7619ae";
 
+    // Carry the old on/off switch over to the three-way mode. Sharing was off by
+    // default, so anyone who never touched it keeps it off rather than being opted
+    // in by the new Anonymous default.
+    static public void migrateSharing(Context context) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
 
-        boolean b = preferences.getBoolean("sSHARING", false);
-        if (b) {
-            String key = preferences.getString("sSHARINGKEY", defaultKey);
-            if (key.equals("")) key = defaultKey;
-            return AisCatcherJava.createSharing(b, key) == 0;
+        if (preferences.contains("sSHARINGMODE") || !preferences.contains("sSHARING")) return;
 
+        String mode = "NONE";
+        if (preferences.getBoolean("sSHARING", false))
+            mode = preferences.getString("sSHARINGKEY", "").isEmpty() ? "ANONYMOUS" : "KEY";
+
+        preferences.edit().putString("sSHARINGMODE", mode).remove("sSHARING").commit();
+    }
+
+    static private boolean SetSharing(Context context) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+
+        String mode = preferences.getString("sSHARINGMODE", "ANONYMOUS");
+
+        // relayed input is not ours to contribute, only what we receive ourselves
+        if (mode.equals("NONE") || !DeviceManager.isSharableSource()) {
+            AisCatcherJava.createSharing(false, ANONYMOUS_KEY, false);
+            return true;
         }
-        else
-            AisCatcherJava.createSharing(b, defaultKey);
-        return true;
+
+        String key = ANONYMOUS_KEY;
+        boolean anonymous = true;
+
+        if (mode.equals("KEY")) {
+            key = preferences.getString("sSHARINGKEY", "");
+            anonymous = key.isEmpty();
+            if (anonymous) key = ANONYMOUS_KEY;
+        }
+
+        return AisCatcherJava.createSharing(true, key, anonymous) == 0;
     }
 
 }

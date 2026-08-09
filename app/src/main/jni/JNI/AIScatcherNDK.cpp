@@ -677,14 +677,18 @@ Java_com_jvdegithub_aiscatcher_AisCatcherJava_createWebViewer(JNIEnv *env, jclas
 extern "C"
 JNIEXPORT jint JNICALL
 Java_com_jvdegithub_aiscatcher_AisCatcherJava_createSharing(JNIEnv *env, jclass clazz, jboolean b,
-                                                            jstring k) {
+                                                            jstring k, jboolean anonymous) {
     if(b) {
         jboolean isCopy;
         std::string key = toString(env,k);
 
         sharing = communityFeed = true;
         sharingKey = key;
-        Info() << "Community Sharing: " << key;
+
+        if(anonymous)
+            Warning() << "Sharing anonymously with the aiscatcher.org community. Choose Settings > Community Share to add your own sharing key or to stop sharing.";
+        else
+            Info() << "Community Sharing: " << key;
     }
     else {
         sharing = communityFeed = false;
