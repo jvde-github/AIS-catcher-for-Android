@@ -53,6 +53,7 @@ add_library(
 
         ./AIS-catcher/Source/Application/Receiver.cpp ./AIS-catcher/Source/Web/WebDB.cpp ./AIS-catcher/Source/Application/Config.cpp ./AIS-catcher/Source/Tracking/DB.cpp
         ./AIS-catcher/Source/Tracking/Ships.cpp  ./AIS-catcher/Source/DBMS/PostgreSQL.cpp
+        ./AIS-catcher/Source/DBMS/DatabaseOutput.cpp ./AIS-catcher/Source/DBMS/CSV.cpp
         ./AIS-catcher/Source/Device/AIRSPYHF.cpp ./AIS-catcher/Source/Device/FileWAV.cpp ./AIS-catcher/Source/Device/RTLSDR.cpp ./AIS-catcher/Source/Device/SDRPLAY.cpp
         ./AIS-catcher/Source/DSP/Demod.cpp ./AIS-catcher/Source/DSP/Model.cpp  ./AIS-catcher/Source/Marine/AIS.cpp ./AIS-catcher/Source/JSON/JSONAIS.cpp
         ./AIS-catcher/Source/JSON/Keys.cpp ./AIS-catcher/Source/IO/HTTPClient.cpp
