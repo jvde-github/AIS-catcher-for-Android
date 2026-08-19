@@ -366,7 +366,7 @@ Java_com_jvdegithub_aiscatcher_AisCatcherJava_Run(JNIEnv *env, jclass) {
         for (int i = 0; i < UDPhost.size(); i++) {
             UDP_connections.emplace_back();
             auto &conn = UDP_connections.back();
-            conn.SetKey(AIS::KEY_SETTING_HOST,UDPhost[i]).SetKey(AIS::KEY_SETTING_PORT,UDPport[i]).SetKey(AIS::KEY_SETTING_JSON,UDPJSON[i]?"on":"off");
+            conn.SetKey(AIS::KEY_SETTING_HOST,UDPhost[i]).SetKey(AIS::KEY_SETTING_PORT,UDPport[i]).SetKey(AIS::KEY_SETTING_MSGFORMAT,UDPJSON[i]?"JSON_NMEA":"NMEA");
             setOwnShipKeys(conn);
             conn.Start();
             model->Output() >> conn;
@@ -377,7 +377,7 @@ Java_com_jvdegithub_aiscatcher_AisCatcherJava_Run(JNIEnv *env, jclass) {
             Info() << "Creating TCP listener at port " << TCP_listener_port;
             TCP_listener->SetKey(AIS::KEY_SETTING_PORT, TCP_listener_port);
             TCP_listener->SetKey(AIS::KEY_SETTING_TIMEOUT,"0");
-            TCP_listener->SetKey(AIS::KEY_SETTING_JSON,"false");
+            TCP_listener->SetKey(AIS::KEY_SETTING_MSGFORMAT,"NMEA");
             setOwnShipKeys(*TCP_listener);
             model->Output() >> (*TCP_listener);
         }
@@ -387,7 +387,7 @@ Java_com_jvdegithub_aiscatcher_AisCatcherJava_Run(JNIEnv *env, jclass) {
             TCP_connections.emplace_back();
             auto &conn = TCP_connections.back();
 
-            conn.SetKey(AIS::KEY_SETTING_HOST, "aiscatcher.org").SetKey(AIS::KEY_SETTING_PORT, "4242").SetKey(AIS::KEY_SETTING_JSON, "on").SetKey(AIS::KEY_SETTING_FILTER, "on").SetKey(AIS::KEY_SETTING_GPS, "off");
+            conn.SetKey(AIS::KEY_SETTING_HOST, "aiscatcher.org").SetKey(AIS::KEY_SETTING_PORT, "4242").SetKey(AIS::KEY_SETTING_MSGFORMAT, "COMMUNITY_HUB").SetKey(AIS::KEY_SETTING_FILTER, "on").SetKey(AIS::KEY_SETTING_GPS, "off");
             conn.SetKey(AIS::KEY_SETTING_UUID, sharingKey);
             setOwnShipKeys(conn);
             conn.Start();
