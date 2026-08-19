@@ -20,7 +20,6 @@ android {
                 arguments "-DANDROID_STL=c++_shared"
             }
         }
-        signingConfig signingConfigs.debug
     }
 
     buildTypes {
@@ -39,13 +38,6 @@ android {
     }
     dataBinding{
         enabled=true
-    }
-    sourceSets {
-        main {
-            java {
-                srcDirs 'src\\main\\java', 'src\\main\\java\\2'
-            }
-        }
     }
     externalNativeBuild {
         cmake {
