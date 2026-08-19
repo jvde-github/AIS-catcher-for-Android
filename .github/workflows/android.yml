@@ -8,31 +8,33 @@ on:
 jobs:
   apk:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
     - name: Checkout repository and submodules
-      uses: actions/checkout@v3
+      uses: actions/checkout@v7
       with:
         submodules: recursive
         fetch-depth: 0  # Needed for version generation
-        
+
     - name: set up JDK 17
-      uses: actions/setup-java@v3
+      uses: actions/setup-java@v5
       with:
         java-version: '17'
         distribution: 'temurin'
         cache: gradle
-        
+
     - name: Setup Android SDK
-      uses: android-actions/setup-android@v3
-      
+      uses: android-actions/setup-android@v4
+
     - name: Install Ninja and check Android SDK
       run: |
         sudo apt-get update
         sudo apt-get install -y ninja-build
-        
+
     - name: Set permissions for gradlew
       run: chmod +x gradlew
-      
+
     - name: Check Android SDK Details
       run: |
         echo "SDK Location:"
@@ -43,7 +45,7 @@ jobs:
         ls -la $ANDROID_SDK_ROOT/platform-tools/
         echo "NDK versions:"
         ls -la $ANDROID_SDK_ROOT/ndk/
-        
+
     # Generate version based on date and commit
     - name: Generate version
       id: version
@@ -53,11 +55,11 @@ jobs:
         VERSION="${DATE}-${SHORT_SHA}"
         echo "version=${VERSION}" >> $GITHUB_OUTPUT
         echo "Generated version: ${VERSION}"
-                
+
     - name: Build 
       run: ./gradlew build    
-      
-    - uses: ilharp/sign-android-release@v1
+
+    - uses: ilharp/sign-android-release@v2
       name: Sign app APK
       id: sign_app
       with:
@@ -68,85 +70,80 @@ jobs:
         keyPassword: ${{ secrets.KEY_PASSWORD }}
         buildToolsVersion: 34.0.0
 
+    # Collect both APKs under stable names, used by the releases and the artifacts
+    - name: Stage release assets
+      run: |
+        mkdir -p dist
+        cp app/build/outputs/apk/debug/app-debug.apk dist/app-debug.apk
+        cp "${{ steps.sign_app.outputs.signedFile }}" dist/app-release-signed.apk
+        ls -la dist
+
     # Only create releases on pushes to master, not on PRs
     - name: Create Release
       if: github.event_name == 'push' && github.ref == 'refs/heads/master'
-      id: create_release
-      uses: actions/create-release@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        tag_name: v${{ steps.version.outputs.version }}
-        release_name: AIS Catcher v${{ steps.version.outputs.version }}
-        body: |
-          Automated release of AIS Catcher
-          
-          Built from commit: ${{ github.sha }}
-          
-          ## Changes
-          - Latest updates from master branch
-          
-          ## Downloads
-          - **app-debug.apk**: Debug version for testing
-          - **app-release-signed.apk**: Production-ready signed APK
-        draft: false
-        prerelease: false
-        
-    - name: Upload Debug APK to Release
-      if: github.event_name == 'push' && github.ref == 'refs/heads/master'
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: app/build/outputs/apk/debug/app-debug.apk
-        asset_name: app-debug.apk
-        asset_content_type: application/vnd.android.package-archive
-        
-    - name: Upload Signed APK to Release
-      if: github.event_name == 'push' && github.ref == 'refs/heads/master'
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ${{ steps.sign_app.outputs.signedFile }}
-        asset_name: app-release-signed.apk
-        asset_content_type: application/vnd.android.package-archive
+      run: |
+        gh release create "v${{ steps.version.outputs.version }}" \
+          --title "AIS Catcher v${{ steps.version.outputs.version }}" \
+          --target "$GITHUB_SHA" \
+          --notes "Automated release of AIS Catcher
 
-    # Update Edge release for backward compatibility
+        Built from commit: ${{ github.sha }}
+
+        ## Downloads
+        - **app-debug.apk**: Debug version for testing
+        - **app-release-signed.apk**: Production-ready signed APK" \
+          dist/app-debug.apk \
+          dist/app-release-signed.apk
+
+    # Edge keeps one long-lived release so the download URLs never change.
+    # The tag is force-moved rather than the release deleted and recreated:
+    # recreating hands out a fresh release id whose upload endpoint 404s until
+    # GitHub catches up, and a plain delete leaves the old tag behind.
     - name: Update Edge release
       if: github.event_name == 'push' && github.ref == 'refs/heads/master'
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
-        # Delete existing Edge release if it exists
-        gh release delete Edge --yes || true
-        # Create new Edge release
-        gh release create Edge \
-          --title "Latest Edge Build" \
-          --notes "Always contains the latest build from master branch. 
-        
+        NOTES="Always contains the latest build from master branch.
+
         **Note:** This release is updated automatically and maintains the same download URLs for backward compatibility.
-        
+
         For version-specific releases and automated updates, please use the numbered releases above.
-        
+
         Built from commit: ${{ github.sha }}
-        Version: v${{ steps.version.outputs.version }}" \
-          --prerelease
-        # Upload APKs to Edge release
-        gh release upload Edge app/build/outputs/apk/debug/app-debug.apk --clobber
-        gh release upload Edge ${{ steps.sign_app.outputs.signedFile }} --clobber
+        Version: v${{ steps.version.outputs.version }}"
+
+        git tag -f Edge "$GITHUB_SHA"
+        git push -f origin refs/tags/Edge
+
+        if gh release view Edge >/dev/null 2>&1; then
+          gh release edit Edge --title "Latest Edge Build" --notes "$NOTES" --prerelease
+        else
+          gh release create Edge --title "Latest Edge Build" --notes "$NOTES" --target "$GITHUB_SHA" --prerelease
+        fi
+
+        n=0
+        until gh release upload Edge dist/app-debug.apk dist/app-release-signed.apk --clobber; do
+          n=$((n + 1))
+          if [ "$n" -ge 5 ]; then
+            echo "Edge asset upload failed after $n attempts"
+            exit 1
+          fi
+          echo "Edge asset upload failed, retry $n in 10s"
+          sleep 10
+        done
 
     # Keep artifacts for PRs and additional backup
     - name: Upload Debug APK Artifact
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       with:
         name: debug-apk-${{ steps.version.outputs.version }}
-        path: app/build/outputs/apk/debug/app-debug.apk
-        
+        path: dist/app-debug.apk
+
     - name: Upload Release APK Artifact
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       with:
         name: release-apk-${{ steps.version.outputs.version }}
-        path: ${{ steps.sign_app.outputs.signedFile }}
+        path: dist/app-release-signed.apk
