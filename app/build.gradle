@@ -10,8 +10,8 @@ android {
         applicationId "com.jvdegithub.aiscatcher"
         minSdk 23
         targetSdk 34
-        versionCode 121
-        versionName '1.21'
+        versionCode 122
+        versionName '1.22'
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         externalNativeBuild {
@@ -26,6 +26,18 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    // The native libraries are five sixths of the APK and were stored uncompressed
+    // (the modern default, for direct loading from the APK). Compressed, they are
+    // extracted once at install and the APK halves, which keeps it under
+    // IzzyOnDroid's 30 MB limit (issue #28).
+    packaging {
+        jniLibs {
+            useLegacyPackaging = true
+        }
+        dex {
+            useLegacyPackaging = true
         }
     }
     compileOptions {
