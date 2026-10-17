@@ -1,21 +1,9 @@
-# Add project specific ProGuard rules here.
-# You can control the set of applied configuration files using the
-# proguardFiles setting in build.gradle.
-#
-# For more details, see
-#   http://developer.android.com/guide/developing/tools/proguard.html
+# R8 shrinks and optimises the release build but keeps every name, so stack
+# traces stay readable and the build stays reproducible (IzzyOnDroid's
+# "optimize, but do not obfuscate").
+-dontobfuscate
 
-# If your project uses WebView with JS, uncomment the following
-# and specify the fully qualified class name to the JavaScript interface
-# class:
-#-keepclassmembers class fqcn.of.javascript.interface.for.webview {
-#   public *;
-#}
-
-# Uncomment this to preserve the line number information for
-# debugging stack traces.
-#-keepattributes SourceFile,LineNumberTable
-
-# If you keep the line number information, uncomment this to
-# hide the original source file name.
-#-renamesourcefileattribute SourceFile
+# Reached from the native side (AIScatcherNDK.cpp) by name: the static
+# callbacks onMessage/onStatus/onUpdate/onError and the Statistics fields.
+-keep class com.jvdegithub.aiscatcher.AisCatcherJava { *; }
+-keep class com.jvdegithub.aiscatcher.AisCatcherJava$* { *; }
