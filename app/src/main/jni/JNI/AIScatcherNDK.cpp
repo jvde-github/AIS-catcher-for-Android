@@ -274,7 +274,6 @@ Java_com_jvdegithub_aiscatcher_AisCatcherJava_InitNative(JNIEnv *env, jclass ins
 
     memset(&statistics, 0, sizeof(statistics));
 
-    server.setActive(true);
     server.SetKey(AIS::KEY_SETTING_PORT,std::to_string(port));
     server.SetKey(AIS::KEY_SETTING_STATION,"Android");
     server.SetKey(AIS::KEY_SETTING_SHARE_LOC,"ON");
@@ -427,8 +426,16 @@ Java_com_jvdegithub_aiscatcher_AisCatcherJava_Run(JNIEnv *env, jclass) {
 
         int time_idx = 0;
 
+        // the network outputs make and keep their connections from poll(), as the
+        // engine's main loop does for the command-line program: every 50 ms, off the
+        // decoding thread
+        const int POLL_INTERVAL = 50;
+
         while (device->isStreaming() && !stop) {
-            std::this_thread::sleep_for(std::chrono::milliseconds(TIME_INTERVAL));
+            for (int i = 0; i < TIME_INTERVAL / POLL_INTERVAL && device->isStreaming() && !stop; i++) {
+                std::this_thread::sleep_for(std::chrono::milliseconds(POLL_INTERVAL));
+                for (auto &t : TCP_connections) t.poll();
+            }
 
             callbackUpdate(env);
             if(++time_idx % 30 == 0)
@@ -613,7 +620,6 @@ Java_com_jvdegithub_aiscatcher_AisCatcherJava_createReceiver(JNIEnv *env, jclass
             throw std::runtime_error("Cannot create Web Viewer)");
         }
 
-        webviewer->setActive(true);
         webviewer->SetKey(AIS::KEY_SETTING_PORT, std::to_string(webviewer_port));
         webviewer->SetKey(AIS::KEY_SETTING_STATION, "Android");
         webviewer->SetKey(AIS::KEY_SETTING_SHARE_LOC,"ON");

@@ -71,6 +71,7 @@ add_library(
         ./AIS-catcher/Source/Aviation/Basestation.cpp ./AIS-catcher/Source/Aviation/Beast.cpp  ./AIS-catcher/Source/Utilities/TemplateString.cpp ./AIS-catcher/Source/Web/MapTiles.cpp
         ./AIS-catcher/Source/Web/BackupManager.cpp ./AIS-catcher/Source/Web/FrontendConfig.cpp
         ./AIS-catcher/Source/Tracking/ReceiverTracker.cpp ./AIS-catcher/Source/DSP/Decoder/V2/V2Engine.cpp
+        ./AIS-catcher/Source/Tracking/PlaceCatalogue.cpp ./AIS-catcher/Source/Web/ViewerConfiguration.cpp ./AIS-catcher/Source/Web/ViewerSettings.cpp ./AIS-catcher/Source/IO/MsgOut.cpp
 
         JNI/AIScatcherNDK.cpp)
 
