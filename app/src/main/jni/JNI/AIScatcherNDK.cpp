@@ -41,15 +41,16 @@ bool communityFeed = false;
 #include "Common.h"
 #include "Model.h"
 #include "Network.h"
-#include "WebViewer.h"
+#include "Site.h"
 #include "Logger.h"
 
-#include "RTLSDR.h"
-#include "AIRSPYHF.h"
-#include "HACKRF.h"
-#include "RTLTCP.h"
-#include "SpyServer.h"
-#include "AIRSPY.h"
+// by their directory: AIRSPY.h and AIRSPYHF.h are the libraries' own headers on a case-insensitive disk
+#include "Device/RTLSDR.h"
+#include "Device/AIRSPYHF.h"
+#include "Device/HACKRF.h"
+#include "Device/RTLTCP.h"
+#include "Device/SpyServer.h"
+#include "Device/AIRSPY.h"
 
 #include "Keys.h"
 
@@ -84,10 +85,14 @@ struct Statistics {
 
 } statistics;
 
-WebViewer server;
-static std::unique_ptr<WebViewer> webviewer = nullptr;
-static std::unique_ptr<IO::TCPlistenerStreamer> TCP_listener = nullptr;
+// What lives as long as the app: the phone as the one station, the tracker
+// and the viewers, the app's own on its port and one on the network when the
+// settings ask for it
+static Site site;
+static int viewer_port = -1;
 int webviewer_port = -1;
+static float station_lat = LAT_UNDEFINED, station_lon = LON_UNDEFINED;
+static std::string device_product, device_vendor, device_serial;
 
 JNIEXPORT jint JNICALL JNI_OnLoad(JavaVM *, void *) {
     return JNI_VERSION_1_6;
@@ -228,8 +233,6 @@ struct Drivers {
     Device::AIRSPYHF AIRSPYHF;
 } drivers;
 
-std::deque<IO::UDPStreamer> UDP_connections;
-std::deque<IO::TCPClientStreamer> TCP_connections;
 std::vector<std::string> UDPhost;
 std::vector<std::string> UDPport;
 std::vector<bool> UDPJSON;
@@ -245,7 +248,6 @@ int own_interval = 0;
 bool http_enabled = false;
 bool http_gzip = false;
 std::string http_url, http_userpwd, http_id, http_interval, http_protocol;
-static std::unique_ptr<IO::HTTPStreamer> HTTP_output = nullptr;
 
 NMEAcounter NMEAcounter;
 RAWcounter rawcounter;
@@ -254,9 +256,70 @@ Device::Device *device = nullptr;
 static std::unique_ptr<AIS::Model> model = nullptr;
 AIS::JSONAIS json2ais;
 
+// The app's one device and model as the site reaches them, to put its consumers on
+struct AppWiring : EngineWiring {
+    void unwire() override {
+        model->Output().out.clear();
+        json2ais.out.clear();
+        model->Output() >> NMEAcounter;
+        model->Output() >> json2ais;
+    }
+    void feed(Tracker &t, const TrackerSpec *) override {
+        json2ais.out.Connect(&t.json());
+    }
+    uint64_t route(const std::vector<std::string> &, uint64_t groups_in, const std::string &) override {
+        return groups_in;
+    }
+    void wire(IO::OutputMessage &o) override {
+        const bool json = o.fmt == MessageFormat::JSON_FULL || o.fmt == MessageFormat::JSON_ANNOTATED ||
+                          o.fmt == MessageFormat::JSON_SPARSE;
+        if (json)
+            json2ais.out.Connect((StreamIn<JSON::JSON> *) &o);
+        else
+            model->Output().out.Connect((StreamIn<AIS::Message> *) &o);
+    }
+    uint64_t radios() override { return GROUPS_ALL; }
+} wiring;
+
+// the phone, where its GPS puts it, on the map; riding the own vessel when there is one
+static void publishStation() {
+    StationRegistry stations;
+    uint64_t seq = 0;
+    StationRegistry::Station s;
+    s.id = 1;
+    s.name = "Android";
+    s.lat = station_lat;
+    s.lon = station_lon;
+    s.mmsi = own_mmsi > 0 ? (uint32_t)own_mmsi : 0;
+    s.gps = false;
+    s.share_loc = true;
+    stations.define(s, seq);
+    site.publishStations(stations);
+}
+
+// the viewers: the app's own, for this phone only, and the one on the network
+static void configureSite() {
+    SiteConfig cfg;
+    ServerSpec own;
+    own.port = viewer_port;
+    own.viewer.station = "Android";
+    own.viewer.realtime = true;
+    own.viewer.log = true;
+    cfg.servers.push_back(own);
+    if (webviewer_port != -1) {
+        ServerSpec lan;
+        lan.port = webviewer_port;
+        lan.bind = "0.0.0.0";
+        lan.viewer.station = "Android";
+        lan.viewer.realtime = true;
+        cfg.servers.push_back(lan);
+    }
+    site.configure(cfg);
+}
+
 std::atomic<bool> stop{false};
 
-void StopRequest() {
+void StopRequest(bool) {
     stop = true;
 }
 
@@ -274,12 +337,9 @@ Java_com_jvdegithub_aiscatcher_AisCatcherJava_InitNative(JNIEnv *env, jclass ins
 
     memset(&statistics, 0, sizeof(statistics));
 
-    server.SetKey(AIS::KEY_SETTING_PORT,std::to_string(port));
-    server.SetKey(AIS::KEY_SETTING_STATION,"Android");
-    server.SetKey(AIS::KEY_SETTING_SHARE_LOC,"ON");
-    server.SetKey(AIS::KEY_SETTING_REALTIME,"ON");
-    server.SetKey(AIS::KEY_SETTING_LOG,"ON");
-    server.startServing();
+    viewer_port = port;
+    configureSite();
+    publishStation();
 
     return 0;
 }
@@ -348,6 +408,7 @@ Java_com_jvdegithub_aiscatcher_AisCatcherJava_Run(JNIEnv *env, jclass) {
     const int TIME_MAX = (TIME_CONSTRAINT * 1000) / TIME_INTERVAL;
     TAG tag;
     tag.mode = 7;
+    tag.station_id = 1; // the phone's station, so distances are measured from it
 
     auto setOwnShipKeys = [](Setting &s) {
         if (own_mmsi <= 0) return;
@@ -360,62 +421,66 @@ Java_com_jvdegithub_aiscatcher_AisCatcherJava_Run(JNIEnv *env, jclass) {
     };
 
     try {
+        // the outputs: the site starts them, puts them on the model and stops them with the run
+        Outputs outs;
+        auto add = [&](const std::shared_ptr<IO::OutputMessage> &o, const std::string &told) {
+            setOwnShipKeys(*o);
+            outs.list.push_back(o);
+            outs.told.push_back(told);
+        };
+
         Info() << "Creating UDP output channels";
 
         for (int i = 0; i < UDPhost.size(); i++) {
-            UDP_connections.emplace_back();
-            auto &conn = UDP_connections.back();
-            conn.SetKey(AIS::KEY_SETTING_HOST,UDPhost[i]).SetKey(AIS::KEY_SETTING_PORT,UDPport[i]).SetKey(AIS::KEY_SETTING_MSGFORMAT,UDPJSON[i]?"JSON_NMEA":"NMEA");
-            setOwnShipKeys(conn);
-            conn.Start();
-            model->Output() >> conn;
+            auto conn = std::make_shared<IO::UDPStreamer>();
+            conn->SetKey(AIS::KEY_SETTING_HOST,UDPhost[i]).SetKey(AIS::KEY_SETTING_PORT,UDPport[i]).SetKey(AIS::KEY_SETTING_MSGFORMAT,UDPJSON[i]?"JSON_NMEA":"NMEA");
+            add(conn, "udp " + UDPhost[i] + ":" + UDPport[i]);
         }
 
         if(!TCP_listener_port.empty()) {
-            TCP_listener = std::make_unique<IO::TCPlistenerStreamer>();
+            auto listener = std::make_shared<IO::TCPlistenerStreamer>();
             Info() << "Creating TCP listener at port " << TCP_listener_port;
-            TCP_listener->SetKey(AIS::KEY_SETTING_PORT, TCP_listener_port);
-            TCP_listener->SetKey(AIS::KEY_SETTING_TIMEOUT,"0");
-            TCP_listener->SetKey(AIS::KEY_SETTING_MSGFORMAT,"NMEA");
-            setOwnShipKeys(*TCP_listener);
-            model->Output() >> (*TCP_listener);
+            listener->SetKey(AIS::KEY_SETTING_PORT, TCP_listener_port);
+            listener->SetKey(AIS::KEY_SETTING_TIMEOUT,"0");
+            listener->SetKey(AIS::KEY_SETTING_MSGFORMAT,"NMEA");
+            add(listener, "tcp listener " + TCP_listener_port);
         }
 
         if(sharing) {
             Info() << "Creating Sharing output channel";
-            TCP_connections.emplace_back();
-            auto &conn = TCP_connections.back();
+            auto conn = std::make_shared<IO::TCPClientStreamer>();
 
-            conn.SetKey(AIS::KEY_SETTING_HOST, "aiscatcher.org").SetKey(AIS::KEY_SETTING_PORT, "4242").SetKey(AIS::KEY_SETTING_MSGFORMAT, "COMMUNITY_HUB").SetKey(AIS::KEY_SETTING_FILTER, "on").SetKey(AIS::KEY_SETTING_GPS, "off");
-            conn.SetKey(AIS::KEY_SETTING_UUID, sharingKey);
-            setOwnShipKeys(conn);
-            conn.Start();
-            model->Output() >> conn;
+            conn->SetKey(AIS::KEY_SETTING_HOST, "aiscatcher.org").SetKey(AIS::KEY_SETTING_PORT, "4242").SetKey(AIS::KEY_SETTING_MSGFORMAT, "COMMUNITY_HUB").SetKey(AIS::KEY_SETTING_FILTER, "on").SetKey(AIS::KEY_SETTING_GPS, "off");
+            conn->SetKey(AIS::KEY_SETTING_UUID, sharingKey);
+            add(conn, "sharing");
+            outs.feed = conn.get();
+            outs.sharing_defined = true;
         }
 
         if(http_enabled) {
             Info() << "Creating HTTP output to " << http_url;
-            HTTP_output = std::make_unique<IO::HTTPStreamer>();
-            HTTP_output->SetKey(AIS::KEY_SETTING_URL, http_url);
-            if(!http_userpwd.empty()) HTTP_output->SetKey(AIS::KEY_SETTING_USERPWD, http_userpwd);
-            if(!http_id.empty())      HTTP_output->SetKey(AIS::KEY_SETTING_STATIONID, http_id);
-            if(!http_interval.empty())HTTP_output->SetKey(AIS::KEY_SETTING_INTERVAL, http_interval);
-            HTTP_output->SetKey(AIS::KEY_SETTING_PROTOCOL, http_protocol);
-            HTTP_output->SetKey(AIS::KEY_SETTING_GZIP, http_gzip ? "on" : "off");
-            setOwnShipKeys(*HTTP_output);
-            json2ais.out >> (*HTTP_output);
-            HTTP_output->Start();
+            auto http = std::make_shared<IO::HTTPStreamer>();
+            http->SetKey(AIS::KEY_SETTING_URL, http_url);
+            if(!http_userpwd.empty()) http->SetKey(AIS::KEY_SETTING_USERPWD, http_userpwd);
+            if(!http_id.empty())      http->SetKey(AIS::KEY_SETTING_STATIONID, http_id);
+            if(!http_interval.empty())http->SetKey(AIS::KEY_SETTING_INTERVAL, http_interval);
+            http->SetKey(AIS::KEY_SETTING_PROTOCOL, http_protocol);
+            http->SetKey(AIS::KEY_SETTING_GZIP, http_gzip ? "on" : "off");
+            add(http, "http " + http_url);
+            outs.http = true;
         }
 
-        if(webviewer) {
-            Info() << "Starting Web Viewer";
-            webviewer->startServing();
-        }
+        // the device, for the viewer's statistics
+        DeviceFacts d;
+        const std::string serial = device_serial.empty() ? "-" : device_serial;
+        d.product = device_product.empty() ? device->getProduct() : device_product;
+        d.vendor = device_vendor.empty() ? "-" : device_vendor;
+        d.serial = serial;
+        d.sample_rate = device->getRateDescription();
+        d.label = d.product + (serial != "-" ? " " + serial : "");
+        d.model = model->getName();
+        site.attachEngine(EngineFacts(1, d), wiring, std::move(outs));
 
-        if(TCP_listener) {
-            Info() << "Starting TCP listener";
-            TCP_listener->Start();
-        }
         Info() << "Start Device";
         device->setTag(tag);
         device->Play();
@@ -434,7 +499,7 @@ Java_com_jvdegithub_aiscatcher_AisCatcherJava_Run(JNIEnv *env, jclass) {
         while (device->isStreaming() && !stop) {
             for (int i = 0; i < TIME_INTERVAL / POLL_INTERVAL && device->isStreaming() && !stop; i++) {
                 std::this_thread::sleep_for(std::chrono::milliseconds(POLL_INTERVAL));
-                for (auto &t : TCP_connections) t.poll();
+                site.pollOutputs();
             }
 
             callbackUpdate(env);
@@ -453,29 +518,16 @@ Java_com_jvdegithub_aiscatcher_AisCatcherJava_Run(JNIEnv *env, jclass) {
         model->Output().out.clear();
         json2ais.out.clear();
 
-        for (auto &u: UDP_connections) u.Stop();
-        for (auto &t: TCP_connections) t.Stop();
-
-        if(HTTP_output) HTTP_output->Stop();
-        if(TCP_listener) TCP_listener->Stop();
-
-        UDP_connections.clear();
-        TCP_connections.clear();
-        HTTP_output = nullptr;
+        // the outputs stop with the engine
+        site.detachEngine();
 
         UDPport.clear();
         UDPhost.clear();
         UDPJSON.clear();
-        TCP_listener = nullptr;
 
-        server.detachEngine();
-
-        if(webviewer) {
-            webviewer->detachEngine();
-            webviewer->shutdown();
-            webviewer.reset();
-        }
+        // the network viewer goes with the run, as it came with it
         webviewer_port = -1;
+        configureSite();
 
     } catch (std::exception& e) {
         callbackError(env, e.what());
@@ -575,12 +627,9 @@ Java_com_jvdegithub_aiscatcher_AisCatcherJava_createReceiver(JNIEnv *env, jclass
         else {
             if(model_type == 0) {
 
-                Info() << "Model: default";
-                model = std::make_unique<AIS::ModelDefault>();
-
-                std::string s = (CGF_wide == 0)?"OFF":"ON";
-                model->SetKey(AIS::KEY_SETTING_AFC_WIDE,s);
-                Info() << "AFC Wide " << s;
+                // AIS-catcher's default model; its frequency search is always wide
+                Info() << "Model: default (AIS engine v2)";
+                model = std::make_unique<AIS::ModelEngineV2>();
             }
             else {
                 Info() << "Model: Base (FM)";
@@ -603,34 +652,10 @@ Java_com_jvdegithub_aiscatcher_AisCatcherJava_createReceiver(JNIEnv *env, jclass
     }
 
     device->out >> rawcounter;
-    model->Output() >> NMEAcounter;
-    json2ais.out.clear();
-    model->Output() >> json2ais;
-    server.attachEngine(*model, json2ais.out, *device);
+    *device >> site.received();
 
-    Info() << "Creating additional Web Viewer";
-
-    if(webviewer) webviewer.reset();
-
-    if(webviewer_port != -1) {
-        webviewer = std::make_unique<WebViewer>();
-
-        if(!webviewer) {
-            Critical() << "Cannot create Web Viewer";
-            throw std::runtime_error("Cannot create Web Viewer)");
-        }
-
-        webviewer->SetKey(AIS::KEY_SETTING_PORT, std::to_string(webviewer_port));
-        webviewer->SetKey(AIS::KEY_SETTING_STATION, "Android");
-        webviewer->SetKey(AIS::KEY_SETTING_SHARE_LOC,"ON");
-        webviewer->SetKey(AIS::KEY_SETTING_REALTIME,"ON");
-
-        if (own_mmsi > 0)
-            webviewer->SetKey(AIS::KEY_SETTING_OWN_MMSI, std::to_string(own_mmsi));
-    }
-
-    if(webviewer && webviewer_port != -1)
-        webviewer->attachEngine(*model, json2ais.out, *device);
+    // the network viewer, when the settings ask for one
+    configureSite();
 
     return 0;
 }
@@ -711,7 +736,7 @@ Java_com_jvdegithub_aiscatcher_AisCatcherJava_setOwnMMSI(JNIEnv *env, jclass cla
     own_mode = mode;
     own_interval = interval;
 
-    server.SetKey(AIS::KEY_SETTING_OWN_MMSI, std::to_string(own_mmsi));
+    publishStation();
 
     if (own_mmsi > 0) {
         Info() << "Own MMSI: " << own_mmsi;
@@ -768,8 +793,6 @@ Java_com_jvdegithub_aiscatcher_AisCatcherJava_00024Statistics_Reset(JNIEnv *env,
 
     memset(&statistics, 0, sizeof(statistics));
 
-    server.resetStatistics();
-
     callbackUpdate(env);
 }
 
@@ -777,13 +800,9 @@ extern "C"
 JNIEXPORT void JNICALL
 Java_com_jvdegithub_aiscatcher_AisCatcherJava_setLatLon(JNIEnv *env, jclass clazz, jfloat lat,
                                                         jfloat lon) {
-    server.SetKey(AIS::KEY_SETTING_LAT,std::to_string(lat));
-    server.SetKey(AIS::KEY_SETTING_LON,std::to_string(lon));
-
-    if(webviewer) {
-        webviewer->SetKey(AIS::KEY_SETTING_LAT,std::to_string(lat));
-        webviewer->SetKey(AIS::KEY_SETTING_LON,std::to_string(lon));
-    }
+    station_lat = lat;
+    station_lon = lon;
+    publishStation();
 }
 
 extern "C"
@@ -803,7 +822,9 @@ Java_com_jvdegithub_aiscatcher_AisCatcherJava_setDeviceDescription(JNIEnv *env, 
     std::string vendor = toString(env,v);
     std::string serial = toString(env, s);
 
-    server.setDeviceDescription(product.c_str(), vendor.c_str(), serial.c_str());
+    device_product = product;
+    device_vendor = vendor;
+    device_serial = serial;
 }
 
 extern "C"

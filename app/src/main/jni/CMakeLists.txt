@@ -66,12 +66,17 @@ add_library(
         ./AIS-catcher/Source/JSON/Parser.cpp ./AIS-catcher/Source/Device/AIRSPY.cpp ./AIS-catcher/Source/Device/Serial.cpp
         ./AIS-catcher/Source/Device/HYDRASDR.cpp
         ./AIS-catcher/Source/Aviation/ADSB.cpp
-        ./AIS-catcher/Source/DSP/DSP.cpp ./AIS-catcher/Source/Web/WebViewer.cpp ./AIS-catcher/Source/Web/Prometheus.cpp ./AIS-catcher/Source/IO/Protocol.cpp
+        ./AIS-catcher/Source/DSP/DSP.cpp ./AIS-catcher/Source/Services/Prometheus.cpp ./AIS-catcher/Source/IO/Protocol.cpp
         ./AIS-catcher/Source/Library/Logger.cpp ./AIS-catcher/Source/Application/DeviceManager.cpp ./AIS-catcher/Source/Utilities/StreamHelpers.cpp
         ./AIS-catcher/Source/Aviation/Basestation.cpp ./AIS-catcher/Source/Aviation/Beast.cpp  ./AIS-catcher/Source/Utilities/TemplateString.cpp ./AIS-catcher/Source/Web/MapTiles.cpp
-        ./AIS-catcher/Source/Web/BackupManager.cpp ./AIS-catcher/Source/Web/FrontendConfig.cpp
-        ./AIS-catcher/Source/Tracking/ReceiverTracker.cpp ./AIS-catcher/Source/DSP/Decoder/V2/V2Engine.cpp
-        ./AIS-catcher/Source/Tracking/PlaceCatalogue.cpp ./AIS-catcher/Source/Web/ViewerConfiguration.cpp ./AIS-catcher/Source/Web/ViewerSettings.cpp ./AIS-catcher/Source/IO/MsgOut.cpp
+       
+        ./AIS-catcher/Source/DSP/Decoder/V2/V2Engine.cpp ./AIS-catcher/Source/Site/SiteConfig.cpp
+        ./AIS-catcher/Source/Tracking/PlaceCatalogue.cpp ./AIS-catcher/Source/IO/MsgOut.cpp
+        ./AIS-catcher/Source/Tracking/PlaceGeometry.cpp ./AIS-catcher/Source/Tracking/Journal.cpp ./AIS-catcher/Source/Tracking/Tracker.cpp ./AIS-catcher/Source/Tracking/ViewFilter.cpp
+        ./AIS-catcher/Source/Site/Site.cpp ./AIS-catcher/Source/Web/PluginStore.cpp
+        ./AIS-catcher/Source/Services/Http.cpp ./AIS-catcher/Source/Services/Server.cpp ./AIS-catcher/Source/Services/ApiV1.cpp ./AIS-catcher/Source/Services/Mcp.cpp
+        ./AIS-catcher/Source/Services/Routes.cpp ./AIS-catcher/Source/Services/System.cpp ./AIS-catcher/Source/Services/Ui.cpp ./AIS-catcher/Source/Services/Streams.cpp
+        ./AIS-catcher/Source/Application/Stations.cpp ./AIS-catcher/Source/Services/UiFormat.cpp ./AIS-catcher/Source/Services/GeoJSON.cpp ./AIS-catcher/Source/Services/Kml.cpp
 
         JNI/AIScatcherNDK.cpp)
 
@@ -83,8 +88,11 @@ include_directories(
         ./airspyone_host/libairspy/src
         ./airspyhf/libairspyhf/src
         ./AIS-catcher/Source ./AIS-catcher/Source/Application ./AIS-catcher/Source/Web ./AIS-catcher/Source/IO ./AIS-catcher/Source/Library ./AIS-catcher/Source/Tracking ./AIS-catcher/Source/JSON
-        ./AIS-catcher/Source/DBMS ./AIS-catcher/Source/DSP ./AIS-catcher/Source/Device ./AIS-catcher/Source/Utilities ./AIS-catcher/Source/Aviation ./AIS-catcher/Source/Marine)
+        ./AIS-catcher/Source/DBMS ./AIS-catcher/Source/DSP ./AIS-catcher/Source/Device ./AIS-catcher/Source/Utilities ./AIS-catcher/Source/Aviation ./AIS-catcher/Source/Marine
+        ./AIS-catcher/Source/Site ./AIS-catcher/Source/Services)
 
+# the viewer is a server of the site, reading its tracker
+add_definitions(-DHASAPI -DHASWEBVIEWER)
 add_definitions(-DHASRTLSDR -DHASRTLSDR_BIASTEE -DHASRTL_ANDROID -DHASAIRSPY -DHASAIRSPY_ANDROID -D HASAIRSPYHF -DHASAIRSPYHF_ANDROID -DHASRTLSDR_TUNERBW)
 
 find_package(openssl REQUIRED CONFIG)
