@@ -15,12 +15,14 @@ Here you can find a [link](https://github.com/jvde-github/AIS-catcher-for-Androi
 
 AIS-catcher had a recent overhaul. The instructions below still are relevant but the visualization of the results is now based on the same code as the AIS-catcher web interface. The instructions will be updated in due course.
 <p align="center">
-<img src="https://github.com/jvde-github/AIS-catcher-for-Android/assets/52420030/076920d4-e75a-409c-87ea-d286df8eb046" width=20% height=20%>  &nbsp;
-<img src="https://github.com/jvde-github/AIS-catcher-for-Android/assets/52420030/06f73ba9-3e0d-411d-85ef-ecb6730023b4" width=20% height=20%>  &nbsp;
-<img src="https://github.com/jvde-github/AIS-catcher-for-Android/assets/52420030/dd867256-9e7e-4822-a1e2-dc6115400513" width=20% height=20%>  &nbsp; <br>
-<img src="https://github.com/jvde-github/AIS-catcher-for-Android/assets/52420030/f29801ec-a4d5-4e2d-8568-aae240868048" width=20% height=20%>  &nbsp;
-<img src="https://github.com/jvde-github/AIS-catcher-for-Android/assets/52420030/34368bcf-499b-4497-bfb0-2645bfb9fc2a" width=20% height=20%>  &nbsp;
-<img src="https://github.com/jvde-github/AIS-catcher-for-Android/assets/52420030/6e57de02-cd9a-4778-81fe-4df2242e8907" width=20% height=20%>  &nbsp;
+<img src="fastlane/metadata/android/en-US/images/phoneScreenshots/01.jpg" alt="Map" width=20% height=20%>  &nbsp;
+<img src="fastlane/metadata/android/en-US/images/phoneScreenshots/02.jpg" alt="Ship outlines in port" width=20% height=20%>  &nbsp;
+<img src="fastlane/metadata/android/en-US/images/phoneScreenshots/03.jpg" alt="Ship card" width=20% height=20%>  &nbsp;
+<img src="fastlane/metadata/android/en-US/images/phoneScreenshots/04.jpg" alt="Dashboard: AIS reception" width=20% height=20%>  &nbsp; <br>
+<img src="fastlane/metadata/android/en-US/images/phoneScreenshots/05.jpg" alt="Dashboard: GPS" width=20% height=20%>  &nbsp;
+<img src="fastlane/metadata/android/en-US/images/phoneScreenshots/06.jpg" alt="GPS sky view" width=20% height=20%>  &nbsp;
+<img src="fastlane/metadata/android/en-US/images/phoneScreenshots/07.jpg" alt="Map in dark mode" width=20% height=20%>  &nbsp;
+<img src="fastlane/metadata/android/en-US/images/phoneScreenshots/08.jpg" alt="GPS sky view in dark mode" width=20% height=20%>  &nbsp;
 </p>
 
 The requirements to receive AIS signals are: a RTL-SDR dongle (or alternatively an AirSpy Mini/R2/HF+), a simple antenna, 
