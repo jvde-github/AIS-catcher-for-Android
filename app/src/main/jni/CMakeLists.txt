@@ -58,8 +58,8 @@ add_library(
         ./AIS-catcher/Source/DSP/Demod.cpp ./AIS-catcher/Source/DSP/Model.cpp  ./AIS-catcher/Source/Marine/AIS.cpp ./AIS-catcher/Source/JSON/JSONAIS.cpp
         ./AIS-catcher/Source/JSON/Keys.cpp ./AIS-catcher/Source/IO/HTTPClient.cpp
         ./AIS-catcher/Source/Device/FileRAW.cpp ./AIS-catcher/Source/Device/HACKRF.cpp ./AIS-catcher/Source/Device/UDP.cpp ./AIS-catcher/Source/Device/RTLTCP.cpp
-        ./AIS-catcher/Source/Device/ZMQ.cpp ./AIS-catcher/Source/Device/SoapySDR.cpp ./AIS-catcher/Source/Device/SpyServer.cpp ./AIS-catcher/Source/Marine/Message.cpp
-        ./AIS-catcher/Source/Marine/NMEA.cpp
+        ./AIS-catcher/Source/Device/TCPServerInput.cpp ./AIS-catcher/Source/Device/SoapySDR.cpp ./AIS-catcher/Source/Device/SpyServer.cpp ./AIS-catcher/Source/Marine/Message.cpp
+        ./AIS-catcher/Source/Marine/NMEA.cpp ./AIS-catcher/Source/Marine/N2K.cpp
         ./AIS-catcher/Source/Utilities/Convert.cpp ./AIS-catcher/Source/Utilities/Parse.cpp ./AIS-catcher/Source/Utilities/Helper.cpp
         ./AIS-catcher/Source/JSON/JSON.cpp ./AIS-catcher/Source/IO/Network.cpp
         ./AIS-catcher/Source/IO/HTTPServer.cpp ./AIS-catcher/Source/IO/TCPServer.cpp
@@ -72,7 +72,7 @@ add_library(
        
         ./AIS-catcher/Source/DSP/Decoder/V2/V2Engine.cpp ./AIS-catcher/Source/Site/SiteConfig.cpp
         ./AIS-catcher/Source/Tracking/PlaceCatalogue.cpp ./AIS-catcher/Source/IO/MsgOut.cpp
-        ./AIS-catcher/Source/Tracking/PlaceGeometry.cpp ./AIS-catcher/Source/Tracking/Journal.cpp ./AIS-catcher/Source/Tracking/Tracker.cpp ./AIS-catcher/Source/Tracking/ViewFilter.cpp
+        ./AIS-catcher/Source/Tracking/PlaceGeometry.cpp ./AIS-catcher/Source/Tracking/Journal.cpp ./AIS-catcher/Source/Tracking/Gnss.cpp ./AIS-catcher/Source/Tracking/Health.cpp ./AIS-catcher/Source/Tracking/Tracker.cpp ./AIS-catcher/Source/Tracking/ViewFilter.cpp
         ./AIS-catcher/Source/Site/Site.cpp ./AIS-catcher/Source/Web/PluginStore.cpp
         ./AIS-catcher/Source/Services/Http.cpp ./AIS-catcher/Source/Services/Server.cpp ./AIS-catcher/Source/Services/ApiV1.cpp ./AIS-catcher/Source/Services/Mcp.cpp
         ./AIS-catcher/Source/Services/Routes.cpp ./AIS-catcher/Source/Services/System.cpp ./AIS-catcher/Source/Services/Ui.cpp ./AIS-catcher/Source/Services/Streams.cpp

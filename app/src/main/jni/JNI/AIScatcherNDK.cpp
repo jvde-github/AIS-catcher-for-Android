@@ -24,6 +24,9 @@
 #include <string>
 #include <sstream>
 #include <atomic>
+#include <mutex>
+#include <algorithm>
+#include <cmath>
 
 const int TIME_CONSTRAINT = 120;
 bool communityFeed = false;
@@ -43,6 +46,7 @@ bool communityFeed = false;
 #include "Network.h"
 #include "Site.h"
 #include "Logger.h"
+#include "NMEA.h"
 
 // by their directory: AIRSPY.h and AIRSPYHF.h are the libraries' own headers on a case-insensitive disk
 #include "Device/RTLSDR.h"
@@ -291,10 +295,31 @@ static void publishStation() {
     s.lat = station_lat;
     s.lon = station_lon;
     s.mmsi = own_mmsi > 0 ? (uint32_t)own_mmsi : 0;
-    s.gps = false;
+    s.gps = true;
     s.share_loc = true;
     stations.define(s, seq);
     site.publishStations(stations);
+}
+
+// The phone's GPS, for its station: the positions from the NMEA its GNSS gives, the satellites from
+// Android's GnssStatus, which every phone has where not every phone's NMEA has GSV. On the site's
+// tracker, which outlives the runs, so it is heard with or without a receiver.
+static AIS::NMEA gps_nmea;
+static std::mutex gps_mtx;
+static bool gps_wired = false;
+static const std::string gps_source = "android";
+// from the last GGA with a fix: its HDOP and satellites in use, for the next sky
+static float gps_hdop = -1;
+static int gps_in_use = 0;
+static std::time_t gps_gga_at = 0;
+
+static void wireGPS() {
+    std::lock_guard<std::mutex> lock(gps_mtx);
+    Tracker *t = site.tracker();
+    if (gps_wired || !t) return;
+    gps_nmea.setGPS(true);
+    gps_nmea.outGPS.Connect(&t->gps());
+    gps_wired = true;
 }
 
 // the viewers: the app's own, for this phone only, and the one on the network
@@ -315,6 +340,7 @@ static void configureSite() {
         cfg.servers.push_back(lan);
     }
     site.configure(cfg);
+    wireGPS();
 }
 
 std::atomic<bool> stop{false};
@@ -627,9 +653,9 @@ Java_com_jvdegithub_aiscatcher_AisCatcherJava_createReceiver(JNIEnv *env, jclass
         else {
             if(model_type == 0) {
 
-                // AIS-catcher's default model; its frequency search is always wide
-                Info() << "Model: default (AIS engine v2)";
-                model = std::make_unique<AIS::ModelEngineV2>();
+                // AIS-catcher's default model
+                Info() << "Model: default (AIS engine v2 high)";
+                model = std::make_unique<AIS::ModelEngineV2>(true);
             }
             else {
                 Info() << "Model: Base (FM)";
@@ -803,6 +829,92 @@ Java_com_jvdegithub_aiscatcher_AisCatcherJava_setLatLon(JNIEnv *env, jclass claz
     station_lat = lat;
     station_lon = lon;
     publishStation();
+}
+
+extern "C"
+JNIEXPORT void JNICALL
+Java_com_jvdegithub_aiscatcher_AisCatcherJava_feedGPS(JNIEnv *env, jclass clazz, jstring sentence) {
+    std::string line = toString(env, sentence);
+    if (line.size() < 7 || line[0] != '$') return;
+    // the satellites come from GnssStatus
+    if (line.compare(3, 3, "GSV") == 0 || line.compare(3, 3, "GSA") == 0) return;
+    if (line.back() != '\n') line += "\r\n";
+    std::lock_guard<std::mutex> lock(gps_mtx);
+    if (!gps_wired) return;
+    // GGA's sixth field is the fix quality, the seventh the satellites in use, the eighth the HDOP
+    if (line.compare(3, 3, "GGA") == 0) {
+        std::vector<std::string> f;
+        Util::Parse::Split(line, ',', f);
+        const int quality = f.size() > 8 ? std::atoi(f[6].c_str()) : 0;
+        if (quality >= 1 && quality <= 5) {
+            const float h = (float) std::atof(f[8].c_str());
+            gps_hdop = h > 0 && h < 99 ? h : -1;
+            gps_in_use = std::atoi(f[7].c_str());
+            gps_gga_at = std::time(nullptr);
+        }
+    }
+    TAG tag;
+    tag.station_id = 1;
+    RAW raw = {Format::TXT, (void *) line.data(), (int) line.size()};
+    gps_nmea.Receive(&raw, 1, tag);
+}
+
+// One GnssStatus: a signal an entry, a satellite on two bands twice. Android's constellations
+// 0 unknown, 1 GPS, 2 SBAS, 3 GLONASS, 4 QZSS, 5 BeiDou, 6 Galileo, 7 NavIC; the band by the carrier.
+extern "C"
+JNIEXPORT void JNICALL
+Java_com_jvdegithub_aiscatcher_AisCatcherJava_feedSky(JNIEnv *env, jclass clazz, jintArray constellation, jintArray svid,
+                                                      jfloatArray cn0, jfloatArray elevation, jfloatArray azimuth,
+                                                      jbooleanArray used, jfloatArray carrier) {
+    using AIS::Sky;
+    const jsize n = env->GetArrayLength(svid);
+    std::vector<jint> c(n), id(n);
+    std::vector<jfloat> signal(n), el(n), az(n), hz(n);
+    std::vector<jboolean> u(n);
+    env->GetIntArrayRegion(constellation, 0, n, c.data());
+    env->GetIntArrayRegion(svid, 0, n, id.data());
+    env->GetFloatArrayRegion(cn0, 0, n, signal.data());
+    env->GetFloatArrayRegion(elevation, 0, n, el.data());
+    env->GetFloatArrayRegion(azimuth, 0, n, az.data());
+    env->GetBooleanArrayRegion(used, 0, n, u.data());
+    env->GetFloatArrayRegion(carrier, 0, n, hz.data());
+
+    static const int systems[] = {Sky::OTHER, Sky::GPS, Sky::SBAS, Sky::GLONASS, Sky::QZSS, Sky::BEIDOU, Sky::GALILEO, Sky::NAVIC};
+    Sky sky;
+    int in_fix = 0;
+    for (jsize i = 0; i < n; i++) {
+        const int system = c[i] >= 0 && c[i] < 8 ? systems[c[i]] : (int) Sky::OTHER;
+        const int sv = system == Sky::QZSS && id[i] > 192 ? id[i] - 192 : id[i];
+        if (sv <= 0) continue;
+        const float mhz = hz[i] / 1e6f;
+        const int band = mhz <= 0 || mhz > 1500 ? Sky::L1 : mhz > 1170 && mhz < 1185 ? Sky::L5 : Sky::L2;
+        auto sat = std::find_if(sky.satellites.begin(), sky.satellites.end(),
+                                [&](const Sky::Satellite &o) { return o.system == system && o.id == sv; });
+        if (sat == sky.satellites.end()) {
+            sky.satellites.push_back({system, sv, (int) std::lround(el[i]), (int) std::lround(az[i]), {-1, -1, -1}, false});
+            sat = sky.satellites.end() - 1;
+        }
+        if (signal[i] > 0)
+            sat->signal[band] = std::max(sat->signal[band], (int) std::lround(signal[i]));
+        if (u[i] && !sat->used) {
+            sat->used = true;
+            in_fix++;
+        }
+    }
+    if (sky.satellites.empty()) return;
+
+    std::lock_guard<std::mutex> lock(gps_mtx);
+    if (!gps_wired) return;
+    // a GnssStatus that marks no satellite used while the GGA has a fix: the GGA's count
+    const bool gga = std::time(nullptr) - gps_gga_at < 10;
+    const int in_use = in_fix >= 3 || !gga ? in_fix : std::max(in_fix, std::max(gps_in_use, 3));
+    sky.fix = in_use >= 4 ? 3 : in_use == 3 ? 2 : 1;
+    sky.hdop = gga ? gps_hdop : -1;
+    TAG tag;
+    tag.station_id = 1;
+    AIS::GPS gps(gps_source);
+    gps.sky = &sky;
+    gps_nmea.outGPS.Send(&gps, 1, tag);
 }
 
 extern "C"
