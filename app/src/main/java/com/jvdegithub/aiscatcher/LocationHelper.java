@@ -104,7 +104,7 @@ public class LocationHelper implements LocationListener {
     }
 
     private void removeNmeaListener() {
-        if (nmeaListener == null) return;
+        if (nmeaListener == null || Build.VERSION.SDK_INT < Build.VERSION_CODES.N) return;
         locationManager.removeNmeaListener(nmeaListener);
         locationManager.unregisterGnssStatusCallback(statusCallback);
         gnssThread.quitSafely();
