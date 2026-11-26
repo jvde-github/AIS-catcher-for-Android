@@ -301,14 +301,12 @@ static void publishStation() {
     site.publishStations(stations);
 }
 
-// The phone's GPS, for its station: the positions from the NMEA its GNSS gives, the satellites from
-// Android's GnssStatus, which every phone has where not every phone's NMEA has GSV. On the site's
-// tracker, which outlives the runs, so it is heard with or without a receiver.
+// the phone's GPS for its station: fixes from its NMEA, satellites from GnssStatus
 static AIS::NMEA gps_nmea;
 static std::mutex gps_mtx;
 static bool gps_wired = false;
 static const std::string gps_source = "android";
-// from the last GGA with a fix: its HDOP and satellites in use, for the next sky
+// from the last GGA with a fix
 static float gps_hdop = -1;
 static int gps_in_use = 0;
 static std::time_t gps_gga_at = 0;
@@ -836,12 +834,11 @@ JNIEXPORT void JNICALL
 Java_com_jvdegithub_aiscatcher_AisCatcherJava_feedGPS(JNIEnv *env, jclass clazz, jstring sentence) {
     std::string line = toString(env, sentence);
     if (line.size() < 7 || line[0] != '$') return;
-    // the satellites come from GnssStatus
     if (line.compare(3, 3, "GSV") == 0 || line.compare(3, 3, "GSA") == 0) return;
     if (line.back() != '\n') line += "\r\n";
     std::lock_guard<std::mutex> lock(gps_mtx);
     if (!gps_wired) return;
-    // GGA's sixth field is the fix quality, the seventh the satellites in use, the eighth the HDOP
+    // fields 6 to 8: fix quality, satellites in use, HDOP
     if (line.compare(3, 3, "GGA") == 0) {
         std::vector<std::string> f;
         Util::Parse::Split(line, ',', f);
@@ -859,8 +856,7 @@ Java_com_jvdegithub_aiscatcher_AisCatcherJava_feedGPS(JNIEnv *env, jclass clazz,
     gps_nmea.Receive(&raw, 1, tag);
 }
 
-// One GnssStatus: a signal an entry, a satellite on two bands twice. Android's constellations
-// 0 unknown, 1 GPS, 2 SBAS, 3 GLONASS, 4 QZSS, 5 BeiDou, 6 Galileo, 7 NavIC; the band by the carrier.
+// one GnssStatus: a satellite heard on two bands comes twice
 extern "C"
 JNIEXPORT void JNICALL
 Java_com_jvdegithub_aiscatcher_AisCatcherJava_feedSky(JNIEnv *env, jclass clazz, jintArray constellation, jintArray svid,
@@ -879,13 +875,15 @@ Java_com_jvdegithub_aiscatcher_AisCatcherJava_feedSky(JNIEnv *env, jclass clazz,
     env->GetBooleanArrayRegion(used, 0, n, u.data());
     env->GetFloatArrayRegion(carrier, 0, n, hz.data());
 
+    // by Android's constellation type
     static const int systems[] = {Sky::OTHER, Sky::GPS, Sky::SBAS, Sky::GLONASS, Sky::QZSS, Sky::BEIDOU, Sky::GALILEO, Sky::NAVIC};
     Sky sky;
     int in_fix = 0;
     for (jsize i = 0; i < n; i++) {
         const int system = c[i] >= 0 && c[i] < 8 ? systems[c[i]] : (int) Sky::OTHER;
         const int sv = system == Sky::QZSS && id[i] > 192 ? id[i] - 192 : id[i];
-        if (sv <= 0) continue;
+        // GLONASS above its slots is a frequency channel: the slot is not known yet
+        if (sv <= 0 || (system == Sky::GLONASS && sv > 32)) continue;
         const float mhz = hz[i] / 1e6f;
         const int band = mhz <= 0 || mhz > 1500 ? Sky::L1 : mhz > 1170 && mhz < 1185 ? Sky::L5 : Sky::L2;
         auto sat = std::find_if(sky.satellites.begin(), sky.satellites.end(),
@@ -901,11 +899,10 @@ Java_com_jvdegithub_aiscatcher_AisCatcherJava_feedSky(JNIEnv *env, jclass clazz,
             in_fix++;
         }
     }
-    if (sky.satellites.empty()) return;
 
     std::lock_guard<std::mutex> lock(gps_mtx);
     if (!gps_wired) return;
-    // a GnssStatus that marks no satellite used while the GGA has a fix: the GGA's count
+    // no satellite marked used while the GGA has a fix: the GGA's count
     const bool gga = std::time(nullptr) - gps_gga_at < 10;
     const int in_use = in_fix >= 3 || !gga ? in_fix : std::max(in_fix, std::max(gps_in_use, 3));
     sky.fix = in_use >= 4 ? 3 : in_use == 3 ? 2 : 1;

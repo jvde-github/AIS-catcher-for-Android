@@ -12,7 +12,7 @@ import android.location.OnNmeaMessageListener;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Looper;
+import android.os.HandlerThread;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -26,9 +26,9 @@ public class LocationHelper implements LocationListener {
     private Context context;
     private LocationManager locationManager;
     private boolean isUpdatingLocation = false;
-    // for the GPS tab: the GNSS's own sentences for the fixes, its status for the satellites
     private OnNmeaMessageListener nmeaListener = null;
     private GnssStatus.Callback statusCallback = null;
+    private HandlerThread gnssThread = null;
     public LocationHelper(Context context) {
         this.context = context;
         locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
@@ -42,16 +42,20 @@ public class LocationHelper implements LocationListener {
                     new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION},
                     PERMISSION_REQUEST_CODE);
         } else {
-            if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+            addNmeaListener();
+            if (isUpdatingLocation) return;
+            boolean hasGps = locationManager.getAllProviders().contains(LocationManager.GPS_PROVIDER);
+            // also while it is off: the updates start when it is switched on
+            if (hasGps) {
                 locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 30 * 1000, 0, this);
                 isUpdatingLocation = true;
-                addNmeaListener();
-            } else if (locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
+            }
+            if (!(hasGps && locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER))
+                    && locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
                 locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 30 * 1000, 0, this);
                 isUpdatingLocation = true;
 
                 Toast.makeText(context, "GPS not available. Using network for location updates.", Toast.LENGTH_LONG).show();
-            } else {
             }
         }
     }
@@ -87,24 +91,30 @@ public class LocationHelper implements LocationListener {
                 AisCatcherJava.feedSky(constellation, svid, cn0, elevation, azimuth, used, carrier);
             }
         };
-        Handler handler = new Handler(Looper.getMainLooper());
+        // off the UI thread: the native side takes the tracker's locks
+        gnssThread = new HandlerThread("gnss");
+        gnssThread.start();
+        Handler handler = new Handler(gnssThread.getLooper());
         try {
             locationManager.addNmeaListener(nmeaListener, handler);
             locationManager.registerGnssStatusCallback(statusCallback, handler);
         } catch (SecurityException e) {
-            locationManager.removeNmeaListener(nmeaListener);
-            nmeaListener = null;
-            statusCallback = null;
+            removeNmeaListener();
         }
     }
 
+    private void removeNmeaListener() {
+        if (nmeaListener == null) return;
+        locationManager.removeNmeaListener(nmeaListener);
+        locationManager.unregisterGnssStatusCallback(statusCallback);
+        gnssThread.quitSafely();
+        nmeaListener = null;
+        statusCallback = null;
+        gnssThread = null;
+    }
+
     public void removeLocationUpdates() {
-        if (nmeaListener != null) {
-            locationManager.removeNmeaListener(nmeaListener);
-            locationManager.unregisterGnssStatusCallback(statusCallback);
-            nmeaListener = null;
-            statusCallback = null;
-        }
+        removeNmeaListener();
         if (isUpdatingLocation) {
             locationManager.removeUpdates(this);
             isUpdatingLocation = false;
@@ -113,8 +123,15 @@ public class LocationHelper implements LocationListener {
     @Override
     public void onStatusChanged(String provider, int status, Bundle extras) { }
 
+    // the GPS switched on: from the network's positions to its own
     @Override
-    public void onProviderEnabled(String provider) { }
+    public void onProviderEnabled(String provider) {
+        if (LocationManager.GPS_PROVIDER.equals(provider) && isUpdatingLocation) {
+            locationManager.removeUpdates(this);
+            isUpdatingLocation = false;
+            requestLocationUpdates();
+        }
+    }
 
     @Override
     public void onProviderDisabled(String provider) { }
